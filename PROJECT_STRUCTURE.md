@@ -89,6 +89,7 @@ Electron + React + TypeScript IDE.
 | `src/renderer/` | React UI (Monaco, chat, terminal, inline completion) |
 | `src/renderer/src/features/completion/` | Inline completion controller, Monaco provider, context collector |
 | `src/renderer/src/settings/` | Inline completion settings UI |
+| `e2e/verify-completion.mjs` | Phase 14 Electron + Playwright E2E (`npm run verify:completion`) |
 | `src/preload/` | Secure IPC bridge |
 
 ### `apps/web`

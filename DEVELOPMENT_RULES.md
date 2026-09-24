@@ -339,6 +339,8 @@ Before merging any PR:
 
 ### Phase 14 inline completion rules
 
+Phase 14 is **GREEN** when `apps/desktop` `npm run verify:completion` passes (25 E2E checks) plus pytest/ruff/desktop unit tests.
+
 94. **No second model stack.** Inline completion must use the existing `ModelProvider` via `POST /v1/completions`; do not route through `LoopAgentRunner`.
 95. **Bounded context only.** Never upload the full repository for completions; use prefix/suffix, nearby lines, and optional indexer snippets.
 96. **Stale response protection.** Discard completions when document version, cursor position, workspace, or file no longer match the request.

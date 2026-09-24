@@ -31,6 +31,7 @@ interface EditorStore {
   setReviewIndex: (index: number) => void;
   acceptChange: (index: number) => ProposedChange | null;
   rejectChange: (index: number) => void;
+  resetWorkspace: () => void;
 }
 
 function detectLanguage(path: string): string {
@@ -120,4 +121,13 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
       proposedChanges: state.proposedChanges.filter((_, i) => i !== index),
       reviewIndex: Math.max(0, index - 1),
     })),
+
+  resetWorkspace: () =>
+    set({
+      tabs: [],
+      activeTab: null,
+      selection: null,
+      proposedChanges: [],
+      reviewIndex: 0,
+    }),
 }));

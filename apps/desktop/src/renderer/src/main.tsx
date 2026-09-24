@@ -2,12 +2,9 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./index.css";
-import { useCompletionStore } from "./features/completion/completionStore";
+import { installE2EBridge } from "./e2e/e2eBridge";
 
-if (import.meta.env.DEV) {
-  (window as Window & { __COMPLETION_E2E__?: typeof useCompletionStore }).__COMPLETION_E2E__ =
-    useCompletionStore;
-}
+installE2EBridge();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

@@ -43,7 +43,7 @@ Build a **replaceable-model AI platform** that eventually runs on **our own mode
 | Vector DB / object storage | **FUTURE** | Not implemented; Redis/MySQL only in dev stack |
 | API gateway / auth / multi-tenant | **FUTURE** | Phase 15–16 |
 | Desktop IDE | **IMPLEMENTED** | `apps/desktop`, `docs/DESKTOP_IDE.md` |
-| Inline code completion | **IMPLEMENTED** | `services/ai-api/completion`, `docs/INLINE_COMPLETION.md` |
+| Inline code completion | **IMPLEMENTED (Phase 14 GREEN)** | `services/ai-api/completion`, `apps/desktop/e2e/verify-completion.mjs`, `docs/INLINE_COMPLETION.md` |
 
 ---
 

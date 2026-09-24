@@ -8,4 +8,20 @@ export function setActiveCompletionController(controller: CompletionController |
 
 export function cancelActiveCompletion(): void {
   activeController?.cancel();
+  const editor = (window as Window & {
+    __monacoActiveEditor__?: { trigger: (s: string, a: string, p: unknown) => void };
+  }).__monacoActiveEditor__;
+  editor?.trigger("ai-completion", "editor.action.inlineSuggest.hide", {});
+}
+
+export function triggerActiveCompletion(): void {
+  const editor = (window as Window & {
+    __monacoActiveEditor__?: {
+      focus: () => void;
+      trigger: (s: string, a: string, p: unknown) => void;
+    };
+  }).__monacoActiveEditor__;
+  if (!editor) return;
+  editor.focus();
+  editor.trigger("ai-completion", "editor.action.inlineSuggest.trigger", {});
 }

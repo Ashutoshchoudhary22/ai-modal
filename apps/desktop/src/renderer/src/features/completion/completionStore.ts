@@ -46,7 +46,15 @@ export const useCompletionStore = create<CompletionStore>((set) => ({
 
   setEnabled: (enabled) => set({ enabled, status: enabled ? "ready" : "disabled" }),
   setStatus: (status) => set({ status }),
-  setLoading: (loading) => set({ loading, status: loading ? "generating" : "ready" }),
+  setLoading: (loading) =>
+    set((state) => ({
+      loading,
+      ...(loading
+        ? { status: "generating" as CompletionStatus }
+        : state.status === "generating"
+          ? { status: "ready" as CompletionStatus }
+          : {}),
+    })),
   setCompletion: (text, requestId, cursorKey, filePath) =>
     set({
       currentCompletion: text,
@@ -57,7 +65,13 @@ export const useCompletionStore = create<CompletionStore>((set) => ({
       status: "ready",
     }),
   clearCompletion: () =>
-    set({ currentCompletion: null, requestId: null, cursorKey: null, loading: false }),
+    set({
+      currentCompletion: null,
+      requestId: null,
+      cursorKey: null,
+      filePath: null,
+      loading: false,
+    }),
   setError: (error) => set({ error, status: error ? "error" : "ready", loading: false }),
   setLatency: (ms) => set({ lastLatencyMs: ms }),
   incrementTelemetry: (key) =>

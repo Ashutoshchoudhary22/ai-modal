@@ -133,6 +133,9 @@ make test
 # Or individually
 pytest
 npm run test
+
+# Phase 14 inline completion E2E (Electron + Playwright; requires AI API on :8000)
+cd apps/desktop && npm run verify:completion
 ```
 
 ### 6. Start AI API (development)

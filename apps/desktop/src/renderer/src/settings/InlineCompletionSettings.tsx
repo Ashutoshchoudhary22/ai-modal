@@ -1,5 +1,6 @@
 import { useSettingsStore } from "../state/settingsStore";
 import { useCompletionStore } from "../features/completion/completionStore";
+import { cancelActiveCompletion } from "../features/completion/completionBridge";
 
 export function InlineCompletionSettings() {
   const { settings, apiStatus, provider, modelId, updateSettings } = useSettingsStore();
@@ -15,7 +16,9 @@ export function InlineCompletionSettings() {
   const onToggle = async (key: keyof typeof settings, value: boolean | number | string) => {
     await updateSettings({ [key]: value });
     if (key === "inlineCompletionEnabled") {
-      useCompletionStore.getState().setEnabled(Boolean(value));
+      const enabled = Boolean(value);
+      useCompletionStore.getState().setEnabled(enabled);
+      if (!enabled) cancelActiveCompletion();
     }
   };
 
@@ -30,6 +33,7 @@ export function InlineCompletionSettings() {
       <label style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
         <input
           type="checkbox"
+          aria-label="Enable inline completion"
           checked={settings.inlineCompletionEnabled}
           onChange={(e) => void onToggle("inlineCompletionEnabled", e.target.checked)}
         />
@@ -54,6 +58,7 @@ export function InlineCompletionSettings() {
         Debounce (ms)
         <input
           type="number"
+          aria-label="Debounce (ms)"
           min={100}
           max={1000}
           value={settings.completionDebounceMs}
@@ -89,6 +94,7 @@ export function InlineCompletionSettings() {
       <label style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
         <input
           type="checkbox"
+          aria-label="Include bounded repository context (indexer)"
           checked={settings.completionRepositoryContextEnabled}
           onChange={(e) => void onToggle("completionRepositoryContextEnabled", e.target.checked)}
         />

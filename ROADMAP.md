@@ -295,7 +295,7 @@ See [docs/DESKTOP_IDE.md](./docs/DESKTOP_IDE.md).
 
 ---
 
-## Phase 14 — Inline Coding ✅
+## Phase 14 — Inline Coding ✅ GREEN
 
 **Goal:** Low-latency inline code completion (Copilot-style ghost text).
 
@@ -307,6 +307,7 @@ See [docs/DESKTOP_IDE.md](./docs/DESKTOP_IDE.md).
 | Repository-aware bounded context | ✅ |
 | completion-mini benchmark | ✅ |
 | Settings + status indicator | ✅ |
+| Electron + Playwright E2E (`verify:completion`, 25 checks) | ✅ |
 
 See [docs/INLINE_COMPLETION.md](./docs/INLINE_COMPLETION.md).
 

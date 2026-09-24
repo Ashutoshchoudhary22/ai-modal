@@ -8,7 +8,10 @@ import { useSettingsStore } from "../state/settingsStore";
 
 import { useWorkspaceStore } from "../state/workspaceStore";
 
-import { CompletionController } from "../features/completion/CompletionController";
+import {
+  CompletionController,
+  type CompletionSettings,
+} from "../features/completion/CompletionController";
 
 import {
 
@@ -64,6 +67,10 @@ export function MonacoEditor() {
 
 
   useEffect(() => {
+    controllerRef.current?.invalidate("workspace");
+  }, [workspace?.workspaceId]);
+
+  useEffect(() => {
 
     return () => {
 
@@ -98,6 +105,25 @@ export function MonacoEditor() {
 
 
 
+  const readCompletionSettings = (): CompletionSettings => {
+    const currentSettings = useSettingsStore.getState().settings;
+    const currentWorkspace = useWorkspaceStore.getState().workspace;
+    return {
+      apiUrl: currentSettings?.apiUrl ?? "http://127.0.0.1:8000",
+      indexerUrl: currentSettings?.indexerUrl ?? "http://127.0.0.1:8002",
+      indexerWorkspaceId: currentWorkspace?.indexerWorkspaceId ?? null,
+      enabled: currentSettings?.inlineCompletionEnabled ?? true,
+      model: currentSettings?.completionModel ?? currentSettings?.defaultModel ?? "default",
+      debounceMs: currentSettings?.completionDebounceMs ?? 250,
+      maxTokens: currentSettings?.completionMaxTokens ?? 256,
+      contextLines: currentSettings?.completionContextLines ?? 50,
+      repositoryContextEnabled: currentSettings?.completionRepositoryContextEnabled ?? true,
+      maxRequestsPerMinute: currentSettings?.completionMaxRequestsPerMinute ?? 60,
+      timeoutMs: currentSettings?.completionTimeoutMs ?? 5000,
+      triggerOnTyping: currentSettings?.completionTriggerOnTyping ?? true,
+    };
+  };
+
   const handleMount = (editor: import("monaco-editor").editor.IStandaloneCodeEditor, monaco: Monaco) => {
     (window as Window & { __monacoActiveEditor__?: typeof editor }).__monacoActiveEditor__ = editor;
 
@@ -107,35 +133,7 @@ export function MonacoEditor() {
 
     controllerRef.current?.dispose();
 
-
-
-    const controller = new CompletionController(() => ({
-
-      apiUrl: settings?.apiUrl ?? "http://127.0.0.1:8000",
-
-      indexerUrl: settings?.indexerUrl ?? "http://127.0.0.1:8002",
-
-      indexerWorkspaceId: workspace?.indexerWorkspaceId ?? null,
-
-      enabled: settings?.inlineCompletionEnabled ?? true,
-
-      model: settings?.completionModel ?? settings?.defaultModel ?? "default",
-
-      debounceMs: settings?.completionDebounceMs ?? 250,
-
-      maxTokens: settings?.completionMaxTokens ?? 256,
-
-      contextLines: settings?.completionContextLines ?? 50,
-
-      repositoryContextEnabled: settings?.completionRepositoryContextEnabled ?? true,
-
-      maxRequestsPerMinute: settings?.completionMaxRequestsPerMinute ?? 60,
-
-      timeoutMs: settings?.completionTimeoutMs ?? 5000,
-
-      triggerOnTyping: settings?.completionTriggerOnTyping ?? true,
-
-    }));
+    const controller = new CompletionController(() => readCompletionSettings());
 
     controllerRef.current = controller;
     setActiveCompletionController(controller);
@@ -160,11 +158,14 @@ export function MonacoEditor() {
 
     );
 
-    const getCompletionOptions = () => ({
-      enabled: settings?.inlineCompletionEnabled ?? true,
-      triggerOnTyping: settings?.completionTriggerOnTyping ?? true,
-      debounceMs: settings?.completionDebounceMs ?? 250,
-    });
+    const getCompletionOptions = () => {
+      const currentSettings = useSettingsStore.getState().settings;
+      return {
+        enabled: currentSettings?.inlineCompletionEnabled ?? true,
+        triggerOnTyping: currentSettings?.completionTriggerOnTyping ?? true,
+        debounceMs: currentSettings?.completionDebounceMs ?? 250,
+      };
+    };
 
     const cleanup = setupCompletionListeners(
       editor,

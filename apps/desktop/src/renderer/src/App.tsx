@@ -40,6 +40,21 @@ export default function App() {
   }, [loadSettings, refreshHealth]);
 
   useEffect(() => {
+    if (!workspace) return undefined;
+    let active = true;
+    const refreshWorkspace = async () => {
+      const ws = await window.desktop.workspace.get();
+      if (active && ws) useWorkspaceStore.getState().setWorkspace(ws);
+    };
+    void refreshWorkspace();
+    const interval = setInterval(() => void refreshWorkspace(), 1500);
+    return () => {
+      active = false;
+      clearInterval(interval);
+    };
+  }, [workspace?.workspaceId]);
+
+  useEffect(() => {
     if (!workspace) {
       import("./features/completion/completionBridge").then(({ cancelActiveCompletion }) =>
         cancelActiveCompletion(),
@@ -47,6 +62,7 @@ export default function App() {
       import("./features/completion/completionDocumentVersion").then(({ clearDocumentVersions }) =>
         clearDocumentVersions(),
       );
+      useEditorStore.getState().resetWorkspace();
     }
   }, [workspace]);
 
@@ -116,7 +132,7 @@ export default function App() {
       import("./state/assistantStore").then(({ useAssistantStore }) => useAssistantStore.getState().setMode("completion"));
     }});
     commandRegistry.register({ id: "completion-trigger", title: "AI: Trigger Completion", shortcut: `${mod}+Space`, handler: () => {
-      document.dispatchEvent(new KeyboardEvent("keydown", { key: " ", ctrlKey: !window.desktop.platform.isMac, metaKey: window.desktop.platform.isMac }));
+      import("./features/completion/completionBridge").then(({ triggerActiveCompletion }) => triggerActiveCompletion());
     }});
     commandRegistry.register({ id: "completion-cancel", title: "AI: Cancel Completion", shortcut: "Esc", handler: () => {
       import("./features/completion/completionBridge").then(({ cancelActiveCompletion }) => cancelActiveCompletion());

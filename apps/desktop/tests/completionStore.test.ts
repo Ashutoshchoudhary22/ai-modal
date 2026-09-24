@@ -37,4 +37,11 @@ describe("completionStore", () => {
     useCompletionStore.getState().incrementTelemetry("accepted");
     expect(useCompletionStore.getState().telemetry.accepted).toBe(1);
   });
+
+  it("preserves offline status when loading finishes", () => {
+    useCompletionStore.getState().setLoading(true);
+    useCompletionStore.getState().setStatus("offline");
+    useCompletionStore.getState().setLoading(false);
+    expect(useCompletionStore.getState().status).toBe("offline");
+  });
 });

@@ -98,6 +98,38 @@ describe("CompletionController", () => {
     controller.dispose();
   });
 
+  it("suppresses automatic completion during post-accept cooldown", async () => {
+    const controller = new CompletionController(() => baseSettings);
+    controller.acceptCompletion();
+    const result = await controller.provide(snapshot, "automatic");
+    expect(result).toBeNull();
+    controller.dispose();
+  });
+
+  it("discards response when cursor invalidation generation changes", async () => {
+    vi.mocked(requestCompletion).mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          setTimeout(
+            () =>
+              resolve({
+                request_id: "test",
+                completion: { text: "findById(id);" },
+                latency_ms: 1,
+              }),
+            30,
+          );
+        }),
+    );
+    const controller = new CompletionController(() => baseSettings);
+    const promise = controller.provide(snapshot, "automatic");
+    await new Promise((r) => setTimeout(r, 15));
+    controller.invalidate("cursor");
+    const result = await promise;
+    expect(result).toBeNull();
+    controller.dispose();
+  });
+
   it("allows explicit manual completion when typing trigger is disabled", async () => {
     const controller = new CompletionController(() => ({
       ...baseSettings,
