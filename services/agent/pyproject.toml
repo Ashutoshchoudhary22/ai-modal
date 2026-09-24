@@ -7,6 +7,7 @@ dependencies = [
     "ai-platform-protocol",
     "ai-platform-shared",
     "ai-platform-code-indexer",
+    "ai-platform-ai-api",
     "fastapi>=0.115.0",
     "uvicorn[standard]>=0.32.0",
 ]
@@ -30,3 +31,4 @@ packages = ["src/agent"]
 ai-platform-protocol = { workspace = true }
 ai-platform-shared = { workspace = true }
 ai-platform-code-indexer = { workspace = true }
+ai-platform-ai-api = { workspace = true }

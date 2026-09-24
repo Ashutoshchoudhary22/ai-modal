@@ -11,7 +11,7 @@
 | `apps/web/` | **IMPLEMENTED (dev)** | Test console UI (React + Vite) |
 | `apps/desktop/`, `apps/admin/` | **PLANNED** | README + placeholder `package.json` only |
 | `services/code-indexer/` | **IMPLEMENTED** | Phase 4 repository intelligence (scan, index, search, context) |
-| `services/agent/` | **IMPLEMENTED** | Phase 5 coding agent tools (registry, file/code/terminal/git tools, API) |
+| `services/agent/` | **IMPLEMENTED** | Phase 5 tools + Phase 6 agent loop (runner, policies, streaming API) |
 | `browser-agent/`, `training-api/` | **PLANNED** | README placeholders only |
 | `training/`, `models/` | **IMPLEMENTED (Phase 2 SFT)** | Dataset pipeline + config-driven training; see `docs/TRAINING.md` |
 | `tests/integration/` | **IMPLEMENTED** | Phase 0 structure checks |

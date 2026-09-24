@@ -12,7 +12,7 @@ def test_agent_step_types():
 
 
 def test_agent_run_config():
-    cfg = AgentRunConfig(workspace_root="/tmp/ws", task="fix bug")
+    cfg = AgentRunConfig(workspace_id="ws-1", workspace_root="/tmp/ws", task="fix bug")
     assert cfg.max_iterations == 25
 
 

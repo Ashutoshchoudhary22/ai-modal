@@ -44,7 +44,18 @@ class Settings(BaseSettings):
 
     agent_host: str = "0.0.0.0"
     agent_port: int = 8001
+    agent_enabled: bool = True
     agent_max_iterations: int = 25
+    agent_max_tool_calls: int = 50
+    agent_max_same_tool_calls: int = 10
+    agent_max_model_calls: int = 30
+    agent_max_runtime_sec: int = 600
+    agent_max_context_chars: int = 32_000
+    agent_max_tool_result_chars: int = 8_000
+    agent_max_history_messages: int = 50
+    agent_max_retries: int = 3
+    agent_max_retries_per_tool: int = 2
+    agent_default_policy: str = "coding"
     agent_tool_timeout_sec: int = 120
 
     tools_enabled: bool = True

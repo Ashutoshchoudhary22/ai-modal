@@ -9,7 +9,7 @@ from ai_platform_shared.config import get_settings
 from ai_platform_shared.logging import setup_logging
 from fastapi import FastAPI
 
-from agent.routes import health, tools
+from agent.routes import agent, health, tools
 
 
 @asynccontextmanager
@@ -21,13 +21,14 @@ async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
 
 def create_app() -> FastAPI:
     app = FastAPI(
-        title="AI Platform — Coding Agent Tools",
-        version="0.1.0",
-        description="Deterministic coding tools for future agent loop",
+        title="AI Platform — Coding Agent",
+        version="0.2.0",
+        description="Coding agent tools and bounded agent loop",
         lifespan=lifespan,
     )
     app.include_router(health.router)
     app.include_router(tools.router, prefix="/v1")
+    app.include_router(agent.router, prefix="/v1")
     return app
 
 

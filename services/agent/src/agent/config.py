@@ -29,6 +29,40 @@ class ToolSettings:
     )
 
 
+@dataclass
+class AgentSettings:
+    enabled: bool = True
+    max_iterations: int = 25
+    max_tool_calls: int = 50
+    max_same_tool_calls: int = 10
+    max_model_calls: int = 30
+    max_runtime_sec: int = 600
+    max_context_chars: int = 32_000
+    max_tool_result_chars: int = 8_000
+    max_history_messages: int = 50
+    max_retries: int = 3
+    max_retries_per_tool: int = 2
+    default_policy: str = "coding"
+
+
+def load_agent_settings(settings: Settings | None = None) -> AgentSettings:
+    cfg = settings or get_settings()
+    return AgentSettings(
+        enabled=cfg.agent_enabled,
+        max_iterations=cfg.agent_max_iterations,
+        max_tool_calls=cfg.agent_max_tool_calls,
+        max_same_tool_calls=cfg.agent_max_same_tool_calls,
+        max_model_calls=cfg.agent_max_model_calls,
+        max_runtime_sec=cfg.agent_max_runtime_sec,
+        max_context_chars=cfg.agent_max_context_chars,
+        max_tool_result_chars=cfg.agent_max_tool_result_chars,
+        max_history_messages=cfg.agent_max_history_messages,
+        max_retries=cfg.agent_max_retries,
+        max_retries_per_tool=cfg.agent_max_retries_per_tool,
+        default_policy=cfg.agent_default_policy,
+    )
+
+
 def load_tool_settings(settings: Settings | None = None) -> ToolSettings:
     cfg = settings or get_settings()
     return ToolSettings(

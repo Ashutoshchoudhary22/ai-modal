@@ -15,7 +15,8 @@ A proprietary AI development platform for software engineering — code generati
 | Code model fine-tuning | 2–3 |
 | Repository indexing & search | 4 ✅ |
 | Coding agent tools (file/search/terminal/git) | 5 ✅ |
-| Autonomous coding agent loop | 6 |
+| Bounded agent loop (orchestration) | 6 ✅ |
+| Autonomous UI generation | 7 |
 | UI generation (React/Tailwind) | 7 |
 | Screenshot-to-code | 8 |
 | Browser-based UI testing | 9 |
@@ -142,6 +143,10 @@ make dev-ai-api
 ### Coding agent tools (Phase 5)
 
 See [docs/CODING_AGENT_TOOLS.md](./docs/CODING_AGENT_TOOLS.md) for tool schemas, permissions, and API usage (`GET /v1/tools`, `POST /v1/tools/execute` on the agent service).
+
+### Agent loop (Phase 6)
+
+See [docs/AGENT_LOOP.md](./docs/AGENT_LOOP.md) for the bounded agent loop (`POST /v1/agent/runs`, streaming, policies, limits).
 
 ### 7. Start Test UI (browser console)
 

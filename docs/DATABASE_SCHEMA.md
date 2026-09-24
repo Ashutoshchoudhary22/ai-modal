@@ -113,6 +113,41 @@ audit_logs (append-only)
 | started_at | TIMESTAMP | |
 | completed_at | TIMESTAMP | |
 
+### `agent_runs` (Phase 6)
+
+Bounded agent loop run metadata. Does not store full prompts or tool outputs.
+
+| Column | Type | Notes |
+|--------|------|-------|
+| id | CHAR(36) PK | run_id |
+| workspace_id | VARCHAR(255) | |
+| request_id | VARCHAR(255) | correlation ID |
+| status | VARCHAR(50) | queued, running, completed, failed, cancelled, limit_reached |
+| policy | VARCHAR(50) | read_only, coding, testing |
+| task | TEXT | user task |
+| started_at | TIMESTAMP | |
+| completed_at | TIMESTAMP | nullable |
+| iterations | INT | |
+| tool_calls | INT | |
+| model_calls | INT | |
+| stop_reason | VARCHAR(100) | nullable |
+| final_response | TEXT | nullable, bounded |
+| error_summary | TEXT | nullable |
+
+### `agent_run_events` (Phase 6)
+
+Bounded event metadata for agent runs (not full streaming tokens).
+
+| Column | Type | Notes |
+|--------|------|-------|
+| id | BIGINT AUTO_INCREMENT PK | |
+| run_id | CHAR(36) FK | → agent_runs |
+| sequence | INT | deterministic per run |
+| event_type | VARCHAR(80) | run.started, tool.completed, etc. |
+| tool_name | VARCHAR(100) | nullable |
+| success | TINYINT(1) | nullable |
+| duration_ms | INT | nullable |
+
 ### `agent_events`
 
 Append-only event log (mirrors WebSocket stream).
@@ -410,6 +445,7 @@ See migration `004_repository_intelligence.sql` and `005_repository_files.sql`. 
 - Phase 3: `infra/docker/mysql/migrations/003_dataset_system.sql`
 - Phase 4: `infra/docker/mysql/migrations/004_repository_intelligence.sql`
 - Phase 4: `infra/docker/mysql/migrations/005_repository_files.sql`
+- Phase 6: `infra/docker/mysql/migrations/006_agent_runs.sql`
 
 Apply migrations:
 

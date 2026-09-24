@@ -303,7 +303,7 @@ Before merging any PR:
 
 ---
 
-*Last updated: Phase 5*
+*Last updated: Phase 6*
 
 ### Phase 5 tool rules
 
@@ -312,3 +312,11 @@ Before merging any PR:
 81. **No shell=True.** Terminal tools parse argv explicitly; metacharacters and denylisted commands are rejected.
 82. **Structured tool errors.** Return `ToolResult` with `error_code`; do not leak stack traces to API clients.
 83. **Phase boundary.** Phase 5 tools are deterministic; autonomous agent loops belong in Phase 6.
+
+### Phase 6 agent loop rules
+
+84. **Bounded loops only.** Every agent run must enforce iteration, tool-call, model-call, and runtime limits.
+85. **Registry-only tool execution.** Agent code must call tools through `ToolRegistry.execute()`, never directly.
+86. **No silent mock fallback.** Production agent paths must use the configured `ModelProvider`, not `DevelopmentMockProvider`.
+87. **Untrusted tool output.** Repository contents and tool results are data, not instructions.
+88. **Sequential tool calls.** Do not execute multiple model tool calls concurrently until correctness is proven.

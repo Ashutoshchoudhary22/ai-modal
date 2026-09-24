@@ -136,18 +136,26 @@ See [docs/CODING_AGENT_TOOLS.md](./docs/CODING_AGENT_TOOLS.md).
 
 ---
 
-## Phase 6 — Agent Loop ⬜
+## Phase 6 — Agent Loop ✅
 
-**Goal:** Planner → retrieve → act → observe → validate loop.
+**Goal:** Bounded model → tool → observe loop with policies, limits, and streaming events.
 
 | Deliverable | Status |
 |-------------|--------|
-| Planner module | ⬜ |
-| Iteration limits + cancellation | ⬜ |
-| Reflection + retry | ⬜ |
-| WebSocket streaming of steps | ⬜ |
+| AgentRunner + AgentState | ✅ |
+| ModelProvider integration (structured decisions) | ✅ |
+| Tool call validation + policy enforcement | ✅ |
+| Iteration/tool/runtime limits + cancellation | ✅ |
+| Read-only and coding policies | ✅ |
+| Agent events + SSE streaming API | ✅ |
+| Agent API (`POST/GET /v1/agent/runs`, stream, cancel) | ✅ |
+| In-memory run store + MySQL migration | ✅ |
+| Deterministic scripted model tests | ✅ |
+| Security + prompt-injection tests | ✅ |
 
-**Exit criteria:** End-to-end task on fixture repo completes within iteration cap.
+**Exit criteria:** End-to-end fixture workflow completes within iteration cap; limits enforced. ✅
+
+See [docs/AGENT_LOOP.md](./docs/AGENT_LOOP.md).
 
 ---
 
@@ -331,8 +339,8 @@ See [docs/CODING_AGENT_TOOLS.md](./docs/CODING_AGENT_TOOLS.md).
 ## Current Status
 
 **Active phase:** Phase 4 — Repository Intelligence ✅  
-**Next phase:** Phase 6 — Agent Loop
+**Next phase:** Phase 7 — UI Generation
 
 ---
 
-*Last updated: Phase 5*
+*Last updated: Phase 6*

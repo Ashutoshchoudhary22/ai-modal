@@ -32,7 +32,7 @@ Build a **replaceable-model AI platform** that eventually runs on **our own mode
 | Tool protocols + types | **IMPLEMENTED** | `packages/protocol/tools` |
 | Repository intelligence | **IMPLEMENTED** | `services/code-indexer`, `docs/REPOSITORY_INTELLIGENCE.md` |
 | Coding agent tools | **IMPLEMENTED** | `services/agent`, `docs/CODING_AGENT_TOOLS.md` |
-| Agent loop (planner/retries) | **PLANNED** | Phase 6 |
+| Agent loop (bounded orchestration) | **IMPLEMENTED** | `services/agent/loop`, `docs/AGENT_LOOP.md` |
 | Training pipeline (SFT) | **IMPLEMENTED** | `training/`, `docs/TRAINING.md` |
 | Vector DB / object storage | **FUTURE** | Not implemented; Redis/MySQL only in dev stack |
 | API gateway / auth / multi-tenant | **FUTURE** | Phase 15–16 |
