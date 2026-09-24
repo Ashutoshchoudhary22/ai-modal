@@ -34,6 +34,7 @@ Build a **replaceable-model AI platform** that eventually runs on **our own mode
 | Coding agent tools | **IMPLEMENTED** | `services/agent`, `docs/CODING_AGENT_TOOLS.md` |
 | Agent loop (bounded orchestration) | **IMPLEMENTED** | `services/agent/loop`, `docs/AGENT_LOOP.md` |
 | UI generation | **IMPLEMENTED** | `services/agent/ui`, `docs/UI_GENERATION.md` |
+| Screenshot-to-code | **IMPLEMENTED** | `services/agent/screenshot`, `docs/SCREENSHOT_TO_CODE.md` |
 | Training pipeline (SFT) | **IMPLEMENTED** | `training/`, `docs/TRAINING.md` |
 | Vector DB / object storage | **FUTURE** | Not implemented; Redis/MySQL only in dev stack |
 | API gateway / auth / multi-tenant | **FUTURE** | Phase 15–16 |

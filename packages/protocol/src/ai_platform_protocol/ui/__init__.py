@@ -72,6 +72,7 @@ class UISpec(BaseModel):
     responsive: bool = True
     accessibility: bool = True
     constraints: list[str] = Field(default_factory=list)
+    screenshot_metadata: dict[str, Any] = Field(default_factory=dict)
 
 
 class UIFrameworkProfile(BaseModel):

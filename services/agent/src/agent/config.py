@@ -87,6 +87,38 @@ def load_ui_settings(settings: Settings | None = None) -> UISettings:
     )
 
 
+@dataclass
+class ScreenshotSettings:
+    enabled: bool = True
+    max_image_bytes: int = 10_485_760
+    max_width: int = 4096
+    max_height: int = 4096
+    max_pixels: int = 16_777_216
+    vision_timeout_sec: int = 120
+    visual_validation_enabled: bool = True
+    visual_threshold: float = 0.85
+    max_visual_iterations: int = 3
+    render_timeout_sec: int = 120
+    max_iterations: int = 25
+
+
+def load_screenshot_settings(settings: Settings | None = None) -> ScreenshotSettings:
+    cfg = settings or get_settings()
+    return ScreenshotSettings(
+        enabled=cfg.screenshot_to_code_enabled,
+        max_image_bytes=cfg.vision_max_image_bytes,
+        max_width=cfg.vision_max_width,
+        max_height=cfg.vision_max_height,
+        max_pixels=cfg.vision_max_pixels,
+        vision_timeout_sec=cfg.vision_timeout_sec,
+        visual_validation_enabled=cfg.visual_validation_enabled,
+        visual_threshold=cfg.visual_validation_threshold,
+        max_visual_iterations=cfg.visual_max_iterations,
+        render_timeout_sec=cfg.ui_render_timeout_sec,
+        max_iterations=cfg.agent_max_iterations,
+    )
+
+
 def load_tool_settings(settings: Settings | None = None) -> ToolSettings:
     cfg = settings or get_settings()
     return ToolSettings(

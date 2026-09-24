@@ -105,7 +105,7 @@ Before creating components, the planner searches existing `Button`, `Input`, `Ca
 
 ## Known limitations
 
-1. No screenshot-to-code (Phase 8)
+1. Screenshot-to-code is Phase 8 — see [SCREENSHOT_TO_CODE.md](./SCREENSHOT_TO_CODE.md)
 2. No browser automation (Phase 9)
 3. No automatic dependency installation
 4. No visual correctness validation
@@ -113,4 +113,4 @@ Before creating components, the planner searches existing `Button`, `Input`, `Ca
 
 ## Phase boundary
 
-> Phase 7 generates UI from natural-language requirements using repository-aware coding tools. Screenshot understanding belongs to Phase 8.
+> Phase 7 generates UI from natural-language requirements. Screenshot-to-code is implemented in Phase 8 — see [SCREENSHOT_TO_CODE.md](./SCREENSHOT_TO_CODE.md).

@@ -1,0 +1,39 @@
+{
+  "page_title": "Simple Card",
+  "page_type": "component",
+  "regions": [
+    {
+      "element_type": "card",
+      "label": "Product Card",
+      "text": "Sample product",
+      "region": {"x": 0.1, "y": 0.2, "width": 0.8, "height": 0.6, "label": "card"},
+      "confidence": "observed",
+      "children": [
+        {
+          "element_type": "button",
+          "label": "Buy Now",
+          "confidence": "observed"
+        }
+      ]
+    }
+  ],
+  "layout": {
+    "direction": "column",
+    "layout_type": "flex",
+    "alignment": "center",
+    "confidence": "inferred"
+  },
+  "design_tokens": {
+    "colors": {
+      "primary": "#2563eb",
+      "background": "#ffffff",
+      "text": "#111827"
+    },
+    "typography": {"body": "16px", "heading": "20px"},
+    "spacing": {"md": "16px"}
+  },
+  "responsive_hints": ["center on mobile"],
+  "accessibility_notes": ["button needs accessible label"],
+  "overall_confidence": 0.92,
+  "provider": "development_mock"
+}

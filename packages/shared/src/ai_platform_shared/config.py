@@ -65,6 +65,21 @@ class Settings(BaseSettings):
     ui_default_validation: str = "build"
     ui_max_generation_files: int = 20
 
+    vision_provider: str = "development_mock"
+    vision_model: str = ""
+    vision_max_image_bytes: int = 10_485_760  # 10 MiB
+    vision_max_width: int = 4096
+    vision_max_height: int = 4096
+    vision_max_pixels: int = 16_777_216  # 4096*4096
+    vision_timeout_sec: int = 120
+    screenshot_to_code_enabled: bool = True
+
+    ui_renderer: str = "development_mock"
+    ui_render_timeout_sec: int = 120
+    visual_validation_enabled: bool = True
+    visual_validation_threshold: float = 0.85
+    visual_max_iterations: int = 3
+
     tools_enabled: bool = True
     tool_max_file_size: int = 1_048_576
     tool_max_output_chars: int = 32_000
@@ -83,7 +98,7 @@ class Settings(BaseSettings):
     rate_limit_rpm: int = 60
     cors_origins: str = "http://localhost:3000,http://localhost:5173"
 
-    @field_validator("model_provider")
+    @field_validator("model_provider", "vision_provider", "ui_renderer")
     @classmethod
     def normalize_provider(cls, value: str) -> str:
         normalized = value.strip().lower()

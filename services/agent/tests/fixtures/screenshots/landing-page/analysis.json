@@ -1,0 +1,23 @@
+{
+  "page_title": "Landing Page",
+  "page_type": "landing",
+  "regions": [
+    {
+      "element_type": "hero",
+      "label": "Hero",
+      "region": {"x": 0, "y": 0, "width": 1, "height": 0.5, "label": "hero"},
+      "confidence": "observed",
+      "children": [
+        {"element_type": "button", "label": "Get Started", "confidence": "observed"}
+      ]
+    },
+    {
+      "element_type": "footer",
+      "label": "Footer",
+      "region": {"x": 0, "y": 0.9, "width": 1, "height": 0.1, "label": "footer"},
+      "confidence": "observed"
+    }
+  ],
+  "overall_confidence": 0.87,
+  "provider": "development_mock"
+}

@@ -1,0 +1,23 @@
+{
+  "page_title": "Login Form",
+  "page_type": "form",
+  "regions": [
+    {
+      "element_type": "form",
+      "label": "Login Form",
+      "region": {"x": 0.25, "y": 0.2, "width": 0.5, "height": 0.6, "label": "content"},
+      "confidence": "observed",
+      "children": [
+        {"element_type": "input", "label": "Email", "confidence": "observed", "accessibility_hint": "email input needs label"},
+        {"element_type": "input", "label": "Password", "confidence": "observed", "accessibility_hint": "password input needs label"},
+        {"element_type": "button", "label": "Sign In", "confidence": "observed"}
+      ]
+    }
+  ],
+  "design_tokens": {
+    "colors": {"primary": "#2563eb", "background": "#ffffff", "border": "#e5e7eb"}
+  },
+  "accessibility_notes": ["label all inputs", "keyboard accessible submit"],
+  "overall_confidence": 0.9,
+  "provider": "development_mock"
+}

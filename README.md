@@ -153,6 +153,10 @@ See [docs/AGENT_LOOP.md](./docs/AGENT_LOOP.md) for the bounded agent loop (`POST
 
 See [docs/UI_GENERATION.md](./docs/UI_GENERATION.md) for framework-aware UI generation (`POST /v1/ui/generate`).
 
+### Screenshot-to-code (Phase 8)
+
+See [docs/SCREENSHOT_TO_CODE.md](./docs/SCREENSHOT_TO_CODE.md) for screenshot-to-code (`POST /v1/ui/screenshot-to-code`).
+
 ### 7. Start Test UI (browser console)
 
 ```bash

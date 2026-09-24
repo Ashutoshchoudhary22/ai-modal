@@ -179,15 +179,24 @@ See [docs/UI_GENERATION.md](./docs/UI_GENERATION.md).
 
 ---
 
-## Phase 8 — Screenshot-to-Code ⬜
+## Phase 8 — Screenshot-to-Code ✅
 
-**Goal:** Vision → layout → React iteration loop.
+**Goal:** Vision → layout → code generation with visual validation.
 
 | Deliverable | Status |
 |-------------|--------|
-| Layout understanding pipeline | ⬜ |
-| Visual diff evaluation | ⬜ |
-| Iterative correction | ⬜ |
+| VisionProvider abstraction | ✅ |
+| Image validation (PNG/JPEG/WebP) | ✅ |
+| VisualAnalysis → UISpec | ✅ |
+| Phase 7 planner/generator integration | ✅ |
+| UIRenderer + VisualComparator | ✅ |
+| Bounded visual fix loop | ✅ |
+| API (`POST /v1/ui/screenshot-to-code`, stream, GET run) | ✅ |
+| Security + prompt-injection tests | ✅ |
+
+**Exit criteria:** Screenshot → vision analysis → UI code → visual comparison with bounded correction. ✅
+
+See [docs/SCREENSHOT_TO_CODE.md](./docs/SCREENSHOT_TO_CODE.md).
 
 ---
 

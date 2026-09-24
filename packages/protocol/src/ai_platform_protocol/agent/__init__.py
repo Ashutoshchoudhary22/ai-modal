@@ -78,6 +78,16 @@ class AgentEventType(StrEnum):
     UI_VALIDATION_STARTED = "ui.validation.started"
     UI_VALIDATION_COMPLETED = "ui.validation.completed"
     UI_COMPLETED = "ui.completed"
+    IMAGE_RECEIVED = "screenshot.image.received"
+    VISION_STARTED = "screenshot.vision.started"
+    VISION_COMPLETED = "screenshot.vision.completed"
+    RENDER_STARTED = "screenshot.render.started"
+    RENDER_COMPLETED = "screenshot.render.completed"
+    VISUAL_COMPARISON_STARTED = "screenshot.visual.comparison.started"
+    VISUAL_COMPARISON_COMPLETED = "screenshot.visual.comparison.completed"
+    VISUAL_FIX_STARTED = "screenshot.visual.fix.started"
+    SCREENSHOT_COMPLETED = "screenshot.completed"
+    SCREENSHOT_FAILED = "screenshot.failed"
 
 
 class AgentEvent(BaseModel):

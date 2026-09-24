@@ -85,9 +85,11 @@ Mandatory engineering standards for all contributors and AI-assisted development
 37. **Generated UI standards.** Semantic HTML, responsive layout, accessible labels/contrast where applicable.
 38. **No pixel-perfect claims.** Visual similarity requires metric-backed evaluation.
 39. **Reuse existing UI.** Phase 7 UI generation must detect framework/styling from the repository and reuse existing components/tokens — do not introduce a second styling system or duplicate Agent Loop.
-40. **No screenshot-to-code in Phase 7.** Image/screenshot understanding and browser automation belong to Phase 8/9.
-41. **Validation honesty.** UI validation results must reflect actual diagnostics/build/test command outcomes; never claim success without running configured checks.
-42. **No silent dependency installs.** Missing packages return structured `dependency_missing` guidance; do not run `npm install` without explicit policy.
+40. **Screenshot-to-code in Phase 8 only.** Phase 7 must not accept images; Phase 8 uses VisionProvider and visual comparison without implementing Phase 9 browser agents.
+41. **Vision honesty.** Mock vision providers must be labeled; never claim real visual understanding in production paths using development mocks.
+42. **Visual validation thresholds.** Visual comparison scores must come from deterministic metrics, not fabricated values.
+43. **Validation honesty.** UI validation results must reflect actual diagnostics/build/test command outcomes; never claim success without running configured checks.
+44. **No silent dependency installs.** Missing packages return structured `dependency_missing` guidance; do not run `npm install` without explicit policy.
 
 ---
 

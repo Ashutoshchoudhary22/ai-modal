@@ -138,18 +138,8 @@ def bootstrap(conn, db: dict[str, str | int]) -> None:
         for statement in statements:
             cur.execute(statement)
     conn.commit()
-    _ensure_schema_migrations(conn)
-    applied = _applied_versions(conn)
-    for version in (
-        "001_initial",
-        "002_provider_model_registry",
-        "003_dataset_system",
-        "004_repository_intelligence",
-        "005_repository_files",
-    ):
-        if version not in applied:
-            _record_migration(conn, version)
     print("Bootstrap complete.")
+    print("Run pending migrations with: python scripts/db_migrate.py")
 
 
 def apply_migrations(conn) -> None:
