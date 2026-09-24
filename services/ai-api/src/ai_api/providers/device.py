@@ -78,8 +78,15 @@ def detect_device(device_setting: str = "auto") -> ResolvedDevice:
     )
 
 
+_DTYPE_ALIASES = {
+    "fp32": "float32",
+    "fp16": "float16",
+    "bf16": "bfloat16",
+}
+
+
 def resolve_dtype(dtype_setting: str, device: ResolvedDevice) -> str:
-    requested = dtype_setting.strip().lower()
+    requested = _DTYPE_ALIASES.get(dtype_setting.strip().lower(), dtype_setting.strip().lower())
     if requested == "auto":
         if device.device_type == "cuda":
             return "float16"

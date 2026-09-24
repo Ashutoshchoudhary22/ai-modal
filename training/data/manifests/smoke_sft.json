@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "dataset": {
+    "name": "smoke-sft",
+    "version": "1.0.0",
+    "description": "Synthetic smoke-test coding SFT dataset — SMOKE TEST ONLY",
+    "language": "en",
+    "format": "jsonl",
+    "task": "code_sft",
+    "synthetic": true
+  },
+  "source": {
+    "name": "ai-platform-synthetic",
+    "type": "synthetic",
+    "license": "Proprietary-Synthetic",
+    "license_url": null
+  },
+  "records": {
+    "raw_path": "training/tests/fixtures/smoke_sft.jsonl",
+    "processed_dir": "training/data/processed/smoke-sft/1.0.0"
+  },
+  "quality": {
+    "min_chars": 10,
+    "max_chars": 5000,
+    "min_output_chars": 5,
+    "require_license": true,
+    "allow_duplicates": false,
+    "reject_empty": true
+  },
+  "preprocessing": {
+    "version": "1.0",
+    "unicode_normalize": "NFC",
+    "strip_outer_whitespace": true,
+    "remove_empty": true
+  },
+  "split": {
+    "train": 0.8,
+    "validation": 0.1,
+    "test": 0.1,
+    "seed": 42
+  },
+  "tokenizer": {
+    "model_id": "hf-internal-testing/tiny-random-gpt2",
+    "use_fast": true
+  },
+  "provenance": {
+    "created_at": "2026-09-24T00:00:00Z",
+    "created_by": "ai-platform",
+    "processing_version": "1.0"
+  }
+}

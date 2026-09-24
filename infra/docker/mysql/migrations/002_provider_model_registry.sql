@@ -18,8 +18,8 @@ CREATE TABLE IF NOT EXISTS provider_model_registry (
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_provider_model_registry_provider ON provider_model_registry(provider);
-CREATE INDEX idx_provider_model_registry_status ON provider_model_registry(status);
+CREATE INDEX IF NOT EXISTS idx_provider_model_registry_provider ON provider_model_registry(provider);
+CREATE INDEX IF NOT EXISTS idx_provider_model_registry_status ON provider_model_registry(status);
 
 INSERT INTO provider_model_registry (
     id, model_id, model_name, version, provider, architecture,

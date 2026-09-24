@@ -1,0 +1,5 @@
+Looking in links: c:\Users\PIPSER~1\AppData\Local\Temp\tmpv_6my5x_
+Requirement already satisfied: pip in c:\ashutosh\apidemo_source_code\new folder\.venv\lib\site-packages (26.2.1)
+Requirement already satisfied: pip in .\.venv\Lib\site-packages (26.2.1)
+pip 26.2.1 from C:\ashutosh\apidemo_source_code\New folder\.venv\Lib\site-packages\pip (python 3.14)
+STEP1_EXIT=0  

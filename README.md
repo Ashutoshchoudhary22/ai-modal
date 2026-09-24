@@ -178,6 +178,7 @@ Details: [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)
 | [docs/ENVIRONMENT.md](./docs/ENVIRONMENT.md) | Configuration |
 | [docs/MODEL_PROVIDER.md](./docs/MODEL_PROVIDER.md) | Model provider architecture |
 | [docs/LOCAL_MODEL_SETUP.md](./docs/LOCAL_MODEL_SETUP.md) | Local HF model setup |
+| [docs/TRAINING.md](./docs/TRAINING.md) | SFT training pipeline |
 
 ---
 
@@ -195,8 +196,8 @@ Full rules: [DEVELOPMENT_RULES.md](./DEVELOPMENT_RULES.md)
 
 ## Current Status
 
-**Phase 1 — Model Abstraction** ✅  
-**Next: Phase 2 — Coding Model Pipeline**
+**Phase 2 — Coding Model Pipeline** ✅  
+**Next: Phase 3 — Dataset System**
 
 ---
 

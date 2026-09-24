@@ -1,0 +1,7 @@
+{"instruction": "Print hello", "input": "", "output": "print('hello')"}
+{"instruction": "Print x", "input": "", "output": "print('x')"}
+{"instruction": "Print x", "input": "", "output": "print( 'x' )"}
+{"instruction": "Add numbers", "input": "", "output": "def add(a, b):\n    return a + b"}
+{"messages": [{"role": "user", "content": "Write a greet function"}, {"role": "assistant", "content": "def greet(name):\n    return f'Hello, {name}'"}]}
+{"prompt": "def double(n):", "completion": "    return n * 2"}
+{"prompt": "Choose better code", "chosen": "return x + 1", "rejected": "return x++"}

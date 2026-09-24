@@ -1,0 +1,10 @@
+{"id": "smoke-001", "instruction": "Write a Python function that adds two numbers.", "input": "", "output": "def add(a, b):\n    return a + b"}
+{"id": "smoke-002", "instruction": "Write a Python function that returns the length of a list.", "input": "", "output": "def list_length(items):\n    return len(items)"}
+{"id": "smoke-003", "instruction": "Fix the bug in this function.", "input": "def greet(name):\n    return 'Hello ' + name", "output": "def greet(name):\n    return f'Hello {name}'"}
+{"id": "smoke-004", "instruction": "Implement factorial recursively.", "input": "", "output": "def factorial(n):\n    if n <= 1:\n        return 1\n    return n * factorial(n - 1)"}
+{"id": "smoke-005", "instruction": "Write a function to check even numbers.", "input": "", "output": "def is_even(value):\n    return value % 2 == 0"}
+{"id": "smoke-006", "instruction": "Create a function that reverses a string.", "input": "", "output": "def reverse_text(text):\n    return text[::-1]"}
+{"id": "smoke-007", "instruction": "Write a function that sums a list of integers.", "input": "", "output": "def sum_values(values):\n    total = 0\n    for item in values:\n        total += item\n    return total"}
+{"id": "smoke-008", "instruction": "Implement a safe division function.", "input": "", "output": "def safe_divide(a, b):\n    if b == 0:\n        raise ValueError('division by zero')\n    return a / b"}
+{"id": "smoke-009", "instruction": "Write a function that returns unique items preserving order.", "input": "", "output": "def unique(items):\n    seen = set()\n    result = []\n    for item in items:\n        if item not in seen:\n            seen.add(item)\n            result.append(item)\n    return result"}
+{"id": "smoke-010", "instruction": "Write a function that converts a string to lowercase.", "input": "", "output": "def to_lower(text):\n    return text.lower()"}

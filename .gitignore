@@ -34,6 +34,8 @@ models/**/*.bin
 models/**/*.safetensors
 models/**/*.pt
 models/**/*.ckpt
+models/finetuned/**
+!models/finetuned/README.md
 training/data/raw/
 training/data/processed/
 *.parquet

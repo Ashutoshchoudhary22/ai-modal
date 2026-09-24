@@ -1,0 +1,53 @@
+{
+  "schema_version": "1.0",
+  "dataset": {
+    "name": "coding-mini",
+    "version": "1.0.0",
+    "description": "Synthetic mini coding dataset for local validation",
+    "language": "en",
+    "format": "jsonl",
+    "task": "code_sft",
+    "dataset_type": "mixed",
+    "synthetic": true
+  },
+  "source": {
+    "name": "ai-platform-examples",
+    "type": "synthetic",
+    "license": "MIT"
+  },
+  "records": {
+    "raw_path": "coding-mini.jsonl"
+  },
+  "quality": {
+    "min_chars": 1,
+    "max_chars": 50000,
+    "min_output_chars": 1,
+    "require_license": true,
+    "allow_duplicates": true,
+    "reject_empty": true
+  },
+  "validation": {
+    "strict": true,
+    "allow_empty_lines": false
+  },
+  "preprocessing": {
+    "version": "1.0",
+    "unicode_normalize": "NFC",
+    "strip_outer_whitespace": true,
+    "remove_empty": true
+  },
+  "deduplication": {
+    "exact": true,
+    "normalized": true
+  },
+  "split": {
+    "train": 0.6,
+    "validation": 0.2,
+    "test": 0.2,
+    "seed": 42
+  },
+  "provenance": {
+    "created_at": "2026-01-01T00:00:00Z",
+    "created_by": "ai-platform"
+  }
+}

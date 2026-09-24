@@ -1,0 +1,61 @@
+# SMOKE TEST ONLY — not a production coding model.
+# Quick CPU pipeline verification on a tiny synthetic dataset.
+
+experiment:
+  name: smoke-test
+  description: "SMOKE TEST ONLY — verifies dataset → train → checkpoint pipeline"
+  seed: 42
+  smoke_test: true
+
+model:
+  base_model_id: "hf-internal-testing/tiny-random-gpt2"
+  trust_remote_code: false
+
+tokenizer:
+  model_id: "hf-internal-testing/tiny-random-gpt2"
+  use_fast: true
+
+dataset:
+  manifest: "training/data/manifests/smoke_sft.json"
+  reuse_processed: true
+
+output:
+  dir: "models/finetuned/smoke-test"
+  save_total_limit: 1
+
+training:
+  num_epochs: 1
+  per_device_train_batch_size: 1
+  per_device_eval_batch_size: 1
+  gradient_accumulation_steps: 1
+  learning_rate: 5.0e-5
+  max_seq_length: 128
+  precision: fp32
+  warmup_ratio: 0.0
+  logging_steps: 1
+  save_strategy: "epoch"
+  eval_strategy: "epoch"
+  gradient_checkpointing: false
+
+lora:
+  enabled: false
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+  target_modules: ["c_attn"]
+  quantization: none
+
+hardware:
+  device: cpu
+  precision: fp32
+
+registry:
+  enabled: false
+
+wandb:
+  enabled: false
+
+prompt_template:
+  instruction: "### Instruction:\n{instruction}"
+  input: "### Input:\n{input}"
+  response: "### Response:\n{output}"

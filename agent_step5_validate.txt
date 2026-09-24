@@ -1,0 +1,7 @@
+Manifest: training\data\manifests\smoke_sft.json
+Raw dataset: C:\ashutosh\apidemo_source_code\New folder\training\tests\fixtures\smoke_sft.jsonl
+Total lines: 10
+Valid records: 10
+Invalid records: 0
+Duplicate records: 0
+Raw SHA-256: 93d605e1888795bfc623e274999b6f58c019ee92ebc74eaeef5ee6dd1ef4414b

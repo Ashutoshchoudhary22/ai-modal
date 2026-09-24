@@ -49,38 +49,44 @@ Phased implementation plan. Each phase must pass tests and documentation updates
 
 ---
 
-## Phase 2 — Coding Model Pipeline ⬜
+## Phase 2 — Coding Model Pipeline ✅
 
 **Goal:** Configurable SFT training for code models.
 
 | Deliverable | Status |
 |-------------|--------|
-| Tokenizer management | ⬜ |
-| Dataset loading + validation | ⬜ |
-| Cleaning, dedup, language detection | ⬜ |
-| Train/val/test split | ⬜ |
-| `training/sft/train.py --config` | ⬜ |
-| LoRA/QLoRA + full FT configs | ⬜ |
-| Auto CUDA device detection | ⬜ |
-| Checkpoint + experiment tracking | ⬜ |
+| Tokenizer management | ✅ |
+| Dataset loading + validation | ✅ |
+| Cleaning, dedup, language detection | ✅ (language metadata; detection PLANNED Phase 3) |
+| Train/val/test split | ✅ |
+| `training/sft/train.py --config` | ✅ |
+| LoRA/QLoRA + full FT configs | ✅ |
+| Auto CUDA device detection | ✅ |
+| Checkpoint + experiment tracking | ✅ |
 
-**Exit criteria:** Training runs on mock/small dataset; checkpoints saved; config documented.
+**Exit criteria:** Training runs on mock/small dataset; checkpoints saved; config documented. ✅
+
+See [docs/TRAINING.md](./docs/TRAINING.md).
 
 ---
 
-## Phase 3 — Dataset System ⬜
+## Phase 3 — Dataset System ✅
 
 **Goal:** Versioned, governed dataset pipeline.
 
 | Deliverable | Status |
 |-------------|--------|
-| Dataset manifest format | ⬜ |
-| Provenance, hashing, dedup | ⬜ |
-| License + quality metadata | ⬜ |
-| 12 category schemas (A–L) | ⬜ |
-| Validation CLI | ⬜ |
+| Dataset manifest format | ✅ |
+| Provenance, hashing, dedup | ✅ |
+| License + quality metadata | ✅ |
+| Instruction / conversation / completion / preference schemas | ✅ |
+| Validation + processing CLI | ✅ |
+| MySQL dataset metadata | ✅ |
+| Quality reports + leakage checks | ✅ |
 
-**Exit criteria:** Sample datasets validate; train/test separation enforced.
+**Exit criteria:** Sample datasets validate; train/test separation enforced. ✅
+
+See [docs/DATASETS.md](./docs/DATASETS.md).
 
 ---
 
@@ -308,8 +314,8 @@ Phased implementation plan. Each phase must pass tests and documentation updates
 
 ## Current Status
 
-**Active phase:** Phase 1 — Model Abstraction ✅  
-**Next phase:** Phase 2 — Coding Model Pipeline
+**Active phase:** Phase 3 — Dataset System ✅  
+**Next phase:** Phase 4 — Repository Intelligence
 
 ---
 

@@ -1,0 +1,31 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.0, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\ashutosh\apidemo_source_code\New folder
+configfile: pyproject.toml
+plugins: anyio-4.15.1, asyncio-1.4.0
+asyncio: mode=Mode.AUTO, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 22 items
+
+training\tests\test_config.py ...                                        [ 13%]
+training\tests\test_dedup.py F                                           [ 18%]
+training\tests\test_hardware.py ...                                      [ 31%]
+training\tests\test_hashing.py ..                                        [ 40%]
+training\tests\test_local_provider_integration.py s                      [ 45%]
+training\tests\test_lora.py ..                                           [ 54%]
+training\tests\test_pipeline.py .                                        [ 59%]
+training\tests\test_registry.py ..                                       [ 68%]
+training\tests\test_smoke_training.py s                                  [ 72%]
+training\tests\test_split.py .                                           [ 77%]
+training\tests\test_validate_cli.py .                                    [ 81%]
+training\tests\test_validation.py ....                                   [100%]
+
+================================== FAILURES ===================================
+____________________ test_deduplicate_exact_and_normalized ____________________
+training\tests\test_dedup.py:14: in test_deduplicate_exact_and_normalized
+    assert len(result.kept) == 1
+E   assert 2 == 1
+E    +  where 2 = len([DedupEntry(record=ParsedRecord(line_number=1, kind='instruction', record_id=None, instruction='A', input_text='', out...28d08b62841f2637e6d0bd998a595b1a', normalized_hash='60e69b567034664fc5b123d9aad3b4a7af2e879312468f357a14b1e77b007db8')])
+E    +    where [DedupEntry(record=ParsedRecord(line_number=1, kind='instruction', record_id=None, instruction='A', input_text='', out...28d08b62841f2637e6d0bd998a595b1a', normalized_hash='60e69b567034664fc5b123d9aad3b4a7af2e879312468f357a14b1e77b007db8')] = DedupResult(kept=[DedupEntry(record=ParsedRecord(line_number=1, kind='instruction', record_id=None, instruction='A', i...t('x')", messages=[], metadata={}, raw={'instruction': 'A', 'input': '', 'output': "print('x')"}), 'exact duplicate')]).kept
+=========================== short test summary info ===========================
+FAILED training/tests/test_dedup.py::test_deduplicate_exact_and_normalized - ...
+=================== 1 failed, 19 passed, 2 skipped in 3.10s ===================

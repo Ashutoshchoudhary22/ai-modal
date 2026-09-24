@@ -32,7 +32,7 @@ Build a **replaceable-model AI platform** that eventually runs on **our own mode
 | Agent / tool / indexer protocols | **PLANNED (interfaces only)** | `packages/protocol/agent`, `tools`, `indexer` |
 | Agent service, tools, sandbox | **PLANNED** | Phase 5–6 |
 | Repository intelligence | **PLANNED** | Phase 4 |
-| Training pipeline | **PLANNED** | Phase 2–3 |
+| Training pipeline (SFT) | **IMPLEMENTED** | `training/`, `docs/TRAINING.md` |
 | Vector DB / object storage | **FUTURE** | Not implemented; Redis/MySQL only in dev stack |
 | API gateway / auth / multi-tenant | **FUTURE** | Phase 15–16 |
 | Desktop IDE | **FUTURE** | Phase 13 |

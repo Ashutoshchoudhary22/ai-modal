@@ -11,11 +11,12 @@ members = [
     "packages/protocol",
     "packages/shared",
     "services/ai-api",
+    "training",
 ]
 
 [tool.pytest.ini_options]
-testpaths = ["tests", "packages", "services"]
-pythonpath = ["packages/protocol/src", "packages/shared/src"]
+testpaths = ["tests", "packages", "services", "training/tests"]
+pythonpath = ["packages/protocol/src", "packages/shared/src", "."]
 asyncio_mode = "auto"
 addopts = "-v --tb=short"
 markers = [

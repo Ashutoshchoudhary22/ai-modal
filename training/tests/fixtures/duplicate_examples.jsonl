@@ -1,0 +1,4 @@
+{"id": "dup-1", "instruction": "Same task", "input": "", "output": "print('a')"}
+{"id": "dup-2", "instruction": "Same task", "input": "", "output": "print('a')"}
+{"instruction": "Missing id duplicate", "input": "", "output": "print('a')"}
+{"instruction": "Valid unique", "input": "", "output": "print('b')"}

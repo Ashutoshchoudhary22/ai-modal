@@ -205,6 +205,46 @@ Vector embeddings stored in external vector DB (e.g. Qdrant or dedicated search 
 | content_hash | VARCHAR(64) | |
 | created_at | TIMESTAMP | |
 
+### `dataset_sources` (Phase 3)
+
+| Column | Type | Notes |
+|--------|------|-------|
+| id | CHAR(36) PK | |
+| dataset_id | CHAR(36) FK | |
+| source_name | VARCHAR(255) | |
+| source_type | VARCHAR(50) | internal, synthetic, external, ... |
+| source_reference | TEXT | nullable URL/path |
+| license | VARCHAR(100) | |
+| created_at | TIMESTAMP | |
+
+### `dataset_processing_runs` (Phase 3)
+
+Tracks each dataset processing execution. Large JSONL bodies remain on filesystem.
+
+| Column | Type | Notes |
+|--------|------|-------|
+| id | CHAR(36) PK | |
+| dataset_version_id | CHAR(36) FK | |
+| status | VARCHAR(50) | completed, failed, ... |
+| input_records | INT | |
+| valid_records | INT | |
+| invalid_records | INT | |
+| exact_duplicates | INT | |
+| normalized_duplicates | INT | |
+| filtered_records | INT | |
+| output_records | INT | |
+| train_records | INT | |
+| validation_records | INT | |
+| test_records | INT | |
+| raw_hash | VARCHAR(64) | |
+| normalized_hash | VARCHAR(64) | |
+| processed_hash | VARCHAR(64) | |
+| processing_config_hash | VARCHAR(64) | |
+| report_uri | TEXT | quality_report.json path |
+| processed_uri | TEXT | processed artifact directory |
+| started_at | TIMESTAMP | |
+| completed_at | TIMESTAMP | nullable |
+
 ### `training_jobs`
 
 | Column | Type | Notes |
@@ -341,8 +381,16 @@ Migration: `infra/docker/mysql/migrations/002_provider_model_registry.sql`
 
 - Bootstrap: `infra/docker/mysql/init.sql` (schema `001_initial`)
 - Phase 1: `infra/docker/mysql/migrations/002_provider_model_registry.sql`
+- Phase 3: `infra/docker/mysql/migrations/003_dataset_system.sql`
 
-Future: Alembic (Python) or sql-migrate for incremental changes.
+Apply migrations:
+
+```bash
+make db-migrate    # bootstrap empty DB + apply pending migrations
+make db-status     # show applied migrations
+```
+
+Tracked in `schema_migrations` table. Future: Alembic (Python) or sql-migrate for incremental changes.
 
 ---
 

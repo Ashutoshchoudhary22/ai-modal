@@ -1,0 +1,322 @@
+[1m[91mSIM201[0m[1m Use `self.lora.quantization != "none"` instead of `not self.lora.quantization == "none"`[0m
+   [1m[94m--> [0mtraining\core\config.py:120:67
+    [1m[94m|[0m
+[1m[94m118[0m [1m[94m|[0m             if missing:
+[1m[94m119[0m [1m[94m|[0m                 raise ValueError(f"Registry enabled but missing fields: {', '.join(missing)}")
+[1m[94m120[0m [1m[94m|[0m         if self.lora.enabled and not self.lora.target_modules and not self.lora.quantization == "none":
+    [1m[94m|[0m                                                                   [1m[91m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[1m[94m121[0m [1m[94m|[0m             pass
+[1m[94m122[0m [1m[94m|[0m         return self
+    [1m[94m|[0m
+[1m[96mhelp[0m[1m: Replace with `!=` operator[0m
+
+[1m[91mE501[0m[1m Line too long (103 > 100)[0m
+   [1m[94m--> [0mtraining\core\config.py:120:101
+    [1m[94m|[0m
+[1m[94m118[0m [1m[94m|[0m             if missing:
+[1m[94m119[0m [1m[94m|[0m                 raise ValueError(f"Registry enabled but missing fields: {', '.join(missing)}")
+[1m[94m120[0m [1m[94m|[0m         if self.lora.enabled and not self.lora.target_modules and not self.lora.quantization == "none":
+    [1m[94m|[0m                                                                                                     [1m[91m^^^[0m
+[1m[94m121[0m [1m[94m|[0m             pass
+[1m[94m122[0m [1m[94m|[0m         return self
+    [1m[94m|[0m
+
+[1m[91mE501[0m[1m Line too long (109 > 100)[0m
+   [1m[94m--> [0mtraining\core\trainer.py:164:101
+    [1m[94m|[0m
+[1m[94m162[0m [1m[94m|[0m         raise TrainingConfigError("Dataset validation failed:\n" + validation.summary())
+[1m[94m163[0m [1m[94m|[0m
+[1m[94m164[0m [1m[94m|[0m     processed_dir = resolve_repo_path(config.dataset.processed_dir) if config.dataset.processed_dir else None
+    [1m[94m|[0m                                                                                                     [1m[91m^^^^^^^^^[0m
+[1m[94m165[0m [1m[94m|[0m     if processed_dir is None:
+[1m[94m166[0m [1m[94m|[0m         processed_dir = Path(manifest.records.processed_dir) if manifest.records.processed_dir else None
+    [1m[94m|[0m
+
+[1m[91mE501[0m[1m Line too long (104 > 100)[0m
+   [1m[94m--> [0mtraining\core\trainer.py:166:101
+    [1m[94m|[0m
+[1m[94m164[0m [1m[94m|[0m     processed_dir = resolve_repo_path(config.dataset.processed_dir) if config.dataset.processed_dir else None
+[1m[94m165[0m [1m[94m|[0m     if processed_dir is None:
+[1m[94m166[0m [1m[94m|[0m         processed_dir = Path(manifest.records.processed_dir) if manifest.records.processed_dir else None
+    [1m[94m|[0m                                                                                                     [1m[91m^^^^[0m
+[1m[94m167[0m [1m[94m|[0m     processed_manifest_path = (
+[1m[94m168[0m [1m[94m|[0m         (processed_dir / "manifest.json") if processed_dir is not None else None
+    [1m[94m|[0m
+
+[1m[91mE501[0m[1m Line too long (103 > 100)[0m
+   [1m[94m--> [0mtraining\core\trainer.py:221:101
+    [1m[94m|[0m
+[1m[94m220[0m [1m[94m|[0m     train_dataset = _records_to_dataset(train_records, config, tokenizer_adapter)
+[1m[94m221[0m [1m[94m|[0m     eval_dataset = _records_to_dataset(val_records, config, tokenizer_adapter) if val_records else None
+    [1m[94m|[0m                                                                                                     [1m[91m^^^[0m
+[1m[94m222[0m [1m[94m|[0m
+[1m[94m223[0m [1m[94m|[0m     output_dir = prepare_output_dir(config)
+    [1m[94m|[0m
+
+[1m[91mE501[0m[1m Line too long (107 > 100)[0m
+  [1m[94m--> [0mtraining\datasets\__main__.py:14:101
+   [1m[94m|[0m
+[1m[94m13[0m [1m[94m|[0m def build_parser() -> argparse.ArgumentParser:
+[1m[94m14[0m [1m[94m|[0m     parser = argparse.ArgumentParser(description="Validate AI Platform dataset manifest and JSONL records")
+   [1m[94m|[0m                                                                                                     [1m[91m^^^^^^^[0m
+[1m[94m15[0m [1m[94m|[0m     parser.add_argument("--input", required=True, help="Path to raw JSONL dataset")
+[1m[94m16[0m [1m[94m|[0m     parser.add_argument("--manifest", required=True, help="Path to dataset manifest JSON")
+   [1m[94m|[0m
+
+[1m[91mE501[0m[1m Line too long (110 > 100)[0m
+  [1m[94m--> [0mtraining\datasets\__main__.py:47:101
+   [1m[94m|[0m
+[1m[94m45[0m [1m[94m|[0m             tokenizer_counter = counter
+[1m[94m46[0m [1m[94m|[0m         except ImportError:
+[1m[94m47[0m [1m[94m|[0m             print("Tokenizer statistics skipped: training[train] dependencies not installed", file=sys.stderr)
+   [1m[94m|[0m                                                                                                     [1m[91m^^^^^^^^^^[0m
+[1m[94m48[0m [1m[94m|[0m
+[1m[94m49[0m [1m[94m|[0m     report = validate_manifest_and_dataset(manifest, manifest_path, tokenizer_counter=tokenizer_counter)
+   [1m[94m|[0m
+
+[1m[91mE501[0m[1m Line too long (104 > 100)[0m
+  [1m[94m--> [0mtraining\datasets\__main__.py:49:101
+   [1m[94m|[0m
+[1m[94m47[0m [1m[94m|[0m             print("Tokenizer statistics skipped: training[train] dependencies not installed", file=sys.stderr)
+[1m[94m48[0m [1m[94m|[0m
+[1m[94m49[0m [1m[94m|[0m     report = validate_manifest_and_dataset(manifest, manifest_path, tokenizer_counter=tokenizer_counter)
+   [1m[94m|[0m                                                                                                     [1m[91m^^^^[0m
+[1m[94m50[0m [1m[94m|[0m     print(report.summary())
+[1m[94m51[0m [1m[94m|[0m     return 0 if report.passed else 1
+   [1m[94m|[0m
+
+[1m[91mF401[0m [[1m[96m*[0m][1m `training.datasets.split.SplitResult` imported but unused[0m
+  [1m[94m--> [0mtraining\datasets\pipeline.py:14:37
+   [1m[94m|[0m
+[1m[94m12[0m [1m[94m|[0m from training.datasets.manifest import DatasetManifest, save_manifest
+[1m[94m13[0m [1m[94m|[0m from training.datasets.records import ParsedRecord
+[1m[94m14[0m [1m[94m|[0m from training.datasets.split import SplitResult, split_records
+   [1m[94m|[0m                                     [1m[91m^^^^^^^^^^^[0m
+[1m[94m15[0m [1m[94m|[0m from training.datasets.validation import load_jsonl_records, resolve_raw_path
+   [1m[94m|[0m
+[1m[96mhelp[0m[1m: Remove unused import: `training.datasets.split.SplitResult`[0m
+[1m[94m  [0m [1m[94m|[0m
+[1m[94m13[0m [1m[94m|[0m from training.datasets.records import ParsedRecord
+[1m[94m  [0m [1m[31m-[0m [31mfrom training.datasets.split import [0m[1m[31mSplitResult, [0m[0m[31msplit_records
+[0m[1m[94m14[0m [1m[32m+[0m [32mfrom training.datasets.split import [0m[32msplit_records
+[0m[1m[94m15[0m [1m[94m|[0m from training.datasets.validation import load_jsonl_records, resolve_raw_path
+[1m[94m  [0m [1m[94m|[0m
+
+[1m[91mE501[0m[1m Line too long (107 > 100)[0m
+  [1m[94m--> [0mtraining\datasets\pipeline.py:78:101
+   [1m[94m|[0m
+[1m[94m76[0m [1m[94m|[0m             target_dir = Path(manifest.records.processed_dir)
+[1m[94m77[0m [1m[94m|[0m         else:
+[1m[94m78[0m [1m[94m|[0m             target_dir = Path("training/data/processed") / manifest.dataset.name / manifest.dataset.version
+   [1m[94m|[0m                                                                                                     [1m[91m^^^^^^^[0m
+[1m[94m79[0m [1m[94m|[0m     target_dir.mkdir(parents=True, exist_ok=True)
+   [1m[94m|[0m
+
+[1m[91mE501[0m[1m Line too long (106 > 100)[0m
+  [1m[94m--> [0mtraining\datasets\records.py:96:101
+   [1m[94m|[0m
+[1m[94m96[0m [1m[94m|[0m def try_parse_record(line_number: int, payload: dict[str, Any]) -> tuple[ParsedRecord | None, str | None]:
+   [1m[94m|[0m                                                                                                     [1m[91m^^^^^^[0m
+[1m[94m97[0m [1m[94m|[0m     try:
+[1m[94m98[0m [1m[94m|[0m         return parse_record(line_number, payload), None
+   [1m[94m|[0m
+
+[1m[91mE501[0m[1m Line too long (101 > 100)[0m
+  [1m[94m--> [0mtraining\datasets\split.py:43:101
+   [1m[94m|[0m
+[1m[94m41[0m [1m[94m|[0m     val_hashes = {entry.normalized_hash for entry in validation}
+[1m[94m42[0m [1m[94m|[0m     test_hashes = {entry.normalized_hash for entry in test}
+[1m[94m43[0m [1m[94m|[0m     overlap = (train_hashes & val_hashes) | (train_hashes & test_hashes) | (val_hashes & test_hashes)
+   [1m[94m|[0m                                                                                                     [1m[91m^[0m
+[1m[94m44[0m [1m[94m|[0m     if overlap:
+[1m[94m45[0m [1m[94m|[0m         raise ValueError("Split produced overlapping records across partitions")
+   [1m[94m|[0m
+
+[1m[91mE501[0m[1m Line too long (104 > 100)[0m
+  [1m[94m--> [0mtraining\datasets\validation.py:97:101
+   [1m[94m|[0m
+[1m[94m95[0m [1m[94m|[0m             parsed, error = try_parse_record(line_number, payload)
+[1m[94m96[0m [1m[94m|[0m             if parsed is None:
+[1m[94m97[0m [1m[94m|[0m                 issues.append(ValidationIssue(line_number, error or "invalid record", severity="error"))
+   [1m[94m|[0m                                                                                                     [1m[91m^^^^[0m
+[1m[94m98[0m [1m[94m|[0m                 continue
+[1m[94m99[0m [1m[94m|[0m             records.append(parsed)
+   [1m[94m|[0m
+
+[1m[91mE501[0m[1m Line too long (104 > 100)[0m
+   [1m[94m--> [0mtraining\datasets\validation.py:115:101
+    [1m[94m|[0m
+[1m[94m114[0m [1m[94m|[0m     if manifest.quality.require_license and not manifest.source.license.strip():
+[1m[94m115[0m [1m[94m|[0m         report.issues.append(ValidationIssue(None, "missing source license metadata", severity="error"))
+    [1m[94m|[0m                                                                                                     [1m[91m^^^^[0m
+[1m[94m116[0m [1m[94m|[0m
+[1m[94m117[0m [1m[94m|[0m     raw_path = resolve_raw_path(manifest, manifest_path)
+    [1m[94m|[0m
+
+[1m[91mE501[0m[1m Line too long (103 > 100)[0m
+   [1m[94m--> [0mtraining\datasets\validation.py:182:101
+    [1m[94m|[0m
+[1m[94m180[0m [1m[94m|[0m                 report.duplicate_records += 1
+[1m[94m181[0m [1m[94m|[0m                 report.issues.append(
+[1m[94m182[0m [1m[94m|[0m                     ValidationIssue(record.line_number, f"duplicate id: {record_id}", severity="error")
+    [1m[94m|[0m                                                                                                     [1m[91m^^^[0m
+[1m[94m183[0m [1m[94m|[0m                 )
+[1m[94m184[0m [1m[94m|[0m                 if not manifest.quality.allow_duplicates:
+    [1m[94m|[0m
+
+[1m[91mF401[0m [[1m[96m*[0m][1m `pytest` imported but unused[0m
+ [1m[94m--> [0mtraining\tests\conftest.py:3:8
+  [1m[94m|[0m
+[1m[94m1[0m [1m[94m|[0m from pathlib import Path
+[1m[94m2[0m [1m[94m|[0m
+[1m[94m3[0m [1m[94m|[0m import pytest
+  [1m[94m|[0m        [1m[91m^^^^^^[0m
+[1m[94m4[0m [1m[94m|[0m
+[1m[94m5[0m [1m[94m|[0m FIXTURES = Path(__file__).parent / "fixtures"
+  [1m[94m|[0m
+[1m[96mhelp[0m[1m: Remove unused import: `pytest`[0m
+[1m[94m [0m [1m[94m|[0m
+[1m[94m2[0m [1m[94m|[0m
+[1m[94m [0m [1m[31m-[0m [31mimport pytest
+[0m[1m[94m3[0m [1m[94m|[0m
+[1m[94m [0m [1m[94m|[0m
+
+[1m[91mF401[0m [[1m[96m*[0m][1m `pathlib.Path` imported but unused[0m
+ [1m[94m--> [0mtraining\tests\test_config.py:1:21
+  [1m[94m|[0m
+[1m[94m1[0m [1m[94m|[0m from pathlib import Path
+  [1m[94m|[0m                     [1m[91m^^^^[0m
+[1m[94m2[0m [1m[94m|[0m
+[1m[94m3[0m [1m[94m|[0m from training.core.config import load_training_config
+  [1m[94m|[0m
+[1m[96mhelp[0m[1m: Remove unused import: `pathlib.Path`[0m
+[1m[94m [0m [1m[94m|[0m
+[1m[94m [0m [1m[31m-[0m [31mfrom pathlib import Path
+[0m[1m[94m1[0m [1m[94m|[0m
+[1m[94m [0m [1m[94m|[0m
+
+[1m[91mF401[0m [[1m[96m*[0m][1m `pathlib.Path` imported but unused[0m
+ [1m[94m--> [0mtraining\tests\test_dedup.py:1:21
+  [1m[94m|[0m
+[1m[94m1[0m [1m[94m|[0m from pathlib import Path
+  [1m[94m|[0m                     [1m[91m^^^^[0m
+[1m[94m2[0m [1m[94m|[0m
+[1m[94m3[0m [1m[94m|[0m from training.datasets.dedup import deduplicate_records
+  [1m[94m|[0m
+[1m[96mhelp[0m[1m: Remove unused import: `pathlib.Path`[0m
+[1m[94m [0m [1m[94m|[0m
+[1m[94m [0m [1m[31m-[0m [31mfrom pathlib import Path
+[0m[1m[94m1[0m [1m[94m|[0m
+[1m[94m [0m [1m[94m|[0m
+
+[1m[91mI001[0m [[1m[96m*[0m][1m Import block is un-sorted or un-formatted[0m
+ [1m[94m--> [0mtraining\tests\test_hardware.py:1:1
+  [1m[94m|[0m
+[1m[94m1[0m [1m[94m|[0m [1m[91m/[0m from training.core.hardware import detect_training_hardware, resolve_training_precision
+[1m[94m2[0m [1m[94m|[0m [1m[91m|[0m from training.core.errors import TrainingConfigError
+[1m[94m3[0m [1m[94m|[0m [1m[91m|[0m import pytest
+  [1m[94m|[0m [1m[91m|_____________^[0m
+[1m[96mhelp[0m[1m: Organize imports[0m
+[1m[94m [0m [1m[94m|[0m
+[1m[94m [0m [1m[31m-[0m [31mfrom training.core.hardware import detect_training_hardware, resolve_training_precision
+[0m[1m[94m [0m [1m[31m-[0m [31mfrom training.core.errors import TrainingConfigError
+[0m[1m[94m1[0m [1m[94m|[0m import pytest
+[1m[94m2[0m [1m[94m|[0m
+[1m[94m3[0m [1m[32m+[0m [32mfrom training.core.errors import TrainingConfigError
+[0m[1m[94m4[0m [1m[32m+[0m [32mfrom training.core.hardware import detect_training_hardware, resolve_training_precision
+[0m[1m[94m5[0m [1m[32m+[0m[32m
+[0m[1m[94m6[0m [1m[94m|[0m
+[1m[94m [0m [1m[94m|[0m
+
+[1m[91mI001[0m [[1m[96m*[0m][1m Import block is un-sorted or un-formatted[0m
+ [1m[94m--> [0mtraining\tests\test_hashing.py:1:1
+  [1m[94m|[0m
+[1m[94m1[0m [1m[94m|[0m from training.datasets.hashing import sha256_text, canonical_json
+  [1m[94m|[0m [1m[91m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[1m[96mhelp[0m[1m: Organize imports[0m
+[1m[94m [0m [1m[94m|[0m
+[1m[94m [0m [1m[31m-[0m [31mfrom training.datasets.hashing import [0m[1m[31msha256_text,[0m[0m[31m [0m[1m[31mcanonical_json[0m[0m[31m
+[0m[1m[94m1[0m [1m[32m+[0m [32mfrom training.datasets.hashing import [0m[1m[32mcanonical_json,[0m[0m[32m [0m[1m[32msha256_text[0m[0m[32m
+[0m[1m[94m2[0m [1m[94m|[0m
+[1m[94m [0m [1m[94m|[0m
+
+[1m[91mF401[0m [[1m[96m*[0m][1m `unittest.mock.AsyncMock` imported but unused[0m
+ [1m[94m--> [0mtraining\tests\test_local_provider_integration.py:2:27
+  [1m[94m|[0m
+[1m[94m1[0m [1m[94m|[0m from pathlib import Path
+[1m[94m2[0m [1m[94m|[0m from unittest.mock import AsyncMock, patch
+  [1m[94m|[0m                           [1m[91m^^^^^^^^^[0m
+[1m[94m3[0m [1m[94m|[0m
+[1m[94m4[0m [1m[94m|[0m import pytest
+  [1m[94m|[0m
+[1m[96mhelp[0m[1m: Remove unused import[0m
+[1m[94m [0m [1m[94m|[0m
+[1m[94m1[0m [1m[94m|[0m from pathlib import Path
+[1m[94m [0m [1m[31m-[0m [31mfrom unittest.mock import AsyncMock, patch
+[0m[1m[94m2[0m [1m[94m|[0m
+[1m[94m [0m [1m[94m|[0m
+
+[1m[91mF401[0m [[1m[96m*[0m][1m `unittest.mock.patch` imported but unused[0m
+ [1m[94m--> [0mtraining\tests\test_local_provider_integration.py:2:38
+  [1m[94m|[0m
+[1m[94m1[0m [1m[94m|[0m from pathlib import Path
+[1m[94m2[0m [1m[94m|[0m from unittest.mock import AsyncMock, patch
+  [1m[94m|[0m                                      [1m[91m^^^^^[0m
+[1m[94m3[0m [1m[94m|[0m
+[1m[94m4[0m [1m[94m|[0m import pytest
+  [1m[94m|[0m
+[1m[96mhelp[0m[1m: Remove unused import[0m
+[1m[94m [0m [1m[94m|[0m
+[1m[94m1[0m [1m[94m|[0m from pathlib import Path
+[1m[94m [0m [1m[31m-[0m [31mfrom unittest.mock import AsyncMock, patch
+[0m[1m[94m2[0m [1m[94m|[0m
+[1m[94m [0m [1m[94m|[0m
+
+[1m[91mI001[0m [[1m[96m*[0m][1m Import block is un-sorted or un-formatted[0m
+  [1m[94m--> [0mtraining\tests\test_local_provider_integration.py:12:5
+   [1m[94m|[0m
+[1m[94m10[0m [1m[94m|[0m       pytest.importorskip("transformers")
+[1m[94m11[0m [1m[94m|[0m
+[1m[94m12[0m [1m[94m|[0m [1m[91m/[0m     from ai_platform_protocol.models.inference import GenerateRequest
+[1m[94m13[0m [1m[94m|[0m [1m[91m|[0m     from ai_api.providers.local_model import LocalModelProvider
+[1m[94m14[0m [1m[94m|[0m [1m[91m|[0m
+[1m[94m15[0m [1m[94m|[0m [1m[91m|[0m     from training.core.config import load_training_config
+[1m[94m16[0m [1m[94m|[0m [1m[91m|[0m     from training.core.trainer import run_training
+[1m[94m17[0m [1m[94m|[0m [1m[91m|[0m     import yaml
+   [1m[94m|[0m [1m[91m|_______________^[0m
+[1m[94m18[0m [1m[94m|[0m
+[1m[94m19[0m [1m[94m|[0m       source_config = load_training_config("models/configs/smoke_test.yaml")
+   [1m[94m|[0m
+[1m[96mhelp[0m[1m: Organize imports[0m
+[1m[94m  [0m [1m[94m|[0m
+[1m[94m11[0m [1m[94m|[0m
+[1m[94m12[0m [1m[32m+[0m [32m    import yaml
+[0m[1m[94m13[0m [1m[32m+[0m [32m    from ai_api.providers.local_model import LocalModelProvider
+[0m[1m[94m14[0m [1m[94m|[0m     from ai_platform_protocol.models.inference import GenerateRequest
+[1m[94m  [0m [1m[31m-[0m [31m    from ai_api.providers.local_model import LocalModelProvider
+[0m[1m[94m15[0m [1m[94m|[0m
+[1m[94m16[0m [1m[94m|[0m     from training.core.config import load_training_config
+[1m[94m17[0m [1m[94m|[0m     from training.core.trainer import run_training
+[1m[94m  [0m [1m[31m-[0m [31m    import yaml
+[0m[1m[94m18[0m [1m[94m|[0m
+[1m[94m  [0m [1m[94m|[0m
+
+[1m[91mF401[0m [[1m[96m*[0m][1m `pytest` imported but unused[0m
+ [1m[94m--> [0mtraining\tests\test_validation.py:3:8
+  [1m[94m|[0m
+[1m[94m1[0m [1m[94m|[0m from pathlib import Path
+[1m[94m2[0m [1m[94m|[0m
+[1m[94m3[0m [1m[94m|[0m import pytest
+  [1m[94m|[0m        [1m[91m^^^^^^[0m
+[1m[94m4[0m [1m[94m|[0m
+[1m[94m5[0m [1m[94m|[0m from training.datasets.manifest import load_manifest
+  [1m[94m|[0m
+[1m[96mhelp[0m[1m: Remove unused import: `pytest`[0m
+[1m[94m [0m [1m[94m|[0m
+[1m[94m2[0m [1m[94m|[0m
+[1m[94m [0m [1m[31m-[0m [31mimport pytest
+[0m[1m[94m3[0m [1m[94m|[0m
+[1m[94m [0m [1m[94m|[0m
+
+Found 24 errors.
+[[36m*[0m] 10 fixable with the `--fix` option (1 hidden fix can be enabled with the `--unsafe-fixes` option).
