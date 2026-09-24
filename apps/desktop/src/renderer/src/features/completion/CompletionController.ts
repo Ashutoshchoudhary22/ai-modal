@@ -28,10 +28,10 @@ export class CompletionController {
   private debounceTimer: ReturnType<typeof setTimeout> | null = null;
   private abortController: AbortController | null = null;
   private latestRequestId = 0;
+  private invalidationGeneration = 0;
+  private suppressAutoUntil = 0;
   private requestTimestamps: number[] = [];
   private disposed = false;
-  private pendingSnapshot: EditorSnapshot | null = null;
-  private pendingKind: "automatic" | "manual" = "automatic";
 
   constructor(private readonly getSettings: () => CompletionSettings) {}
 
@@ -40,14 +40,35 @@ export class CompletionController {
     this.cancel();
   }
 
-  cancel(): void {
+  /** Invalidate in-flight work after document/cursor/workspace changes. */
+  invalidate(reason: "content" | "cursor" | "workspace" | "tab" = "content"): void {
+    this.invalidationGeneration += 1;
+    this.latestRequestId += 1;
+    this.abortController?.abort();
+    this.abortController = null;
     if (this.debounceTimer) {
       clearTimeout(this.debounceTimer);
       this.debounceTimer = null;
     }
+    useCompletionStore.getState().clearCompletion();
+    if (reason === "workspace" || reason === "tab") {
+      useCompletionStore.getState().setStatus(
+        this.getSettings().enabled ? "ready" : "disabled",
+      );
+    }
+  }
+
+  cancel(): void {
+    this.invalidate();
+  }
+
+  abortInFlight(): void {
     this.abortController?.abort();
     this.abortController = null;
-    useCompletionStore.getState().clearCompletion();
+    if (this.debounceTimer) {
+      clearTimeout(this.debounceTimer);
+      this.debounceTimer = null;
+    }
   }
 
   async provide(
@@ -64,14 +85,16 @@ export class CompletionController {
     if (kind === "automatic" && !settings.triggerOnTyping) {
       return null;
     }
+    if (kind === "automatic" && Date.now() < this.suppressAutoUntil) {
+      return null;
+    }
 
+    const generation = this.invalidationGeneration;
     return new Promise((resolve) => {
-      this.pendingSnapshot = snapshot;
-      this.pendingKind = kind;
       if (this.debounceTimer) clearTimeout(this.debounceTimer);
       const delay = kind === "manual" ? 0 : settings.debounceMs;
       this.debounceTimer = setTimeout(() => {
-        void this.execute(snapshot, kind, token).then(resolve);
+        void this.execute(snapshot, kind, token, generation).then(resolve);
       }, delay);
     });
   }
@@ -86,6 +109,7 @@ export class CompletionController {
     snapshot: EditorSnapshot,
     kind: "automatic" | "manual",
     token?: { isCancellationRequested: boolean },
+    generation = this.invalidationGeneration,
   ): Promise<string | null> {
     const settings = this.getSettings();
     if (!settings.apiUrl) {
@@ -158,7 +182,10 @@ export class CompletionController {
       );
 
       if (this.disposed || token?.isCancellationRequested) return null;
-      if (requestNum !== this.latestRequestId) {
+      if (
+        generation !== this.invalidationGeneration ||
+        requestNum !== this.latestRequestId
+      ) {
         store.incrementTelemetry("stale");
         return null;
       }
@@ -194,8 +221,13 @@ export class CompletionController {
   }
 
   acceptCompletion(): void {
+    this.suppressAutoUntil = Date.now() + 500;
     useCompletionStore.getState().incrementTelemetry("accepted");
     useCompletionStore.getState().clearCompletion();
+  }
+
+  isAutoSuggestSuppressed(): boolean {
+    return Date.now() < this.suppressAutoUntil;
   }
 
   rejectCompletion(): void {

@@ -99,6 +99,7 @@ export function MonacoEditor() {
 
 
   const handleMount = (editor: import("monaco-editor").editor.IStandaloneCodeEditor, monaco: Monaco) => {
+    (window as Window & { __monacoActiveEditor__?: typeof editor }).__monacoActiveEditor__ = editor;
 
     disposablesRef.current.forEach((d) => d.dispose());
 
@@ -159,60 +160,28 @@ export function MonacoEditor() {
 
     );
 
-    const cleanup = setupCompletionListeners(editor, controller, tab.path);
+    const getCompletionOptions = () => ({
+      enabled: settings?.inlineCompletionEnabled ?? true,
+      triggerOnTyping: settings?.completionTriggerOnTyping ?? true,
+      debounceMs: settings?.completionDebounceMs ?? 250,
+    });
+
+    const cleanup = setupCompletionListeners(
+      editor,
+      controller,
+      tab.path,
+      getCompletionOptions,
+    );
 
     disposablesRef.current.push({ dispose: cleanup });
 
-
-
     editor.addAction({
-
       id: "ai.triggerCompletion",
-
       label: "Trigger AI Completion",
-
       keybindings: [monaco.KeyMod.CtrlCmd | monaco.KeyCode.Space],
-
-      run: async (ed) => {
-
-        const model = ed.getModel();
-
-        const pos = ed.getPosition();
-
-        if (!model || !pos) return;
-
-        const offset = model.getOffsetAt(pos);
-
-        await controller.provide(
-
-          {
-
-            filePath: tab.path,
-
-            language: tab.language,
-
-            content: model.getValue(),
-
-            line: pos.lineNumber - 1,
-
-            column: pos.column - 1,
-
-            offset,
-
-            documentVersion: 0,
-
-            workspaceId: workspace?.workspaceId,
-
-          },
-
-          "manual",
-
-        );
-
-        ed.trigger("ai", "editor.action.inlineSuggest.trigger", {});
-
+      run: (ed) => {
+        ed.trigger("ai-completion", "editor.action.inlineSuggest.trigger", {});
       },
-
     });
 
 

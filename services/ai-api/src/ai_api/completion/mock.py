@@ -28,8 +28,10 @@ def mock_completion(prefix: str, suffix: str, language: str) -> str:
     last_line = prefix.split("\n")[-1] if prefix else ""
     if last_line.strip().endswith("("):
         return "arg) {\n    \n}"
+    if last_line.rstrip().endswith(";"):
+        return ""
     if language in {"typescript", "javascript", "typescriptreact", "javascriptreact"}:
-        return "();"
+        return ""
     if language == "python":
         return "pass"
     return ""

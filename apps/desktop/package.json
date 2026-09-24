@@ -14,7 +14,8 @@
     "package": "electron-vite build && electron-builder --dir",
     "package:win": "electron-vite build && electron-builder --win --dir",
     "package:linux": "electron-vite build && electron-builder --linux --dir",
-    "package:mac": "electron-vite build && electron-builder --mac --dir"
+    "package:mac": "electron-vite build && electron-builder --mac --dir",
+    "verify:completion": "electron-vite build && node e2e/verify-completion.mjs"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
@@ -36,6 +37,7 @@
     "electron-builder": "^25.1.8",
     "electron-vite": "^2.3.0",
     "jsdom": "^26.0.0",
+    "playwright": "^1.63.0",
     "typescript": "^5.7.2",
     "vite": "^5.4.0",
     "vitest": "^3.0.5"
@@ -50,13 +52,19 @@
       "out/**/*"
     ],
     "win": {
-      "target": ["dir"]
+      "target": [
+        "dir"
+      ]
     },
     "linux": {
-      "target": ["dir"]
+      "target": [
+        "dir"
+      ]
     },
     "mac": {
-      "target": ["dir"]
+      "target": [
+        "dir"
+      ]
     }
   }
 }

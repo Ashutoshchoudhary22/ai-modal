@@ -32,9 +32,23 @@ export default function App() {
     void loadSettings();
     const recents = window.desktop.workspace.getRecents();
     void recents.then((r) => useWorkspaceStore.getState().setRecents(r));
+    void window.desktop.workspace.get().then((ws) => {
+      if (ws) useWorkspaceStore.getState().setWorkspace(ws);
+    });
     const interval = setInterval(() => void refreshHealth(), 30000);
     return () => clearInterval(interval);
   }, [loadSettings, refreshHealth]);
+
+  useEffect(() => {
+    if (!workspace) {
+      import("./features/completion/completionBridge").then(({ cancelActiveCompletion }) =>
+        cancelActiveCompletion(),
+      );
+      import("./features/completion/completionDocumentVersion").then(({ clearDocumentVersions }) =>
+        clearDocumentVersions(),
+      );
+    }
+  }, [workspace]);
 
   const saveActive = useCallback(async () => {
     const { activeTab, tabs, markClean } = useEditorStore.getState();

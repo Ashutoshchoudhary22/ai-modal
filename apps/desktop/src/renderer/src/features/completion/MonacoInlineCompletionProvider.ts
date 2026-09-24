@@ -7,6 +7,12 @@ import { bumpDocumentVersion, getDocumentVersion } from "./completionDocumentVer
 
 export { bumpDocumentVersion, getDocumentVersion } from "./completionDocumentVersion";
 
+export interface CompletionListenerOptions {
+  triggerOnTyping: boolean;
+  enabled: boolean;
+  debounceMs: number;
+}
+
 export function registerInlineCompletionProvider(
   monaco: Monaco,
   controller: CompletionController,
@@ -31,9 +37,10 @@ export function registerInlineCompletionProvider(
         workspaceId,
       };
 
-      const kind = context.triggerKind === monaco.languages.InlineCompletionTriggerKind.Explicit
-        ? "manual"
-        : "automatic";
+      const kind =
+        context.triggerKind === monaco.languages.InlineCompletionTriggerKind.Explicit
+          ? "manual"
+          : "automatic";
 
       const text = await controller.provide(snapshot, kind, token);
       if (!text || token.isCancellationRequested) return { items: [] };
@@ -62,17 +69,47 @@ export function setupCompletionListeners(
   editor: editor.IStandaloneCodeEditor,
   controller: CompletionController,
   filePath: string,
+  getOptions: () => CompletionListenerOptions,
 ): () => void {
   const model = editor.getModel();
   if (!model) return () => {};
 
+  let suggestTimer: ReturnType<typeof setTimeout> | null = null;
+  let lastContentChangeAt = 0;
+
+  const scheduleInlineSuggest = () => {
+    const options = getOptions();
+    if (!options.enabled || !options.triggerOnTyping) return;
+    if (controller.isAutoSuggestSuppressed()) return;
+    if (suggestTimer) clearTimeout(suggestTimer);
+    suggestTimer = setTimeout(() => {
+      editor.trigger("ai-completion", "editor.action.inlineSuggest.trigger", {});
+    }, Math.min(options.debounceMs, 100));
+  };
+
   const contentDisposable = model.onDidChangeContent(() => {
+    lastContentChangeAt = Date.now();
     bumpDocumentVersion(filePath);
-    controller.cancel();
+    const hadGhost = Boolean(useCompletionStore.getState().currentCompletion);
+    controller.abortInFlight();
+    if (hadGhost) {
+      controller.acceptCompletion();
+      controller.invalidate("content");
+    } else {
+      controller.invalidate("content");
+    }
+    scheduleInlineSuggest();
+  });
+
+  const cursorDisposable = editor.onDidChangeCursorPosition(() => {
+    if (Date.now() - lastContentChangeAt < 50) return;
+    controller.invalidate("cursor");
   });
 
   return () => {
+    if (suggestTimer) clearTimeout(suggestTimer);
     contentDisposable.dispose();
+    cursorDisposable.dispose();
     controller.dispose();
   };
 }

@@ -283,6 +283,17 @@ app.whenReady().then(() => {
   createWindow();
   desktopLog.info("desktop", "Application started");
 
+  const e2eWorkspace = process.env.AI_PLATFORM_E2E_WORKSPACE;
+  if (e2eWorkspace) {
+    try {
+      openWorkspace(e2eWorkspace);
+      startFileWatcher();
+      desktopLog.info("desktop", `E2E workspace opened: ${e2eWorkspace}`);
+    } catch (err) {
+      desktopLog.warn("desktop", `E2E workspace open failed: ${String(err)}`);
+    }
+  }
+
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
