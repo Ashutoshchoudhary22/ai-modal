@@ -27,6 +27,7 @@ const DEFAULT_SETTINGS: DesktopSettings = {
   ),
   completionTimeoutMs: Number(process.env.AI_PLATFORM_COMPLETION_TIMEOUT_MS ?? 5000),
   completionTriggerOnTyping: true,
+  autoSave: false,
 };
 
 function settingsPath(): string {

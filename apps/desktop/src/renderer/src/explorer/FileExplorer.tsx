@@ -61,6 +61,7 @@ export function FileExplorer() {
       return (
         <div key={entry.path}>
           <div
+            className="explorer-entry"
             style={{ padding: `2px 8px 2px ${padding}px`, cursor: "pointer" }}
             onClick={() => toggleDir(entry.path)}
           >
@@ -74,6 +75,7 @@ export function FileExplorer() {
     return (
       <div
         key={entry.path}
+        className="explorer-entry"
         style={{ padding: `2px 8px 2px ${padding + 12}px`, cursor: "pointer" }}
         onClick={() => openFile(entry.path)}
       >
@@ -83,9 +85,11 @@ export function FileExplorer() {
   };
 
   return (
-    <div className="panel" style={{ height: "100%", overflow: "auto" }}>
+    <div className="panel explorer-panel" style={{ height: "100%" }}>
       <div className="panel-header">Explorer</div>
-      <div style={{ padding: 4 }}>{entries.map((e) => renderEntry(e))}</div>
+      <div className="explorer-tree scrollbar-hidden" style={{ padding: 4 }}>
+        {entries.map((e) => renderEntry(e))}
+      </div>
     </div>
   );
 }

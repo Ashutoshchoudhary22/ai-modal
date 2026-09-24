@@ -17,10 +17,12 @@ export interface ProposedChange {
 interface EditorStore {
   tabs: EditorTab[];
   activeTab: string | null;
+  untitledCounter: number;
   selection: { start: number; end: number; text: string } | null;
   proposedChanges: ProposedChange[];
   reviewIndex: number;
   openTab: (path: string, content: string, language?: string) => void;
+  newUntitled: () => void;
   closeTab: (path: string) => void;
   setActiveTab: (path: string) => void;
   updateContent: (path: string, content: string) => void;
@@ -52,9 +54,14 @@ function detectLanguage(path: string): string {
   return map[ext ?? ""] ?? "plaintext";
 }
 
+export function isUntitledPath(path: string): boolean {
+  return path.startsWith("untitled:");
+}
+
 export const useEditorStore = create<EditorStore>((set, get) => ({
   tabs: [],
   activeTab: null,
+  untitledCounter: 0,
   selection: null,
   proposedChanges: [],
   reviewIndex: 0,
@@ -67,6 +74,20 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
         tabs: [
           ...state.tabs,
           { path, content, dirty: false, language: language ?? detectLanguage(path) },
+        ],
+        activeTab: path,
+      };
+    }),
+
+  newUntitled: () =>
+    set((state) => {
+      const next = state.untitledCounter + 1;
+      const path = `untitled:${next}`;
+      return {
+        untitledCounter: next,
+        tabs: [
+          ...state.tabs,
+          { path, content: "", dirty: false, language: "plaintext" },
         ],
         activeTab: path,
       };
@@ -126,6 +147,7 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
     set({
       tabs: [],
       activeTab: null,
+      untitledCounter: 0,
       selection: null,
       proposedChanges: [],
       reviewIndex: 0,

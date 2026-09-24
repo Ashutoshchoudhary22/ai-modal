@@ -1,5 +1,6 @@
-import { app, BrowserWindow, ipcMain, dialog, shell } from "electron";
-import { join } from "node:path";
+import { app, BrowserWindow, ipcMain, dialog, shell, Menu } from "electron";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { PathSecurityError } from "../shared/security";
 import type { DesktopError, DesktopSettings } from "../shared/types";
 import { desktopLog } from "./logger";
@@ -27,7 +28,9 @@ import {
 } from "./filesystem";
 import {
   createTerminal,
-  executeTerminal,
+  writeTerminal,
+  resizeTerminal,
+  replayTerminal,
   killTerminal,
   clearTerminal,
   cleanupTerminals,
@@ -84,14 +87,15 @@ async function updateGitBranch(): Promise<void> {
   }
 }
 
-function createWindow(): void {
+function createWindow(): BrowserWindow {
   const settings = loadSettings();
-  mainWindow = new BrowserWindow({
+  const win = new BrowserWindow({
     width: 1440,
     height: 900,
     minWidth: 1024,
     minHeight: 720,
     title: "AI Platform IDE",
+    autoHideMenuBar: true,
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
       contextIsolation: true,
@@ -100,19 +104,24 @@ function createWindow(): void {
     },
   });
 
+  win.setMenu(null);
+  win.setMenuBarVisibility(false);
+
   if (process.env.ELECTRON_RENDERER_URL) {
-    mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL);
+    void win.loadURL(process.env.ELECTRON_RENDERER_URL);
   } else {
-    mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
+    void win.loadFile(join(__dirname, "../renderer/index.html"));
   }
 
   if (settings.devtools) {
-    mainWindow.webContents.openDevTools({ mode: "detach" });
+    win.webContents.openDevTools({ mode: "detach" });
   }
 
-  mainWindow.on("closed", () => {
-    mainWindow = null;
+  win.on("closed", () => {
+    if (mainWindow === win) mainWindow = null;
   });
+
+  return win;
 }
 
 function registerIpc(): void {
@@ -221,12 +230,24 @@ function registerIpc(): void {
     }
   });
 
-  ipcMain.handle("terminal:execute", (_e, terminalId: string, command: string) => {
+  ipcMain.handle("terminal:write", (_e, terminalId: string, data: string) => {
     try {
-      executeTerminal(terminalId, command);
+      writeTerminal(terminalId, data);
     } catch (err) {
       return toError(err);
     }
+  });
+
+  ipcMain.handle("terminal:resize", (_e, terminalId: string, cols: number, rows: number) => {
+    try {
+      resizeTerminal(terminalId, cols, rows);
+    } catch (err) {
+      return toError(err);
+    }
+  });
+
+  ipcMain.handle("terminal:replay", (_e, terminalId: string) => {
+    replayTerminal(terminalId);
   });
 
   ipcMain.handle("terminal:kill", (_e, terminalId: string) => killTerminal(terminalId));
@@ -276,11 +297,82 @@ function registerIpc(): void {
       path: result.filePaths[0] ?? null,
     };
   });
+
+  ipcMain.handle("window:openFileDialog", async () => {
+    const result = await dialog.showOpenDialog(mainWindow!, {
+      properties: ["openFile"],
+    });
+    if (result.canceled || !result.filePaths[0]) {
+      return { canceled: true, path: null, content: null };
+    }
+    const filePath = result.filePaths[0];
+    try {
+      const content = readFileSync(filePath, "utf-8");
+      return { canceled: false, path: filePath, content };
+    } catch (err) {
+      return {
+        canceled: true,
+        path: null,
+        content: null,
+        message: err instanceof Error ? err.message : String(err),
+      };
+    }
+  });
+
+  ipcMain.handle("window:saveFileDialog", async (_e, defaultPath?: string) => {
+    const result = await dialog.showSaveDialog(mainWindow!, {
+      defaultPath,
+    });
+    return {
+      canceled: result.canceled,
+      path: result.filePath ?? null,
+    };
+  });
+
+  ipcMain.handle("window:openWorkspaceFileDialog", async () => {
+    const result = await dialog.showOpenDialog(mainWindow!, {
+      properties: ["openFile"],
+      filters: [{ name: "Workspace", extensions: ["code-workspace", "json"] }],
+    });
+    if (result.canceled || !result.filePaths[0]) {
+      return { canceled: true, path: null };
+    }
+    try {
+      const raw = readFileSync(result.filePaths[0], "utf-8");
+      const parsed = JSON.parse(raw) as { folders?: Array<{ path: string }> };
+      const folder = parsed.folders?.[0]?.path;
+      if (!folder) {
+        return { canceled: true, path: null };
+      }
+      const resolved = join(dirname(result.filePaths[0]), folder);
+      return { canceled: false, path: resolved };
+    } catch {
+      return { canceled: true, path: null };
+    }
+  });
+
+  ipcMain.handle("window:newWindow", () => {
+    createWindow();
+  });
+
+  ipcMain.handle("window:closeWindow", () => {
+    mainWindow?.close();
+  });
+
+  ipcMain.handle("window:quit", () => {
+    app.quit();
+  });
 }
 
+app.on("browser-window-created", (_event, win) => {
+  win.setMenu(null);
+  win.setMenuBarVisibility(false);
+});
+
 app.whenReady().then(() => {
+  Menu.setApplicationMenu(null);
   registerIpc();
-  createWindow();
+  mainWindow = createWindow();
   desktopLog.info("desktop", "Application started");
 
   const e2eWorkspace = process.env.AI_PLATFORM_E2E_WORKSPACE;
@@ -295,7 +387,7 @@ app.whenReady().then(() => {
   }
 
   app.on("activate", () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    if (BrowserWindow.getAllWindows().length === 0) mainWindow = createWindow();
   });
 });
 

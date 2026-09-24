@@ -1,0 +1,118 @@
+.menubar {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 8px;
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  user-select: none;
+  z-index: 100;
+}
+
+.menubar-item {
+  position: relative;
+  padding: 4px 10px;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+.menubar-item:hover,
+.menubar-item.active {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.menu-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 280px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  padding: 4px 0;
+  z-index: 1000;
+}
+
+.menu-dropdown.right {
+  left: auto;
+  right: 0;
+}
+
+.menu-dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  padding: 5px 24px 5px 28px;
+  border: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 12px;
+  text-align: left;
+  border-radius: 0;
+}
+
+.menu-dropdown-item:hover:not(:disabled) {
+  background: var(--accent);
+  color: #fff;
+}
+
+.menu-dropdown-item:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.menu-dropdown-item.checked::before {
+  content: "✓";
+  position: absolute;
+  left: 10px;
+}
+
+.menu-dropdown-item {
+  position: relative;
+}
+
+.menu-dropdown-item.has-submenu::after {
+  content: "›";
+  margin-left: auto;
+  font-size: 14px;
+}
+
+.menu-dropdown-shortcut {
+  color: var(--text-secondary);
+  font-size: 11px;
+  margin-left: auto;
+  padding-left: 16px;
+}
+
+.menu-dropdown-item:hover:not(:disabled) .menu-dropdown-shortcut {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.menu-dropdown-separator {
+  height: 1px;
+  margin: 4px 0;
+  background: var(--border);
+}
+
+.menu-submenu {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  min-width: 220px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  padding: 4px 0;
+  display: none;
+}
+
+.menu-dropdown-item.has-submenu:hover > .menu-submenu,
+.menu-submenu:hover {
+  display: block;
+}

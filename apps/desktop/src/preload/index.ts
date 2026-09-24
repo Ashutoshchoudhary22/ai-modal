@@ -8,6 +8,8 @@ import type {
   GitDiffResult,
   GitStatusResult,
   OpenDialogResult,
+  OpenFileDialogResult,
+  SaveFileDialogResult,
   ProjectInfo,
   RecentWorkspace,
   TerminalOutputEvent,
@@ -56,10 +58,13 @@ const desktopAPI: DesktopAPI = {
   },
   terminal: {
     create: (cwd?: string) => ipcRenderer.invoke("terminal:create", cwd),
-    execute: (terminalId: string, command: string) =>
-      ipcRenderer.invoke("terminal:execute", terminalId, command),
+    write: (terminalId: string, data: string) =>
+      ipcRenderer.invoke("terminal:write", terminalId, data),
+    resize: (terminalId: string, cols: number, rows: number) =>
+      ipcRenderer.invoke("terminal:resize", terminalId, cols, rows),
     kill: (terminalId: string) => ipcRenderer.invoke("terminal:kill", terminalId),
     clear: (terminalId: string) => ipcRenderer.invoke("terminal:clear", terminalId),
+    replay: (terminalId: string) => ipcRenderer.invoke("terminal:replay", terminalId),
     onOutput: (callback) => {
       const handler = (_event: Electron.IpcRendererEvent, data: TerminalOutputEvent) =>
         callback(data);
@@ -79,6 +84,12 @@ const desktopAPI: DesktopAPI = {
   window: {
     openExternal: (url: string) => ipcRenderer.invoke("window:openExternal", url),
     showOpenDialog: () => ipcRenderer.invoke("window:showOpenDialog"),
+    openFileDialog: () => ipcRenderer.invoke("window:openFileDialog"),
+    saveFileDialog: (defaultPath?: string) => ipcRenderer.invoke("window:saveFileDialog", defaultPath),
+    openWorkspaceFileDialog: () => ipcRenderer.invoke("window:openWorkspaceFileDialog"),
+    newWindow: () => ipcRenderer.invoke("window:newWindow"),
+    closeWindow: () => ipcRenderer.invoke("window:closeWindow"),
+    quit: () => ipcRenderer.invoke("window:quit"),
   },
   platform: {
     isMac: process.platform === "darwin",

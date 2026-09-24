@@ -5,11 +5,14 @@ import { EditorTabs } from "./editor/EditorTabs";
 import { MonacoEditor } from "./editor/MonacoEditor";
 import { DiffReview } from "./editor/DiffReview";
 import { AssistantPanel } from "./assistant/AssistantPanel";
+import { ChatPanelIcon } from "./assistant/ChatPanelIcon";
 import { BottomPanel } from "./components/BottomPanel";
 import { StatusBar } from "./components/StatusBar";
 import { CommandPalette } from "./components/CommandPalette";
 import { SearchPanel } from "./components/SearchPanel";
 import { Notifications } from "./components/Notifications";
+import { MenuBar } from "./components/menubar/MenuBar";
+import { useFileMenuActions } from "./components/menubar/useFileMenuActions";
 import { useWorkspaceStore } from "./state/workspaceStore";
 import { useSettingsStore } from "./state/settingsStore";
 import { useEditorStore } from "./state/editorStore";
@@ -26,7 +29,9 @@ export default function App() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [bottomTab, setBottomTab] = useState<BottomTab>("terminal");
   const [bottomCollapsed, setBottomCollapsed] = useState(false);
+  const [assistantMinimized, setAssistantMinimized] = useState(false);
   const notify = useNotificationStore((s) => s.notify);
+  const fileMenu = useFileMenuActions();
 
   useEffect(() => {
     void loadSettings();
@@ -90,14 +95,15 @@ export default function App() {
 
   useEffect(() => {
     const mod = window.desktop.platform.isMac ? "Cmd" : "Ctrl";
+    commandRegistry.register({ id: "new-file", title: "New Text File", shortcut: `${mod}+N`, handler: () => fileMenu.newTextFile() });
+    commandRegistry.register({ id: "open-file", title: "Open File", shortcut: `${mod}+O`, handler: () => void fileMenu.openFile() });
     commandRegistry.register({ id: "open-workspace", title: "Open Workspace", handler: async () => {
-      const result = await window.desktop.workspace.open();
-      if (result && "rootPath" in result) {
-        useWorkspaceStore.getState().setWorkspace(result);
-      }
+      await fileMenu.openFolder();
     }});
-    commandRegistry.register({ id: "save", title: "Save", shortcut: `${mod}+S`, handler: () => void saveActive() });
-    commandRegistry.register({ id: "save-all", title: "Save All", shortcut: `${mod}+Shift+S`, handler: () => void saveAll() });
+    commandRegistry.register({ id: "save", title: "Save", shortcut: `${mod}+S`, handler: () => void fileMenu.save() });
+    commandRegistry.register({ id: "save-as", title: "Save As", shortcut: `${mod}+Shift+S`, handler: () => void fileMenu.saveAs() });
+    commandRegistry.register({ id: "save-all", title: "Save All", handler: () => void fileMenu.saveAll() });
+    commandRegistry.register({ id: "close-editor", title: "Close Editor", shortcut: `${mod}+F4`, handler: () => fileMenu.closeEditor() });
     commandRegistry.register({ id: "search", title: "Search", shortcut: `${mod}+Shift+F`, handler: () => setSearchOpen(true) });
     commandRegistry.register({ id: "command-palette", title: "Command Palette", shortcut: `${mod}+Shift+P`, handler: () => setCommandPaletteOpen(true) });
     commandRegistry.register({ id: "toggle-terminal", title: "Toggle Terminal", shortcut: `${mod}+\``, handler: () => {
@@ -137,7 +143,7 @@ export default function App() {
     commandRegistry.register({ id: "completion-cancel", title: "AI: Cancel Completion", shortcut: "Esc", handler: () => {
       import("./features/completion/completionBridge").then(({ cancelActiveCompletion }) => cancelActiveCompletion());
     }});
-  }, [saveActive, saveAll]);
+  }, [fileMenu]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -150,13 +156,25 @@ export default function App() {
         e.preventDefault();
         setSearchOpen(true);
       }
+      if (mod && e.key === "n" && !e.shiftKey) {
+        e.preventDefault();
+        fileMenu.newTextFile();
+      }
+      if (mod && e.key === "o" && !e.shiftKey) {
+        e.preventDefault();
+        void fileMenu.openFile();
+      }
       if (mod && e.key === "s" && !e.shiftKey) {
         e.preventDefault();
-        void saveActive();
+        void fileMenu.save();
       }
       if (mod && e.shiftKey && e.key === "S") {
         e.preventDefault();
-        void saveAll();
+        void fileMenu.saveAs();
+      }
+      if (mod && e.key === "F4") {
+        e.preventDefault();
+        fileMenu.closeEditor();
       }
       if (mod && e.key === "`") {
         e.preventDefault();
@@ -166,42 +184,81 @@ export default function App() {
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [saveActive, saveAll]);
-
-  if (!workspace) {
-    return (
-      <>
-        <WelcomeScreen />
-        <Notifications />
-      </>
-    );
-  }
+  }, [fileMenu]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-      <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
-        <div style={{ width: 240, flexShrink: 0 }}>
+      <MenuBar />
+      {!workspace ? (
+        <WelcomeScreen />
+      ) : (
+        <>
+      <div style={{ display: "flex", flex: 1, overflow: "hidden", minHeight: 0 }}>
+        <div
+          style={{
+            width: 240,
+            flexShrink: 0,
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            overflow: "hidden",
+          }}
+        >
           <FileExplorer />
         </div>
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", position: "relative" }}>
+        <div
+          style={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            position: "relative",
+            minWidth: 0,
+            minHeight: 0,
+            overflow: "hidden",
+          }}
+        >
           <EditorTabs />
-          <div style={{ flex: 1, overflow: "hidden" }}>
+          <div style={{ flex: 1, overflow: "hidden", minHeight: 0 }}>
             <MonacoEditor />
           </div>
           <DiffReview />
+          <BottomPanel
+            activeTab={bottomTab}
+            onTabChange={setBottomTab}
+            collapsed={bottomCollapsed}
+            onToggleCollapse={() => setBottomCollapsed(!bottomCollapsed)}
+            problems={[]}
+          />
         </div>
-        <div style={{ width: 360, flexShrink: 0 }}>
-          <AssistantPanel />
-        </div>
+        {assistantMinimized ? (
+          <div className="assistant-rail">
+            <button
+              type="button"
+              className="assistant-rail-btn"
+              title="Open AI Chat"
+              onClick={() => setAssistantMinimized(false)}
+            >
+              <ChatPanelIcon size={18} />
+            </button>
+          </div>
+        ) : (
+          <div
+            style={{
+              width: 360,
+              flexShrink: 0,
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              overflow: "hidden",
+            }}
+          >
+            <AssistantPanel onMinimize={() => setAssistantMinimized(true)} />
+          </div>
+        )}
       </div>
-      <BottomPanel
-        activeTab={bottomTab}
-        onTabChange={setBottomTab}
-        collapsed={bottomCollapsed}
-        onToggleCollapse={() => setBottomCollapsed(!bottomCollapsed)}
-        problems={[]}
-      />
       <StatusBar />
+        </>
+      )}
       <CommandPalette open={commandPaletteOpen} onClose={() => setCommandPaletteOpen(false)} />
       <SearchPanel open={searchOpen} onClose={() => setSearchOpen(false)} />
       <Notifications />

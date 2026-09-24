@@ -9,10 +9,15 @@ import { streamChat } from "../api/client";
 import { streamAgentRun } from "../api/agent";
 import { MarkdownMessage } from "./MarkdownMessage";
 import { InlineCompletionSettings } from "../settings/InlineCompletionSettings";
+import { ChatPanelIcon } from "./ChatPanelIcon";
 
 type AssistantMode = "chat" | "agent" | "completion";
 
-export function AssistantPanel() {
+interface AssistantPanelProps {
+  onMinimize?: () => void;
+}
+
+export function AssistantPanel({ onMinimize }: AssistantPanelProps) {
   const [input, setInput] = useState("");
   const messages = useAssistantStore((s) => s.messages);
   const attachments = useAssistantStore((s) => s.attachments);
@@ -131,13 +136,26 @@ export function AssistantPanel() {
 
   return (
     <div className="panel" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
-      <div className="panel-header" style={{ display: "flex", justifyContent: "space-between" }}>
-        <span>AI Assistant</span>
-        <div style={{ display: "flex", gap: 4 }}>
+      <div
+        className="panel-header"
+        style={{ display: "flex", alignItems: "center", gap: 8, paddingRight: 4 }}
+      >
+        <span style={{ flexShrink: 0 }}>AI Assistant</span>
+        <div style={{ display: "flex", gap: 4, flex: 1, minWidth: 0 }}>
           <button onClick={() => setMode("chat")} style={{ opacity: mode === "chat" ? 1 : 0.5 }}>Chat</button>
           <button onClick={() => setMode("agent")} style={{ opacity: mode === "agent" ? 1 : 0.5 }}>Agent</button>
           <button onClick={() => setMode("completion")} style={{ opacity: mode === "completion" ? 1 : 0.5 }}>Completion</button>
         </div>
+        {onMinimize && (
+          <button
+            type="button"
+            className="assistant-minimize-btn"
+            title="Minimize AI Chat"
+            onClick={onMinimize}
+          >
+            <ChatPanelIcon size={15} />
+          </button>
+        )}
       </div>
       {mode === "completion" ? (
         <InlineCompletionSettings />
@@ -147,7 +165,7 @@ export function AssistantPanel() {
         Model: {modelId ?? settings?.defaultModel ?? "default"} | Provider: {provider ?? "—"}
         {attachments.length > 0 && ` | Context: ${attachments.length} attachment(s)`}
       </div>
-      <div style={{ flex: 1, overflow: "auto", padding: 8 }}>
+      <div className="scrollbar-hidden" style={{ flex: 1, overflow: "auto", overflowX: "hidden", padding: 8 }}>
         {messages.length === 0 && (
           <div style={{ color: "var(--text-secondary)", textAlign: "center", marginTop: 32 }}>
             {apiStatus === "connected" ? "Ask AI anything..." : "AI service unavailable"}

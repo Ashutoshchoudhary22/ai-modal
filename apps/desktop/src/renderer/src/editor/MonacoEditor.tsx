@@ -2,7 +2,7 @@ import Editor, { type Monaco } from "@monaco-editor/react";
 
 import { useEffect, useRef } from "react";
 
-import { useEditorStore } from "../state/editorStore";
+import { isUntitledPath, useEditorStore } from "../state/editorStore";
 
 import { useSettingsStore } from "../state/settingsStore";
 
@@ -47,6 +47,8 @@ export function MonacoEditor() {
   const controllerRef = useRef<CompletionController | null>(null);
 
   const disposablesRef = useRef<Array<{ dispose: () => void }>>([]);
+
+  const autoSaveTimerRef = useRef<number | null>(null);
 
 
 
@@ -249,7 +251,19 @@ export function MonacoEditor() {
 
       }}
 
-      onChange={(value) => updateContent(tab.path, value ?? "")}
+      onChange={(value) => {
+        const next = value ?? "";
+        updateContent(tab.path, next);
+        if (!settings?.autoSave || isUntitledPath(tab.path)) return;
+        if (autoSaveTimerRef.current) window.clearTimeout(autoSaveTimerRef.current);
+        autoSaveTimerRef.current = window.setTimeout(() => {
+          void window.desktop.files.write(tab.path, next).then((result) => {
+            if (result && typeof result === "object" && "success" in result) {
+              useEditorStore.getState().markClean(tab.path);
+            }
+          });
+        }, 800);
+      }}
 
       onMount={handleMount}
 

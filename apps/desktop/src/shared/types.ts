@@ -36,6 +36,7 @@ export interface FileWriteResult {
 export interface TerminalSession {
   id: string;
   cwd: string;
+  title: string;
   state: "running" | "exited";
   exitCode: number | null;
 }
@@ -81,6 +82,7 @@ export interface DesktopSettings {
   completionMaxRequestsPerMinute: number;
   completionTimeoutMs: number;
   completionTriggerOnTyping: boolean;
+  autoSave: boolean;
 }
 
 export interface RecentWorkspace {
@@ -90,6 +92,17 @@ export interface RecentWorkspace {
 }
 
 export interface OpenDialogResult {
+  canceled: boolean;
+  path: string | null;
+}
+
+export interface OpenFileDialogResult {
+  canceled: boolean;
+  path: string | null;
+  content: string | null;
+}
+
+export interface SaveFileDialogResult {
   canceled: boolean;
   path: string | null;
 }
@@ -123,9 +136,11 @@ export interface DesktopAPI {
   };
   terminal: {
     create: (cwd?: string) => Promise<TerminalSession | DesktopError>;
-    execute: (terminalId: string, command: string) => Promise<void | DesktopError>;
+    write: (terminalId: string, data: string) => Promise<void | DesktopError>;
+    resize: (terminalId: string, cols: number, rows: number) => Promise<void | DesktopError>;
     kill: (terminalId: string) => Promise<void>;
     clear: (terminalId: string) => Promise<void>;
+    replay: (terminalId: string) => Promise<void>;
     onOutput: (callback: (event: TerminalOutputEvent) => void) => () => void;
   };
   git: {
@@ -140,6 +155,12 @@ export interface DesktopAPI {
   window: {
     openExternal: (url: string) => Promise<void>;
     showOpenDialog: () => Promise<OpenDialogResult>;
+    openFileDialog: () => Promise<OpenFileDialogResult>;
+    saveFileDialog: (defaultPath?: string) => Promise<SaveFileDialogResult>;
+    openWorkspaceFileDialog: () => Promise<OpenDialogResult>;
+    newWindow: () => Promise<void>;
+    closeWindow: () => Promise<void>;
+    quit: () => Promise<void>;
   };
   platform: {
     isMac: boolean;

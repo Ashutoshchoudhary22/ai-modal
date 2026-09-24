@@ -10,7 +10,7 @@ import {
   existsSync,
   watch,
 } from "node:fs";
-import { join, relative } from "node:path";
+import { isAbsolute, join, relative } from "node:path";
 import type { FSWatcher } from "node:fs";
 import { BrowserWindow } from "electron";
 import type { FileEntry } from "../shared/types";
@@ -92,22 +92,38 @@ export function listFiles(relativePath = ""): FileEntry[] {
   });
 }
 
-export function readFile(relativePath: string): { path: string; content: string } {
+function resolveFilePath(filePath: string): string {
+  if (isAbsolute(filePath)) return filePath;
   const root = requireWorkspace();
-  assertNotSensitive(relativePath);
-  const abs = resolveRelativePath(root, relativePath);
-  const content = readFileSync(abs, "utf-8");
-  return { path: relativePath, content, encoding: "utf-8" as const };
+  assertNotSensitive(filePath);
+  return resolveRelativePath(root, filePath);
 }
 
-export function writeFile(relativePath: string, content: string): { path: string; success: boolean } {
-  const root = requireWorkspace();
-  assertNotSensitive(relativePath, true);
-  const abs = resolveRelativePath(root, relativePath);
+export function readFile(filePath: string): { path: string; content: string } {
+  const abs = resolveFilePath(filePath);
+  const content = readFileSync(abs, "utf-8");
+  const ws = getWorkspace();
+  const path =
+    ws && !isAbsolute(filePath)
+      ? filePath
+      : abs.replace(/\\/g, "/");
+  return { path, content, encoding: "utf-8" as const };
+}
+
+export function writeFile(filePath: string, content: string): { path: string; success: boolean } {
+  const abs = resolveFilePath(filePath);
+  if (!isAbsolute(filePath)) {
+    assertNotSensitive(filePath, true);
+  }
   const dir = join(abs, "..");
   mkdirSync(dir, { recursive: true });
   writeFileSync(abs, content, "utf-8");
-  return { path: relativePath, success: true };
+  const ws = getWorkspace();
+  const path =
+    ws && !isAbsolute(filePath)
+      ? filePath
+      : abs.replace(/\\/g, "/");
+  return { path, success: true };
 }
 
 export function createEntry(relativePath: string, type: "file" | "directory"): void {
