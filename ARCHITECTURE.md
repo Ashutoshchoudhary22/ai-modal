@@ -44,6 +44,7 @@ Build a **replaceable-model AI platform** that eventually runs on **our own mode
 | API gateway / auth / multi-tenant | **FUTURE** | Phase 15–16 |
 | Desktop IDE | **IMPLEMENTED** | `apps/desktop`, `docs/DESKTOP_IDE.md` |
 | Inline code completion | **IMPLEMENTED (Phase 14 GREEN)** | `services/ai-api/completion`, `apps/desktop/e2e/verify-completion.mjs`, `docs/INLINE_COMPLETION.md` |
+| Real local chat LLM | **IMPLEMENTED** | `LocalModelProvider`, `docs/REAL_CHAT_MODEL.md` |
 
 ---
 

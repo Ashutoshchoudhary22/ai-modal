@@ -24,6 +24,7 @@ def http_status_for_code(code: ProviderErrorCode) -> int:
         ProviderErrorCode.MODEL_NOT_CONFIGURED: 503,
         ProviderErrorCode.MODEL_NOT_FOUND: 404,
         ProviderErrorCode.MODEL_LOAD_FAILED: 503,
+        ProviderErrorCode.REAL_MODEL_UNAVAILABLE: 503,
         ProviderErrorCode.CUDA_UNAVAILABLE: 503,
         ProviderErrorCode.OUT_OF_MEMORY: 503,
         ProviderErrorCode.CONTEXT_LENGTH_EXCEEDED: 400,

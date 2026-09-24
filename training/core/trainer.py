@@ -66,6 +66,8 @@ def _set_seed(seed: int) -> None:
 
 
 def format_record(record: ParsedRecord, config: TrainingConfig) -> str:
+    if record.kind == "conversational":
+        return "\n".join(f"{message['role']}: {message['content']}" for message in record.messages)
     template = config.prompt_template
     parts: list[str] = []
     if record.instruction.strip():

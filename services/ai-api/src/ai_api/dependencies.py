@@ -18,7 +18,7 @@ from ai_api.services.registry import RegistryService
 def get_inference_service() -> InferenceService:
     settings = get_settings()
     provider = create_provider(settings)
-    return InferenceService(provider)
+    return InferenceService(provider, settings=settings)
 
 
 @lru_cache

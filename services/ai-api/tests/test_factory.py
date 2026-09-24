@@ -32,3 +32,8 @@ def test_factory_rejects_unknown_provider() -> None:
 def test_factory_rejects_mock_in_production() -> None:
     with pytest.raises(ValueError):
         create_provider(Settings(env="production", model_provider="development_mock"))
+
+
+def test_factory_rejects_local_without_model_ref() -> None:
+    with pytest.raises(ValueError, match="REAL_MODEL_UNAVAILABLE"):
+        create_provider(Settings(model_provider="local", model_id="", model_path=""))

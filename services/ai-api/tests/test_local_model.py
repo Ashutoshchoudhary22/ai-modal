@@ -86,12 +86,12 @@ async def test_generate_with_mocked_model(provider: LocalModelProvider) -> None:
 @pytest.mark.asyncio
 async def test_model_not_found_maps_to_provider_error(provider: LocalModelProvider) -> None:
     provider._load_error = ProviderError(
-        ProviderErrorCode.MODEL_NOT_FOUND,
-        "Configured local model could not be loaded",
-        status_code=404,
+        ProviderErrorCode.REAL_MODEL_UNAVAILABLE,
+        "REAL_MODEL_UNAVAILABLE: configured local model could not be loaded",
+        status_code=503,
     )
     with pytest.raises(ProviderError) as exc:
         await provider.generate(
             GenerateRequest(messages=[ChatMessage(role="user", content="hello")])
         )
-    assert exc.value.code.value == "MODEL_NOT_FOUND"
+    assert exc.value.code.value == "REAL_MODEL_UNAVAILABLE"

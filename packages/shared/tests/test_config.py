@@ -37,3 +37,9 @@ def test_get_settings_cached() -> None:
     s1 = get_settings()
     s2 = get_settings()
     assert s1 is s2
+
+
+def test_local_provider_requires_model_ref() -> None:
+    settings = Settings(model_provider="local", model_id="", model_path="")
+    with pytest.raises(ValueError, match="REAL_MODEL_UNAVAILABLE"):
+        settings.validate_local_model_configuration()

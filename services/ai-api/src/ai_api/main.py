@@ -18,6 +18,11 @@ async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
     settings = get_settings()
     setup_logging(settings.log_level)
     settings.validate_production_provider()
+    settings.validate_local_model_configuration()
+    if settings.model_provider == "local" and settings.model_preload:
+        from ai_api.dependencies import get_inference_service
+
+        await get_inference_service().provider.get_status()
     yield
 
 

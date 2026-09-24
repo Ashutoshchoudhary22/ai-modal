@@ -145,6 +145,10 @@ make dev-ai-api
 # Health: http://localhost:8000/health
 ```
 
+### Real local chat model (replace development mock)
+
+See [docs/REAL_CHAT_MODEL.md](./docs/REAL_CHAT_MODEL.md) for CPU-friendly setup (`Qwen/Qwen2.5-0.5B-Instruct`, `AI_PLATFORM_MODEL_PROVIDER=local`).
+
 ### Coding agent tools (Phase 5)
 
 See [docs/CODING_AGENT_TOOLS.md](./docs/CODING_AGENT_TOOLS.md) for tool schemas, permissions, and API usage (`GET /v1/tools`, `POST /v1/tools/execute` on the agent service).

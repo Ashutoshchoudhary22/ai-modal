@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import json
 import threading
+import time
 import uuid
 from collections.abc import AsyncIterator
 from typing import Any
@@ -24,9 +25,12 @@ from ai_platform_protocol.models.inference import (
     VisionResponse,
 )
 from ai_platform_protocol.models.provider import ProviderCapabilities, ProviderState, ProviderStatus
+from ai_platform_shared.logging import get_logger
 
 from ai_api.providers.device import detect_device, resolve_dtype, to_device_info
 from ai_api.providers.errors import ProviderError
+
+logger = get_logger(__name__)
 
 
 class LocalModelProvider:
@@ -60,6 +64,7 @@ class LocalModelProvider:
         self._tokenizer: Any | None = None
         self._loading = False
         self._load_error: ProviderError | None = None
+        self._load_time_ms: int | None = None
 
     async def get_status(self) -> ProviderStatus:
         if not self._model_ref:
@@ -115,6 +120,7 @@ class LocalModelProvider:
             diagnostics={
                 "dtype": self._dtype_name,
                 "max_context": self._max_context,
+                "load_time_ms": self._load_time_ms,
             },
         )
 
@@ -336,10 +342,16 @@ class LocalModelProvider:
             if self._model is not None and self._tokenizer is not None:
                 return
             self._loading = True
+            started = time.perf_counter()
             try:
                 import torch
                 from transformers import AutoModelForCausalLM, AutoTokenizer
 
+                logger.info(
+                    "loading local model | ref=%s | device=%s",
+                    self._model_ref,
+                    self._device.torch_device,
+                )
                 tokenizer = AutoTokenizer.from_pretrained(
                     self._model_ref,
                     trust_remote_code=self._trust_remote_code,
@@ -357,24 +369,31 @@ class LocalModelProvider:
                     self._model_ref,
                     trust_remote_code=self._trust_remote_code,
                     torch_dtype=torch_dtype,
+                    low_cpu_mem_usage=True,
                 )
                 model.to(self._device.torch_device)
                 model.eval()
                 self._tokenizer = tokenizer
                 self._model = model
                 self._load_error = None
+                self._load_time_ms = int((time.perf_counter() - started) * 1000)
+                logger.info(
+                    "local model loaded | ref=%s | load_time_ms=%s",
+                    self._model_ref,
+                    self._load_time_ms,
+                )
             except FileNotFoundError as exc:
                 self._load_error = ProviderError(
-                    ProviderErrorCode.MODEL_NOT_FOUND,
-                    "Configured local model was not found",
-                    status_code=404,
+                    ProviderErrorCode.REAL_MODEL_UNAVAILABLE,
+                    "REAL_MODEL_UNAVAILABLE: configured local model was not found",
+                    status_code=503,
                 )
                 raise self._load_error from exc
             except OSError as exc:
                 self._load_error = ProviderError(
-                    ProviderErrorCode.MODEL_NOT_FOUND,
-                    "Configured local model could not be loaded",
-                    status_code=404,
+                    ProviderErrorCode.REAL_MODEL_UNAVAILABLE,
+                    "REAL_MODEL_UNAVAILABLE: configured local model could not be loaded",
+                    status_code=503,
                 )
                 raise self._load_error from exc
             except RuntimeError as exc:
@@ -387,15 +406,15 @@ class LocalModelProvider:
                     )
                 else:
                     self._load_error = ProviderError(
-                        ProviderErrorCode.MODEL_LOAD_FAILED,
-                        "Failed to load local model",
+                        ProviderErrorCode.REAL_MODEL_UNAVAILABLE,
+                        "REAL_MODEL_UNAVAILABLE: failed to load local model",
                         status_code=503,
                     )
                 raise self._load_error from exc
             except Exception as exc:
                 self._load_error = ProviderError(
-                    ProviderErrorCode.MODEL_LOAD_FAILED,
-                    "Failed to load local model",
+                    ProviderErrorCode.REAL_MODEL_UNAVAILABLE,
+                    "REAL_MODEL_UNAVAILABLE: failed to load local model",
                     status_code=503,
                 )
                 raise self._load_error from exc

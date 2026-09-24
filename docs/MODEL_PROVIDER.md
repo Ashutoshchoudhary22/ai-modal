@@ -32,6 +32,8 @@ Configure with:
 AI_PLATFORM_MODEL_PROVIDER=development_mock
 ```
 
+For **real local chat** on CPU, see [REAL_CHAT_MODEL.md](./REAL_CHAT_MODEL.md) (`AI_PLATFORM_MODEL_PROVIDER=local`).
+
 Aliases:
 
 - `mock` → `development_mock`

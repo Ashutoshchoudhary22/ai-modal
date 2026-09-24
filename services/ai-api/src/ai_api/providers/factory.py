@@ -14,6 +14,7 @@ from ai_api.providers.proprietary import ProprietaryModelProvider
 
 def create_provider(settings: Settings) -> ModelProvider:
     settings.validate_production_provider()
+    settings.validate_local_model_configuration()
     provider = settings.model_provider
 
     if provider == "development_mock":
@@ -21,7 +22,7 @@ def create_provider(settings: Settings) -> ModelProvider:
 
     if provider == "local":
         return LocalModelProvider(
-            model_id=settings.model_id,
+            model_id=settings.model_id or settings.default_model,
             model_path=settings.model_path,
             default_model=settings.default_model,
             device_setting=settings.model_device,
@@ -35,7 +36,7 @@ def create_provider(settings: Settings) -> ModelProvider:
         return ProprietaryModelProvider()
 
     raise ProviderError(
-        ProviderErrorCode.MODEL_NOT_CONFIGURED,
+        ProviderErrorCode.REAL_MODEL_UNAVAILABLE,
         f"Unsupported model provider: {settings.model_provider}",
         status_code=503,
     )
