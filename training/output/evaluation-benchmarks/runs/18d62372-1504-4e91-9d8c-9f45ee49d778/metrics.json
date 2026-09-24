@@ -1,0 +1,34 @@
+[
+  {
+    "metric_id": "render_success",
+    "metric_version": 1,
+    "value": 1.0,
+    "sample_count": 1,
+    "direction": "higher_is_better",
+    "unavailable": false
+  },
+  {
+    "metric_id": "visual_similarity",
+    "metric_version": 1,
+    "value": 1.0,
+    "sample_count": 1,
+    "direction": "higher_is_better",
+    "unavailable": false
+  },
+  {
+    "metric_id": "layout_similarity",
+    "metric_version": 1,
+    "value": 1.0,
+    "sample_count": 1,
+    "direction": "higher_is_better",
+    "unavailable": false
+  },
+  {
+    "metric_id": "latency_ms",
+    "metric_version": 1,
+    "value": 0.0021000014385208488,
+    "sample_count": 1,
+    "direction": "lower_is_better",
+    "unavailable": false
+  }
+]

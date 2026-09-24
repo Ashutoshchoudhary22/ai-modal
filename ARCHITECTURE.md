@@ -38,6 +38,7 @@ Build a **replaceable-model AI platform** that eventually runs on **our own mode
 | Browser agent | **IMPLEMENTED** | `services/agent/browser`, `docs/BROWSER_AGENT.md` |
 | Multimodal model architecture | **IMPLEMENTED** | `services/ai-api/multimodal`, `docs/MULTIMODAL.md` |
 | Multimodal training strategy | **IMPLEMENTED** | `training/multimodal`, `docs/MULTIMODAL_TRAINING.md` |
+| Evaluation & benchmarking | **IMPLEMENTED** | `training/evaluation`, `docs/EVALUATION.md` |
 | Training pipeline (SFT) | **IMPLEMENTED** | `training/`, `docs/TRAINING.md` |
 | Vector DB / object storage | **FUTURE** | Not implemented; Redis/MySQL only in dev stack |
 | API gateway / auth / multi-tenant | **FUTURE** | Phase 15–16 |
@@ -217,6 +218,17 @@ Dataset (JSONL + image refs)
    ↓ SFT loss + optimizer
    ↓ Checkpoint / resume / experiment metadata
    ↓ Model registry (optional)
+```
+
+### H3. Evaluation & Benchmarking (Phase 12)
+
+```
+Checkpoint / Model Registry
+   ↓ Benchmark Registry
+   ↓ Evaluation Runner + Model Adapter
+   ↓ Task Evaluator (code / multimodal / agent / browser)
+   ↓ Metric Engine
+   ↓ Regression / Comparison Reports
 ```
 
 ### I. SaaS & Multi-Tenancy (Phase 16)

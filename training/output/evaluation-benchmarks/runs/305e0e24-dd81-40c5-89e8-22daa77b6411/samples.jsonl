@@ -1,0 +1,1 @@
+{"sample_id": "browser-001", "prediction": "Browser task completed.", "reference": "completed", "metrics": {"task_success": 1.0}, "latency_ms": 118.47740000121121, "token_usage": {}, "error": null, "failure_category": null, "status": "completed", "attempt_count": 1}

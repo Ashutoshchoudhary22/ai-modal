@@ -1,0 +1,35 @@
+{
+  "run_id": "c891e6b6-ce36-417f-8907-a5ca24638042",
+  "model": {
+    "id": "development-mock-v1",
+    "provider": "development_mock",
+    "checkpoint": null
+  },
+  "benchmark": {
+    "id": "coding-mini",
+    "version": "1.0.0"
+  },
+  "dataset": {
+    "id": "coding-mini",
+    "version": "1.0.0",
+    "fingerprint": "6de57a5e104c728e2a231cd9c4d03021fdbc820784414415037eacfe4c8988e8"
+  },
+  "metric_versions": {
+    "code_pass_rate": 1,
+    "latency_ms": 1,
+    "error_rate": 1
+  },
+  "generation_config": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 1024,
+    "seed": 42,
+    "structured_output": false
+  },
+  "seed": 42,
+  "software_versions": {
+    "python": "3.14.0",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "timestamp": "2026-09-24T08:12:27Z"
+}

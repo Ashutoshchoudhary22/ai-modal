@@ -1,0 +1,34 @@
+[
+  {
+    "metric_id": "normalized_match",
+    "metric_version": 1,
+    "value": 1.0,
+    "sample_count": 1,
+    "direction": "higher_is_better",
+    "unavailable": false
+  },
+  {
+    "metric_id": "schema_validity",
+    "metric_version": 1,
+    "value": 1.0,
+    "sample_count": 1,
+    "direction": "higher_is_better",
+    "unavailable": false
+  },
+  {
+    "metric_id": "field_accuracy",
+    "metric_version": 1,
+    "value": 1.0,
+    "sample_count": 1,
+    "direction": "higher_is_better",
+    "unavailable": false
+  },
+  {
+    "metric_id": "latency_ms",
+    "metric_version": 1,
+    "value": 0.006499998562503606,
+    "sample_count": 1,
+    "direction": "lower_is_better",
+    "unavailable": false
+  }
+]

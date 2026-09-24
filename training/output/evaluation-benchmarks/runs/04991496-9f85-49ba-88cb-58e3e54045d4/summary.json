@@ -1,0 +1,13 @@
+{
+  "run_id": "04991496-9f85-49ba-88cb-58e3e54045d4",
+  "benchmark_id": "agent-mini",
+  "benchmark_version": "1.0.0",
+  "model_id": "development-mock-v1",
+  "model_provider": "development_mock",
+  "status": "completed",
+  "complete": true,
+  "completed_samples": 1,
+  "total_samples": 1,
+  "errors": 0,
+  "warnings": []
+}

@@ -1,0 +1,11 @@
+benchmark_id: coding-mini
+model_id: development-mock-v1
+model_provider: development_mock
+output_dir: training/output/evaluation
+seed: 42
+generation:
+  temperature: 0.0
+  max_tokens: 512
+resources:
+  max_samples: 10
+  code_timeout_sec: 5.0

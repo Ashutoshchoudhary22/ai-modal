@@ -1,0 +1,1 @@
+{"id": "browser-001", "task": "Navigate simple page", "metadata": {"start_url": "https://example.com/simple", "allowed_domains": ["example.com"], "expected_status": "completed", "expected_final_message": "Browser task completed."}}

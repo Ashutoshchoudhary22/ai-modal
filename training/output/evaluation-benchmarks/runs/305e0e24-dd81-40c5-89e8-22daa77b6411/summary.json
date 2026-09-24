@@ -1,0 +1,13 @@
+{
+  "run_id": "305e0e24-dd81-40c5-89e8-22daa77b6411",
+  "benchmark_id": "browser-agent-mini",
+  "benchmark_version": "1.0.0",
+  "model_id": "development-mock-v1",
+  "model_provider": "development_mock",
+  "status": "completed",
+  "complete": true,
+  "completed_samples": 1,
+  "total_samples": 1,
+  "errors": 0,
+  "warnings": []
+}

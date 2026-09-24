@@ -1,0 +1,20 @@
+Evaluation Plan
+Benchmark: agent-mini@1.0.0
+Dataset: agent-mini@1.0.0
+Samples: 1
+
+Model: development-mock-v1
+Provider: development_mock
+Checkpoint: none
+Capabilities: text, image, multimodal
+
+Generation:
+  Temperature: 0.0
+  Max tokens: 1024
+  Seed: 42
+
+Metrics: task_success, latency_ms, error_rate
+
+Resource limits:
+  max_samples: None
+  max_runtime_sec: None

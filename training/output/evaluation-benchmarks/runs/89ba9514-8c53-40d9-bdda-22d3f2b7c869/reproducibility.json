@@ -1,0 +1,36 @@
+{
+  "run_id": "89ba9514-8c53-40d9-bdda-22d3f2b7c869",
+  "model": {
+    "id": "development-mock-v1",
+    "provider": "development_mock",
+    "checkpoint": null
+  },
+  "benchmark": {
+    "id": "vision-mini",
+    "version": "1.0.0"
+  },
+  "dataset": {
+    "id": "vision-mini",
+    "version": "1.0.0",
+    "fingerprint": "94dcf0ad49897015ff52962f579581dfafa726b903e4f954ee153fa6f9ae2bb8"
+  },
+  "metric_versions": {
+    "normalized_match": 1,
+    "schema_validity": 1,
+    "field_accuracy": 1,
+    "latency_ms": 1
+  },
+  "generation_config": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 1024,
+    "seed": 42,
+    "structured_output": false
+  },
+  "seed": 42,
+  "software_versions": {
+    "python": "3.14.0",
+    "platform": "Windows-11-10.0.26200-SP0"
+  },
+  "timestamp": "2026-09-24T08:12:27Z"
+}

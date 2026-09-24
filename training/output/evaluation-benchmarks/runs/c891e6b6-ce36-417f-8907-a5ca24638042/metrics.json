@@ -1,0 +1,26 @@
+[
+  {
+    "metric_id": "code_pass_rate",
+    "metric_version": 1,
+    "value": 1.0,
+    "sample_count": 2,
+    "direction": "higher_is_better",
+    "unavailable": false
+  },
+  {
+    "metric_id": "latency_ms",
+    "metric_version": 1,
+    "value": 0.002249999852210749,
+    "sample_count": 2,
+    "direction": "lower_is_better",
+    "unavailable": false
+  },
+  {
+    "metric_id": "error_rate",
+    "metric_version": 1,
+    "value": 0.0,
+    "sample_count": 2,
+    "direction": "lower_is_better",
+    "unavailable": false
+  }
+]

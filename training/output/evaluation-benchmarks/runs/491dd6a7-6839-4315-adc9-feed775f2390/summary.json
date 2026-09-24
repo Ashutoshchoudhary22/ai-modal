@@ -1,0 +1,13 @@
+{
+  "run_id": "491dd6a7-6839-4315-adc9-feed775f2390",
+  "benchmark_id": "screenshot-to-code-mini",
+  "benchmark_version": "1.0.0",
+  "model_id": "development-mock-v1",
+  "model_provider": "development_mock",
+  "status": "completed_with_errors",
+  "complete": true,
+  "completed_samples": 0,
+  "total_samples": 1,
+  "errors": 1,
+  "warnings": []
+}

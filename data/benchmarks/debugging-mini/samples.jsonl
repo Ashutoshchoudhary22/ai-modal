@@ -1,0 +1,1 @@
+{"id": "debug-001", "prompt": "Fix subtract so it returns a - b.", "reference": "def subtract(a, b):\n    return a - b", "tests": "import unittest\nfrom solution import subtract\n\nclass TestSubtract(unittest.TestCase):\n    def test_subtract(self):\n        self.assertEqual(subtract(5, 2), 3)\n", "metadata": {"scripted_output": "def subtract(a, b):\n    return a - b"}}

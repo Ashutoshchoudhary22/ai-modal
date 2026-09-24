@@ -1,0 +1,1 @@
+{"id": "agent-001", "task": "Summarize repository purpose.", "metadata": {"workspace_fixture": "C:\\ashutosh\\apidemo_source_code\\New folder\\services\\agent\\tests\\fixtures\\workspace", "expected_final_message": "Task completed", "scripted_decisions": [{"type": "final", "message": "Task completed"}]}}

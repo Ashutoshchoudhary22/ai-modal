@@ -128,6 +128,12 @@ class Settings(BaseSettings):
     terminal_denied_commands: str = "rm,del,format,shutdown,reboot,diskpart,reg,curl,wget"
     diagnostics_commands: str = "ruff check .,pytest -q"
 
+    eval_max_samples: int = 100
+    eval_max_runtime_sec: int = 600
+    eval_max_model_calls: int = 200
+    eval_max_tokens: int = 100_000
+    eval_sample_retries: int = 1
+
     rate_limit_rpm: int = 60
     cors_origins: str = "http://localhost:3000,http://localhost:5173"
 

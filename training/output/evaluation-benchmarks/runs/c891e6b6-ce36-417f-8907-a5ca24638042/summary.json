@@ -1,0 +1,13 @@
+{
+  "run_id": "c891e6b6-ce36-417f-8907-a5ca24638042",
+  "benchmark_id": "coding-mini",
+  "benchmark_version": "1.0.0",
+  "model_id": "development-mock-v1",
+  "model_provider": "development_mock",
+  "status": "completed",
+  "complete": true,
+  "completed_samples": 2,
+  "total_samples": 2,
+  "errors": 0,
+  "warnings": []
+}

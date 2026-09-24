@@ -159,6 +159,13 @@ training/
 │   ├── model.py
 │   └── trainer.py
 ├── configs/multimodal/       # e.g. sft.yaml
+├── evaluation/               # Phase 12 evaluation framework
+│   ├── benchmarks/
+│   ├── metrics/
+│   ├── evaluators/
+│   ├── runners/
+│   └── cli.py
+├── configs/evaluation/       # benchmark run configs
 ├── sft/
 │   └── train.py              # python training/sft/train.py --config ...
 ├── preprocess/

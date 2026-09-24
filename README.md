@@ -175,6 +175,14 @@ python -m training.multimodal.train --config training/configs/multimodal/sft.yam
 
 See [docs/MULTIMODAL_TRAINING.md](./docs/MULTIMODAL_TRAINING.md).
 
+### Evaluation (Phase 12)
+
+```bash
+python -m training.evaluation.cli run --benchmark coding-mini --provider development_mock
+```
+
+See [docs/EVALUATION.md](./docs/EVALUATION.md).
+
 ### 7. Start Test UI (browser console)
 
 ```bash
@@ -217,6 +225,7 @@ Details: [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)
 | [docs/LOCAL_MODEL_SETUP.md](./docs/LOCAL_MODEL_SETUP.md) | Local HF model setup |
 | [docs/TRAINING.md](./docs/TRAINING.md) | SFT training pipeline |
 | [docs/MULTIMODAL_TRAINING.md](./docs/MULTIMODAL_TRAINING.md) | Multimodal SFT training |
+| [docs/EVALUATION.md](./docs/EVALUATION.md) | Evaluation & benchmarking |
 
 ---
 

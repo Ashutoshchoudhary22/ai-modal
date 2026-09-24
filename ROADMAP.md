@@ -260,16 +260,20 @@ See [docs/MULTIMODAL_TRAINING.md](./docs/MULTIMODAL_TRAINING.md).
 
 ---
 
-## Phase 12 — Evaluation Framework ⬜
+## Phase 12 — Evaluation Framework ✅
 
-**Goal:** Benchmarks tied to model versions.
+**Goal:** Reproducible benchmarks tied to model versions and checkpoints.
 
 | Deliverable | Status |
 |-------------|--------|
-| Code benchmarks | ⬜ |
-| UI/visual benchmarks | ⬜ |
-| Agent benchmarks | ⬜ |
-| Results storage + comparison | ⬜ |
+| Benchmark + metric registries | ✅ |
+| Coding sandbox evaluation | ✅ |
+| Multimodal / screenshot / UI evaluation | ✅ |
+| Agent + browser benchmarks | ✅ |
+| Regression + comparison reports | ✅ |
+| CLI + minimal API | ✅ |
+
+See [docs/EVALUATION.md](./docs/EVALUATION.md).
 
 ---
 
@@ -380,9 +384,9 @@ See [docs/MULTIMODAL_TRAINING.md](./docs/MULTIMODAL_TRAINING.md).
 
 ## Current Status
 
-**Active phase:** Phase 11 — Multimodal Training Strategy ✅  
-**Next phase:** Phase 12 — Evaluation Framework
+**Active phase:** Phase 12 — Evaluation Framework ✅  
+**Next phase:** Phase 13 — Desktop IDE
 
 ---
 
-*Last updated: Phase 11*
+*Last updated: Phase 12*

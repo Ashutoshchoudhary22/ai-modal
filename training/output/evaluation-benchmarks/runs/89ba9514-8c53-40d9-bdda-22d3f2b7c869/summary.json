@@ -1,0 +1,13 @@
+{
+  "run_id": "89ba9514-8c53-40d9-bdda-22d3f2b7c869",
+  "benchmark_id": "vision-mini",
+  "benchmark_version": "1.0.0",
+  "model_id": "development-mock-v1",
+  "model_provider": "development_mock",
+  "status": "completed",
+  "complete": true,
+  "completed_samples": 1,
+  "total_samples": 1,
+  "errors": 0,
+  "warnings": []
+}

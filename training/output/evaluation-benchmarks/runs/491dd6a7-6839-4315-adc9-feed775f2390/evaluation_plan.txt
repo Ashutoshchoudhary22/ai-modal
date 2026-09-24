@@ -1,0 +1,20 @@
+Evaluation Plan
+Benchmark: screenshot-to-code-mini@1.0.0
+Dataset: screenshot-to-code-mini@1.0.0
+Samples: 1
+
+Model: development-mock-v1
+Provider: development_mock
+Checkpoint: none
+Capabilities: text, image, multimodal
+
+Generation:
+  Temperature: 0.0
+  Max tokens: 1024
+  Seed: 42
+
+Metrics: render_success, visual_similarity, layout_similarity, latency_ms
+
+Resource limits:
+  max_samples: None
+  max_runtime_sec: None

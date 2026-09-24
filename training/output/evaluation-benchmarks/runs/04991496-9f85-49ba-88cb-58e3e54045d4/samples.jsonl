@@ -1,0 +1,1 @@
+{"sample_id": "agent-001", "prediction": "Task completed", "reference": "Task completed", "metrics": {"task_success": 1.0}, "latency_ms": 141.48649999879126, "token_usage": {}, "error": null, "failure_category": null, "status": "completed", "attempt_count": 1}
