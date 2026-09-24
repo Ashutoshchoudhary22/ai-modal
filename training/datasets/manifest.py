@@ -21,6 +21,11 @@ class DatasetInfo(BaseModel):
         "instruction",
         "conversation",
         "preference",
+        "image_understanding",
+        "visual_question_answering",
+        "screenshot_analysis",
+        "screenshot_to_code",
+        "ui_generation",
     ] = "code_sft"
     dataset_type: Literal[
         "instruction",
@@ -28,9 +33,12 @@ class DatasetInfo(BaseModel):
         "completion",
         "preference",
         "mixed",
+        "multimodal",
     ] = "instruction"
     synthetic: bool = False
     parent_version: str | None = None
+    modalities: list[Literal["text", "image"]] = Field(default_factory=lambda: ["text"])
+    task_types: list[str] = Field(default_factory=list)
 
 
 class SourceInfo(BaseModel):
@@ -39,6 +47,13 @@ class SourceInfo(BaseModel):
     url: str | None = None
     license: str = Field(min_length=1)
     license_url: str | None = None
+
+
+class MultimodalInfo(BaseModel):
+    image_count: int | None = Field(default=None, ge=0)
+    image_formats: list[str] = Field(default_factory=list)
+    average_resolution: str | None = None
+    max_resolution: str | None = None
 
 
 class RecordsInfo(BaseModel):
@@ -114,6 +129,7 @@ class DatasetManifest(BaseModel):
     dataset: DatasetInfo
     source: SourceInfo
     records: RecordsInfo
+    multimodal: MultimodalInfo | None = None
     quality: QualityRules = Field(default_factory=QualityRules)
     validation: ValidationConfig = Field(default_factory=ValidationConfig)
     preprocessing: PreprocessingConfig = Field(default_factory=PreprocessingConfig)

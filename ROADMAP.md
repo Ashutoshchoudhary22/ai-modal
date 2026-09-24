@@ -242,14 +242,21 @@ See [docs/MULTIMODAL.md](./docs/MULTIMODAL.md).
 
 ---
 
-## Phase 11 — Training Strategy ⬜
+## Phase 11 — Multimodal Training Strategy ✅
 
-**Goal:** Staged training configs for all 10 stages.
+**Goal:** Reproducible multimodal SFT infrastructure with CPU smoke training.
 
 | Deliverable | Status |
 |-------------|--------|
-| Stage configs (1–10) | ⬜ |
-| Pretraining path (documented, optional) | ⬜ |
+| Multimodal JSONL dataset contract | ✅ |
+| Dataset validation / fingerprint / leakage | ✅ |
+| Preprocessing + collator + label masking | ✅ |
+| Tiny trainable development model | ✅ |
+| SFT + LoRA + checkpoint/resume | ✅ |
+| CLI + minimal training API | ✅ |
+| CPU smoke training (`multimodal-mini`) | ✅ |
+
+See [docs/MULTIMODAL_TRAINING.md](./docs/MULTIMODAL_TRAINING.md).
 
 ---
 
@@ -373,9 +380,9 @@ See [docs/MULTIMODAL.md](./docs/MULTIMODAL.md).
 
 ## Current Status
 
-**Active phase:** Phase 4 — Repository Intelligence ✅  
-**Next phase:** Phase 11 — Training Strategy
+**Active phase:** Phase 11 — Multimodal Training Strategy ✅  
+**Next phase:** Phase 12 — Evaluation Framework
 
 ---
 
-*Last updated: Phase 10*
+*Last updated: Phase 11*

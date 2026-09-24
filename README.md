@@ -165,6 +165,16 @@ See [docs/BROWSER_AGENT.md](./docs/BROWSER_AGENT.md) for the bounded browser age
 
 See [docs/MULTIMODAL.md](./docs/MULTIMODAL.md) for text + image inference (`POST /v1/multimodal/generate`).
 
+### Multimodal training (Phase 11)
+
+CPU smoke SFT with the tiny development dataset:
+
+```bash
+python -m training.multimodal.train --config training/configs/multimodal/sft.yaml
+```
+
+See [docs/MULTIMODAL_TRAINING.md](./docs/MULTIMODAL_TRAINING.md).
+
 ### 7. Start Test UI (browser console)
 
 ```bash
@@ -206,6 +216,7 @@ Details: [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)
 | [docs/MODEL_PROVIDER.md](./docs/MODEL_PROVIDER.md) | Model provider architecture |
 | [docs/LOCAL_MODEL_SETUP.md](./docs/LOCAL_MODEL_SETUP.md) | Local HF model setup |
 | [docs/TRAINING.md](./docs/TRAINING.md) | SFT training pipeline |
+| [docs/MULTIMODAL_TRAINING.md](./docs/MULTIMODAL_TRAINING.md) | Multimodal SFT training |
 
 ---
 

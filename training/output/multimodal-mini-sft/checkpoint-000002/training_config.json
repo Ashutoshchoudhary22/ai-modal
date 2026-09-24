@@ -1,0 +1,103 @@
+{
+  "experiment": {
+    "name": "multimodal-mini-sft",
+    "description": "Development CPU smoke SFT for multimodal-mini",
+    "seed": 42,
+    "smoke_test": true
+  },
+  "dataset": {
+    "path": "data/examples/multimodal-mini",
+    "manifest": null,
+    "split": "train",
+    "max_records": 8,
+    "max_images": null
+  },
+  "model": {
+    "type": "tiny_multimodal",
+    "vision_encoder": {
+      "type": "tiny",
+      "hidden_dim": 32
+    },
+    "projector": {
+      "type": "linear",
+      "hidden_dim": 32
+    },
+    "language_model": {
+      "type": "tiny",
+      "hidden_dim": 32,
+      "vocab_size": null
+    },
+    "freeze_vision_encoder": false,
+    "freeze_language_model": false,
+    "freeze_projector": false,
+    "trust_remote_code": false
+  },
+  "processor": {
+    "chat_template": "<{role}>\n{content}\n</{role}>",
+    "image_token": "<image>",
+    "max_seq_length": 128,
+    "image": {
+      "image_size": 16,
+      "resize_mode": "resize",
+      "max_pixels": 4096,
+      "dtype": "fp32"
+    }
+  },
+  "training": {
+    "training_mode": "full",
+    "num_epochs": 1,
+    "max_steps": 4,
+    "per_device_train_batch_size": 1,
+    "per_device_eval_batch_size": 1,
+    "gradient_accumulation_steps": 2,
+    "learning_rate": 0.01,
+    "weight_decay": 0.0,
+    "warmup_steps": 0,
+    "warmup_ratio": 0.0,
+    "max_grad_norm": 1.0,
+    "logging_steps": 1,
+    "eval_steps": 2,
+    "save_steps": 2,
+    "save_total_limit": 2,
+    "gradient_checkpointing": false,
+    "scheduler": "linear",
+    "optimizer": "adamw"
+  },
+  "peft": {
+    "enabled": false,
+    "method": "lora",
+    "rank": 4,
+    "alpha": 8,
+    "dropout": 0.05,
+    "target_modules": [
+      "lm_head"
+    ]
+  },
+  "hardware": {
+    "device": "cpu",
+    "dtype": "fp32"
+  },
+  "output": {
+    "dir": "training/output/multimodal-mini-sft",
+    "save_total_limit": 2
+  },
+  "resources": {
+    "max_training_steps": 10,
+    "max_dataset_records": 20,
+    "max_images": 20,
+    "max_runtime_sec": null,
+    "min_free_disk_bytes": 1048576
+  },
+  "registry": {
+    "enabled": false,
+    "model_id": null,
+    "model_name": null,
+    "version": null,
+    "status": "registered"
+  },
+  "evaluation": {
+    "enabled": true,
+    "metric": "loss",
+    "lower_is_better": true
+  }
+}

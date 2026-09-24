@@ -127,7 +127,7 @@ Before merging any PR:
 ## 13. Model Research & Training Standards
 
 44. **Reproducible training.**
-    Every training run must record:
+    Multimodal training (Phase 11) writes `reproducibility.json`, `experiment.json`, and checkpoint metadata under the configured output directory. Every training run must record:
 
     * model/base checkpoint
     * dataset version

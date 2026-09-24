@@ -37,6 +37,7 @@ Build a **replaceable-model AI platform** that eventually runs on **our own mode
 | Screenshot-to-code | **IMPLEMENTED** | `services/agent/screenshot`, `docs/SCREENSHOT_TO_CODE.md` |
 | Browser agent | **IMPLEMENTED** | `services/agent/browser`, `docs/BROWSER_AGENT.md` |
 | Multimodal model architecture | **IMPLEMENTED** | `services/ai-api/multimodal`, `docs/MULTIMODAL.md` |
+| Multimodal training strategy | **IMPLEMENTED** | `training/multimodal`, `docs/MULTIMODAL_TRAINING.md` |
 | Training pipeline (SFT) | **IMPLEMENTED** | `training/`, `docs/TRAINING.md` |
 | Vector DB / object storage | **FUTURE** | Not implemented; Redis/MySQL only in dev stack |
 | API gateway / auth / multi-tenant | **FUTURE** | Phase 15–16 |
@@ -204,6 +205,18 @@ Separate interfaces — not coupled to one vision model:
 TextEncoder/Decoder ──┐
                       ├── MultimodalFusion → Unified Generate/Vision API
 VisionEncoder ────────┘
+```
+
+### H2. Multimodal Training (Phase 11)
+
+```
+Dataset (JSONL + image refs)
+   ↓ Validation / fingerprint / leakage
+   ↓ MultimodalTrainingProcessor + collator
+   ↓ TrainableMultimodalModel (tiny dev model or future HF stack)
+   ↓ SFT loss + optimizer
+   ↓ Checkpoint / resume / experiment metadata
+   ↓ Model registry (optional)
 ```
 
 ### I. SaaS & Multi-Tenancy (Phase 16)

@@ -1,0 +1,20 @@
+Training Plan
+Dataset:
+  Records: 8
+  Images: 8
+  Train: 6
+  Validation: 2
+
+Model:
+  Parameters: 29645
+  Trainable: 29645
+
+Hardware:
+  Device: cpu
+  Dtype: fp32
+
+Training:
+  Epochs: 1
+  Steps: 4
+  Effective batch: 2
+  Learning rate: 0.01

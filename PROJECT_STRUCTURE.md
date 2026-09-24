@@ -152,6 +152,13 @@ Shared React components (design system).
 
 ```
 training/
+├── multimodal/               # Phase 11 multimodal SFT
+│   ├── train/                # python -m training.multimodal.train --config ...
+│   ├── processor.py
+│   ├── collator.py
+│   ├── model.py
+│   └── trainer.py
+├── configs/multimodal/       # e.g. sft.yaml
 ├── sft/
 │   └── train.py              # python training/sft/train.py --config ...
 ├── preprocess/
