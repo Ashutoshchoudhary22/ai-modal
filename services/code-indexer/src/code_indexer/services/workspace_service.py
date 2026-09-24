@@ -63,15 +63,15 @@ class WorkspaceService:
             )
 
     def resolve_root_path(self, workspace_id: str, fallback_root: str | None = None) -> Path:
+        allowed = self.config.allowed_workspace_roots or None
         record = self.get_workspace(workspace_id)
         if record:
-            return validate_workspace_root(
-                Path(record.root_path),
-                allowed_roots=self.config.allowed_workspace_roots or None,
-            )
+            try:
+                return validate_workspace_root(Path(record.root_path), allowed_roots=allowed)
+            except PathSecurityError:
+                if fallback_root:
+                    return validate_workspace_root(Path(fallback_root), allowed_roots=allowed)
+                raise
         if fallback_root:
-            return validate_workspace_root(
-                Path(fallback_root),
-                allowed_roots=self.config.allowed_workspace_roots or None,
-            )
+            return validate_workspace_root(Path(fallback_root), allowed_roots=allowed)
         raise PathSecurityError(f"Workspace not found: {workspace_id}")

@@ -1,0 +1,34 @@
+"""Structured tool error codes."""
+
+from __future__ import annotations
+
+from enum import StrEnum
+
+
+class ToolErrorCode(StrEnum):
+    TOOL_NOT_FOUND = "TOOL_NOT_FOUND"
+    INVALID_ARGUMENTS = "INVALID_ARGUMENTS"
+    PERMISSION_DENIED = "PERMISSION_DENIED"
+    WORKSPACE_NOT_FOUND = "WORKSPACE_NOT_FOUND"
+    PATH_OUTSIDE_WORKSPACE = "PATH_OUTSIDE_WORKSPACE"
+    FILE_NOT_FOUND = "FILE_NOT_FOUND"
+    FILE_IS_BINARY = "FILE_IS_BINARY"
+    FILE_TOO_LARGE = "FILE_TOO_LARGE"
+    SENSITIVE_FILE = "SENSITIVE_FILE"
+    EDIT_TARGET_NOT_FOUND = "EDIT_TARGET_NOT_FOUND"
+    EDIT_TARGET_AMBIGUOUS = "EDIT_TARGET_AMBIGUOUS"
+    COMMAND_NOT_ALLOWED = "COMMAND_NOT_ALLOWED"
+    COMMAND_TIMEOUT = "COMMAND_TIMEOUT"
+    COMMAND_FAILED = "COMMAND_FAILED"
+    GIT_NOT_REPOSITORY = "GIT_NOT_REPOSITORY"
+    TOOL_EXECUTION_FAILED = "TOOL_EXECUTION_FAILED"
+    TOOLS_DISABLED = "TOOLS_DISABLED"
+    TERMINAL_DISABLED = "TERMINAL_DISABLED"
+    WRITE_DISABLED = "WRITE_DISABLED"
+
+
+class ToolExecutionError(Exception):
+    def __init__(self, code: ToolErrorCode, message: str) -> None:
+        self.code = code
+        self.message = message
+        super().__init__(message)

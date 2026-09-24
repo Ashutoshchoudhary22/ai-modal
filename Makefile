@@ -14,7 +14,7 @@ help:
 	@echo "  make db-status   Show migration status"
 
 install:
-	pip install -e "packages/protocol[dev]" -e "packages/shared[dev]" -e "services/ai-api[dev]" -e "services/code-indexer[dev]" -e "training[train,dev]"
+	pip install -e "packages/protocol[dev]" -e "packages/shared[dev]" -e "services/ai-api[dev]" -e "services/code-indexer[dev]" -e "services/agent[dev]" -e "training[train,dev]"
 	npm install
 
 test:

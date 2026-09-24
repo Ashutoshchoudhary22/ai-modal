@@ -303,4 +303,12 @@ Before merging any PR:
 
 ---
 
-*Last updated: Phase 0*
+*Last updated: Phase 5*
+
+### Phase 5 tool rules
+
+79. **Tool registry only coordinates.** Do not embed tool behavior in the registry; each tool is a separate module.
+80. **Workspace sandbox mandatory.** All file and terminal tools must resolve paths against `ToolExecutionContext.workspace_root`.
+81. **No shell=True.** Terminal tools parse argv explicitly; metacharacters and denylisted commands are rejected.
+82. **Structured tool errors.** Return `ToolResult` with `error_code`; do not leak stack traces to API clients.
+83. **Phase boundary.** Phase 5 tools are deterministic; autonomous agent loops belong in Phase 6.

@@ -19,7 +19,7 @@ Build a **replaceable-model AI platform** that eventually runs on **our own mode
 
 ---
 
-## Implementation Status (as of Phase 1)
+## Implementation Status (as of Phase 5)
 
 | Area | Status | Location |
 |------|--------|----------|
@@ -29,9 +29,10 @@ Build a **replaceable-model AI platform** that eventually runs on **our own mode
 | Centralized config | **IMPLEMENTED** | `packages/shared/config.py`, `.env.example` |
 | Request ID middleware | **IMPLEMENTED** | `services/ai-api/middleware/request_id.py` |
 | Telemetry context (lightweight) | **IMPLEMENTED** | `packages/shared/telemetry/` |
-| Agent / tool / indexer protocols | **PLANNED (interfaces only)** | `packages/protocol/agent`, `tools`, `indexer` |
-| Agent service, tools, sandbox | **PLANNED** | Phase 5–6 |
-| Repository intelligence | **PLANNED** | Phase 4 |
+| Tool protocols + types | **IMPLEMENTED** | `packages/protocol/tools` |
+| Repository intelligence | **IMPLEMENTED** | `services/code-indexer`, `docs/REPOSITORY_INTELLIGENCE.md` |
+| Coding agent tools | **IMPLEMENTED** | `services/agent`, `docs/CODING_AGENT_TOOLS.md` |
+| Agent loop (planner/retries) | **PLANNED** | Phase 6 |
 | Training pipeline (SFT) | **IMPLEMENTED** | `training/`, `docs/TRAINING.md` |
 | Vector DB / object storage | **FUTURE** | Not implemented; Redis/MySQL only in dev stack |
 | API gateway / auth / multi-tenant | **FUTURE** | Phase 15–16 |

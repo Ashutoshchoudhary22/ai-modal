@@ -12,6 +12,7 @@ members = [
     "packages/shared",
     "services/ai-api",
     "services/code-indexer",
+    "services/agent",
     "training",
 ]
 
@@ -23,6 +24,7 @@ addopts = "-v --tb=short"
 markers = [
     "integration: marks tests that require external services or heavy deps",
 ]
+norecursedirs = [".git", ".venv", "node_modules", "fixtures"]
 
 [tool.ruff]
 target-version = "py312"

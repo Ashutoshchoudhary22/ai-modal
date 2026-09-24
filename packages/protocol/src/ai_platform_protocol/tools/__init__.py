@@ -12,6 +12,7 @@ class ToolPermission(StrEnum):
     READ = "read"
     WRITE = "write"
     EXECUTE = "execute"
+    GIT_READ = "git_read"
     NETWORK = "network"
     BROWSER = "browser"
 
@@ -24,10 +25,18 @@ class ToolDefinition(BaseModel):
     timeout_sec: int = 120
 
 
+class ToolCall(BaseModel):
+    tool_name: str
+    arguments: dict[str, Any] = Field(default_factory=dict)
+    workspace_id: str
+    request_id: str
+
+
 class ToolResult(BaseModel):
     success: bool
     output: str | None = None
     error: str | None = None
+    error_code: str | None = None
     metadata: dict[str, Any] = Field(default_factory=dict)
 
 

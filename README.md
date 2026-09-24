@@ -13,8 +13,9 @@ A proprietary AI development platform for software engineering — code generati
 |------------|-------|
 | Replaceable model providers | 1 ✅ |
 | Code model fine-tuning | 2–3 |
-| Repository indexing & search | 4 |
-| Autonomous coding agent | 5–6 |
+| Repository indexing & search | 4 ✅ |
+| Coding agent tools (file/search/terminal/git) | 5 ✅ |
+| Autonomous coding agent loop | 6 |
 | UI generation (React/Tailwind) | 7 |
 | Screenshot-to-code | 8 |
 | Browser-based UI testing | 9 |
@@ -137,6 +138,10 @@ npm run test
 make dev-ai-api
 # Health: http://localhost:8000/health
 ```
+
+### Coding agent tools (Phase 5)
+
+See [docs/CODING_AGENT_TOOLS.md](./docs/CODING_AGENT_TOOLS.md) for tool schemas, permissions, and API usage (`GET /v1/tools`, `POST /v1/tools/execute` on the agent service).
 
 ### 7. Start Test UI (browser console)
 

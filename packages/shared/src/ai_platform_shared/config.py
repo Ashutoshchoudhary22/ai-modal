@@ -42,6 +42,26 @@ class Settings(BaseSettings):
     model_generation_temperature: float = 0.7
     model_generation_top_p: float = 1.0
 
+    agent_host: str = "0.0.0.0"
+    agent_port: int = 8001
+    agent_max_iterations: int = 25
+    agent_tool_timeout_sec: int = 120
+
+    tools_enabled: bool = True
+    tool_max_file_size: int = 1_048_576
+    tool_max_output_chars: int = 32_000
+    tool_max_search_results: int = 50
+    tool_max_context_chars: int = 16_000
+    tool_write_enabled: bool = True
+    terminal_enabled: bool = True
+    terminal_timeout_sec: int = 120
+    terminal_max_output_chars: int = 32_000
+    terminal_allowed_commands: str = (
+        "python,pytest,ruff,node,npm,npx,pnpm,yarn,git,pip,uv,make,cargo,go"
+    )
+    terminal_denied_commands: str = "rm,del,format,shutdown,reboot,diskpart,reg,curl,wget"
+    diagnostics_commands: str = "ruff check .,pytest -q"
+
     rate_limit_rpm: int = 60
     cors_origins: str = "http://localhost:3000,http://localhost:5173"
 
@@ -56,6 +76,18 @@ class Settings(BaseSettings):
     @property
     def cors_origins_list(self) -> list[str]:
         return [origin.strip() for origin in self.cors_origins.split(",") if origin.strip()]
+
+    @property
+    def terminal_allowed_commands_list(self) -> list[str]:
+        return [c.strip().lower() for c in self.terminal_allowed_commands.split(",") if c.strip()]
+
+    @property
+    def terminal_denied_commands_list(self) -> list[str]:
+        return [c.strip().lower() for c in self.terminal_denied_commands.split(",") if c.strip()]
+
+    @property
+    def diagnostics_commands_list(self) -> list[str]:
+        return [c.strip() for c in self.diagnostics_commands.split(",") if c.strip()]
 
     @property
     def is_production(self) -> bool:

@@ -111,17 +111,28 @@ See [docs/REPOSITORY_INTELLIGENCE.md](./docs/REPOSITORY_INTELLIGENCE.md).
 
 ---
 
-## Phase 5 — Coding Agent Tools ⬜
+## Phase 5 — Coding Agent Tools ✅
 
-**Goal:** Sandboxed tool library with schemas and permissions.
+**Goal:** Deterministic, sandboxed tool library with schemas, permissions, and API.
 
 | Deliverable | Status |
 |-------------|--------|
-| All tools (read/write/terminal/git/browser/…) | ⬜ |
-| Permission rules + timeouts | ⬜ |
-| Cancellation + structured logging | ⬜ |
+| Tool abstraction + registry | ✅ |
+| File tools (read/list/write/edit) | ✅ |
+| Code tools (search/symbols/context) | ✅ |
+| Terminal tool + command policy + executor abstraction | ✅ |
+| Git read-only tools (status/diff) | ✅ |
+| Diagnostics tool (configurable) | ✅ |
+| Permission model + workspace security | ✅ |
+| Tool API (`GET /v1/tools`, `POST /v1/tools/execute`) | ✅ |
+| Unit, security, integration tests | ✅ |
+| In-memory audit logging | ✅ |
 
-**Exit criteria:** Each tool has unit tests; dangerous ops require approval.
+**Exit criteria:** Each tool has unit tests; dangerous ops blocked by policy; no unrestricted terminal. ✅
+
+See [docs/CODING_AGENT_TOOLS.md](./docs/CODING_AGENT_TOOLS.md).
+
+> Phase 5 does **not** include the Agent Loop (Phase 6).
 
 ---
 
@@ -320,8 +331,8 @@ See [docs/REPOSITORY_INTELLIGENCE.md](./docs/REPOSITORY_INTELLIGENCE.md).
 ## Current Status
 
 **Active phase:** Phase 4 — Repository Intelligence ✅  
-**Next phase:** Phase 5 — Coding Agent Tools
+**Next phase:** Phase 6 — Agent Loop
 
 ---
 
-*Last updated: Phase 0*
+*Last updated: Phase 5*
