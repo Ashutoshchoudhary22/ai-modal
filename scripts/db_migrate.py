@@ -70,6 +70,46 @@ def _connect(db: dict[str, str | int], database: str | None = None):
     )
 
 
+_CREATE_INDEX_IF_NOT_EXISTS = re.compile(
+    r"CREATE\s+INDEX\s+IF\s+NOT\s+EXISTS\s+"
+    r"(?P<index_name>[^\s]+)\s+"
+    r"ON\s+(?P<table_name>[^\s(]+)\s*"
+    r"\((?P<columns>[^)]+)\)\s*;?\s*$",
+    re.IGNORECASE,
+)
+
+
+def _index_exists(conn, table_name: str, index_name: str) -> bool:
+    with conn.cursor() as cur:
+        cur.execute(
+            """
+            SELECT COUNT(*)
+            FROM information_schema.statistics
+            WHERE table_schema = DATABASE()
+              AND table_name = %s
+              AND index_name = %s
+            """,
+            (table_name, index_name),
+        )
+        return int(cur.fetchone()[0]) > 0
+
+
+def _execute_statement(conn, statement: str) -> None:
+    normalized = re.sub(r"\s+", " ", statement.strip()).rstrip(";")
+    match = _CREATE_INDEX_IF_NOT_EXISTS.match(normalized)
+    if match:
+        index_name = match.group("index_name")
+        table_name = match.group("table_name")
+        columns = match.group("columns")
+        if _index_exists(conn, table_name, index_name):
+            return
+        with conn.cursor() as cur:
+            cur.execute(f"CREATE INDEX {index_name} ON {table_name}({columns})")
+        return
+    with conn.cursor() as cur:
+        cur.execute(statement)
+
+
 def _split_sql_statements(sql: str) -> list[str]:
     statements: list[str] = []
     current: list[str] = []
@@ -134,9 +174,8 @@ def bootstrap(conn, db: dict[str, str | int]) -> None:
     sql = INIT_SQL.read_text(encoding="utf-8")
     sql = sql.replace("USE aiplatform;", f"USE {db['database']};")
     statements = _split_sql_statements(sql)
-    with conn.cursor() as cur:
-        for statement in statements:
-            cur.execute(statement)
+    for statement in statements:
+        _execute_statement(conn, statement)
     conn.commit()
     print("Bootstrap complete.")
     print("Run pending migrations with: python scripts/db_migrate.py")
@@ -159,9 +198,8 @@ def apply_migrations(conn) -> None:
         db_name = conn.db.decode() if isinstance(conn.db, bytes) else conn.db
         sql = sql.replace("USE aiplatform;", f"USE {db_name};")
         statements = _split_sql_statements(sql)
-        with conn.cursor() as cur:
-            for statement in statements:
-                cur.execute(statement)
+        for statement in statements:
+            _execute_statement(conn, statement)
         conn.commit()
         _record_migration(conn, version)
         print(f"  done  {version}")
