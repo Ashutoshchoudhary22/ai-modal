@@ -36,9 +36,7 @@ class AgentPolicy:
             return False
         if not self.allow_write and tool_name in {"file.write", "file.edit"}:
             return False
-        return not (
-            not self.allow_execute and tool_name in {"terminal.exec", "code.diagnostics"}
-        )
+        return not (not self.allow_execute and tool_name in {"terminal.exec", "code.diagnostics"})
 
     def assert_tool_allowed(self, tool_name: str) -> None:
         if not self.is_tool_allowed(tool_name):

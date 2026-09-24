@@ -65,9 +65,7 @@ def process_dataset(
             target_dir = Path(manifest.records.processed_dir)
         else:
             target_dir = (
-                Path("training/data/processed")
-                / manifest.dataset.name
-                / manifest.dataset.version
+                Path("training/data/processed") / manifest.dataset.name / manifest.dataset.version
             )
     storage = FilesystemDatasetStorage(target_dir)
     target_dir = storage.resolve(".")
@@ -106,12 +104,8 @@ def process_dataset(
     processed_manifest_path = target_dir / "manifest.json"
     save_manifest(processed_manifest, processed_manifest_path)
 
-    exact_dupes = len(
-        [item for item in deduped.removed if item[1] == "exact duplicate"]
-    )
-    norm_dupes = len(
-        [item for item in deduped.removed if item[1] == "normalized-text duplicate"]
-    )
+    exact_dupes = len([item for item in deduped.removed if item[1] == "exact duplicate"])
+    norm_dupes = len([item for item in deduped.removed if item[1] == "normalized-text duplicate"])
     filtered_count = len(filtered.removed) + len(clean_rejected)
 
     quality = QualityReport(

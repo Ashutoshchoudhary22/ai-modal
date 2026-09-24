@@ -119,11 +119,7 @@ class TrainingConfig(BaseModel):
             ]
             if missing:
                 raise ValueError(f"Registry enabled but missing fields: {', '.join(missing)}")
-        if (
-            self.lora.enabled
-            and not self.lora.target_modules
-            and self.lora.quantization != "none"
-        ):
+        if self.lora.enabled and not self.lora.target_modules and self.lora.quantization != "none":
             pass
         return self
 

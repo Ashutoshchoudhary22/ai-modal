@@ -36,7 +36,7 @@ def _require_training_deps() -> None:
         import transformers  # noqa: F401
     except ImportError as exc:
         raise TrainingDependencyError(
-            "Training dependencies missing. Install with: pip install -e \"training[train]\""
+            'Training dependencies missing. Install with: pip install -e "training[train]"'
         ) from exc
 
 
@@ -80,9 +80,7 @@ def _validate_lora_targets(model, target_modules: list[str]) -> None:
     available = {name for name, _ in model.named_modules()}
     missing = [module for module in target_modules if module not in available]
     if missing:
-        raise TrainingConfigError(
-            "LoRA target_modules not found in model: " + ", ".join(missing)
-        )
+        raise TrainingConfigError("LoRA target_modules not found in model: " + ", ".join(missing))
 
 
 def _build_model(config: TrainingConfig, hardware, precision: str):

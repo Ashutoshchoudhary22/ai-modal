@@ -82,9 +82,7 @@ def load_jsonl_records(
             if not stripped:
                 if allow_empty_lines:
                     continue
-                issues.append(
-                    ValidationIssue(line_number, "empty JSONL line", severity="error")
-                )
+                issues.append(ValidationIssue(line_number, "empty JSONL line", severity="error"))
                 continue
             try:
                 payload = json.loads(stripped)

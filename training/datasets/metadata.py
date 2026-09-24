@@ -56,9 +56,7 @@ def persist_dataset_metadata(
                     "processed_hash": result.quality_report.processed_hash,
                     "processing_config_hash": result.quality_report.configuration_hash,
                 },
-                report_uri=str(
-                    Path(result.processed.processed_dir) / "quality_report.json"
-                ),
+                report_uri=str(Path(result.processed.processed_dir) / "quality_report.json"),
                 processed_uri=str(result.processed.processed_dir),
             )
             return version.id

@@ -102,9 +102,7 @@ def test_live_registry_upsert_and_lookup():
         from sqlalchemy import delete
 
         session.execute(
-            delete(ProviderModelRegistryORM).where(
-                ProviderModelRegistryORM.model_id == model_id
-            )
+            delete(ProviderModelRegistryORM).where(ProviderModelRegistryORM.model_id == model_id)
         )
 
 

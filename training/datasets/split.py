@@ -41,9 +41,7 @@ def split_records(entries: list[DedupEntry], config: SplitConfig) -> SplitResult
     val_hashes = {entry.normalized_hash for entry in validation}
     test_hashes = {entry.normalized_hash for entry in test}
     overlap = (
-        (train_hashes & val_hashes)
-        | (train_hashes & test_hashes)
-        | (val_hashes & test_hashes)
+        (train_hashes & val_hashes) | (train_hashes & test_hashes) | (val_hashes & test_hashes)
     )
     if overlap:
         raise ValueError("Split produced overlapping records across partitions")

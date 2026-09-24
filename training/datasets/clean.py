@@ -37,8 +37,7 @@ def clean_record(record: ParsedRecord, config: PreprocessingConfig) -> ParsedRec
         input_text = input_text.strip()
         output = output.strip()
         messages = [
-            {"role": message["role"], "content": message["content"].strip()}
-            for message in messages
+            {"role": message["role"], "content": message["content"].strip()} for message in messages
         ]
 
     if config.remove_empty and not output.strip():
