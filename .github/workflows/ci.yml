@@ -19,13 +19,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -e "packages/protocol[dev]" -e "packages/shared[dev]" -e "services/ai-api[dev]"
+          pip install -e "packages/protocol[dev]" -e "packages/shared[dev]" -e "services/ai-api[dev]" -e "services/code-indexer[dev]" -e "services/agent[dev]" -e "training[dev]"
 
       - name: Ruff lint
-        run: ruff check packages services tests
+        run: ruff check packages services tests training
 
       - name: Ruff format check
-        run: ruff format --check packages services tests
+        run: ruff format --check packages services tests training
 
       - name: Pytest
         run: pytest

@@ -6,6 +6,7 @@ requires-python = ">=3.12"
 dependencies = [
     "ai-platform-protocol",
     "ai-platform-shared",
+    "numpy>=2.0.0",
     "pydantic>=2.10.0",
     "pyyaml>=6.0.2",
 ]
