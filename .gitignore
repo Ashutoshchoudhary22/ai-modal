@@ -26,6 +26,8 @@ npm-debug.log*
 dist/
 build/
 .electron/
+apps/desktop/out/
+apps/desktop/release/
 
 # Environment
 .env

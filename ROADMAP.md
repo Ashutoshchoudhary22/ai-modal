@@ -277,26 +277,38 @@ See [docs/EVALUATION.md](./docs/EVALUATION.md).
 
 ---
 
-## Phase 13 — Desktop IDE ⬜
+## Phase 13 — Desktop IDE ✅
 
-**Goal:** Electron app with Monaco, chat, terminal.
+**Goal:** Electron app with Monaco, chat, terminal, agent, evaluation.
 
 | Deliverable | Status |
 |-------------|--------|
-| Layout (explorer/editor/chat/terminal) | ⬜ |
-| Git, problems, diff panels | ⬜ |
-| Agent mode integration | ⬜ |
+| Electron shell + secure preload | ✅ |
+| Layout (explorer/editor/chat/terminal) | ✅ |
+| Git, problems, diff panels | ✅ |
+| Agent mode integration | ✅ |
+| UI generation + screenshot-to-code | ✅ |
+| Evaluation panel | ✅ |
+| Command palette + search | ✅ |
+
+See [docs/DESKTOP_IDE.md](./docs/DESKTOP_IDE.md).
 
 ---
 
-## Phase 14 — Inline Coding ⬜
+## Phase 14 — Inline Coding ✅
 
-**Goal:** Low-latency completions and inline edits.
+**Goal:** Low-latency inline code completion (Copilot-style ghost text).
 
 | Deliverable | Status |
 |-------------|--------|
-| Streaming completions | ⬜ |
-| Inline edit/explain/refactor | ⬜ |
+| Completion protocol + API | ✅ |
+| Monaco inline completion provider | ✅ |
+| Debounce / cancel / stale protection | ✅ |
+| Repository-aware bounded context | ✅ |
+| completion-mini benchmark | ✅ |
+| Settings + status indicator | ✅ |
+
+See [docs/INLINE_COMPLETION.md](./docs/INLINE_COMPLETION.md).
 
 ---
 
@@ -384,9 +396,9 @@ See [docs/EVALUATION.md](./docs/EVALUATION.md).
 
 ## Current Status
 
-**Active phase:** Phase 12 — Evaluation Framework ✅  
-**Next phase:** Phase 13 — Desktop IDE
+**Active phase:** Phase 14 — Inline Coding ✅  
+**Next phase:** Phase 15 — Security Hardening
 
 ---
 
-*Last updated: Phase 12*
+*Last updated: Phase 14*

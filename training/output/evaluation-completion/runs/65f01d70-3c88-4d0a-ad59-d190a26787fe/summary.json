@@ -1,0 +1,13 @@
+{
+  "run_id": "65f01d70-3c88-4d0a-ad59-d190a26787fe",
+  "benchmark_id": "completion-mini",
+  "benchmark_version": "1.0.0",
+  "model_id": "development-mock-v1",
+  "model_provider": "development_mock",
+  "status": "completed",
+  "complete": true,
+  "completed_samples": 5,
+  "total_samples": 5,
+  "errors": 0,
+  "warnings": []
+}

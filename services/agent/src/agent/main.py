@@ -34,6 +34,12 @@ def create_app() -> FastAPI:
     app.include_router(ui.router, prefix="/v1")
     app.include_router(screenshot.router, prefix="/v1")
     app.include_router(browser.router, prefix="/v1")
+    try:
+        from training.evaluation.api import router as evaluation_router
+
+        app.include_router(evaluation_router)
+    except ImportError:
+        pass
     return app
 
 

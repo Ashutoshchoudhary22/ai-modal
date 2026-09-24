@@ -23,7 +23,8 @@ A proprietary AI development platform for software engineering — code generati
 | Browser-based UI testing | 9 |
 | Multimodal architecture | 10 |
 | Evaluation & benchmarks | 12 |
-| Desktop IDE (Electron) | 13 |
+| Desktop IDE (Electron) | 13 ✅ |
+| Inline code completion | 14 ✅ |
 | Multi-tenant SaaS | 16 |
 
 See [ROADMAP.md](./ROADMAP.md) for the full phased plan.

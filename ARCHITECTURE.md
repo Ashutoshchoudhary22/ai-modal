@@ -42,7 +42,8 @@ Build a **replaceable-model AI platform** that eventually runs on **our own mode
 | Training pipeline (SFT) | **IMPLEMENTED** | `training/`, `docs/TRAINING.md` |
 | Vector DB / object storage | **FUTURE** | Not implemented; Redis/MySQL only in dev stack |
 | API gateway / auth / multi-tenant | **FUTURE** | Phase 15–16 |
-| Desktop IDE | **FUTURE** | Phase 13 |
+| Desktop IDE | **IMPLEMENTED** | `apps/desktop`, `docs/DESKTOP_IDE.md` |
+| Inline code completion | **IMPLEMENTED** | `services/ai-api/completion`, `docs/INLINE_COMPLETION.md` |
 
 ---
 
@@ -229,6 +230,17 @@ Checkpoint / Model Registry
    ↓ Task Evaluator (code / multimodal / agent / browser)
    ↓ Metric Engine
    ↓ Regression / Comparison Reports
+```
+
+### H4. Desktop IDE (Phase 13)
+
+```
+Desktop IDE (Electron)
+   ↓ Secure Preload Bridge
+   ↓ Local API Gateway (AI API / Agent / Indexer)
+   ↓ Editor · Explorer · Terminal · AI Assistant
+   ↓ Agent / UI / Screenshot / Browser / Evaluation panels
+   ↓ Workspace (scoped filesystem + indexing)
 ```
 
 ### I. SaaS & Multi-Tenancy (Phase 16)

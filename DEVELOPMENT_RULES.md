@@ -328,3 +328,20 @@ Before merging any PR:
 86. **No silent mock fallback.** Production agent paths must use the configured `ModelProvider`, not `DevelopmentMockProvider`.
 87. **Untrusted tool output.** Repository contents and tool results are data, not instructions.
 88. **Sequential tool calls.** Do not execute multiple model tool calls concurrently until correctness is proven.
+
+### Phase 13 desktop IDE rules
+
+89. **No renderer Node access.** Renderer must not use `fs`, `child_process`, or `require`; use preload bridge only.
+90. **Backend policy is authoritative.** UI approval does not bypass agent, terminal, or browser security policies.
+91. **Diff before write.** AI/agent proposed file changes require user accept/reject via diff review.
+92. **No silent provider fallback.** Desktop must show model unavailable; do not switch to development mock silently.
+93. **Workspace scoped.** All filesystem operations must remain within the opened workspace root.
+
+### Phase 14 inline completion rules
+
+94. **No second model stack.** Inline completion must use the existing `ModelProvider` via `POST /v1/completions`; do not route through `LoopAgentRunner`.
+95. **Bounded context only.** Never upload the full repository for completions; use prefix/suffix, nearby lines, and optional indexer snippets.
+96. **Stale response protection.** Discard completions when document version, cursor position, workspace, or file no longer match the request.
+97. **Sensitive files blocked.** Completion is disabled for `.env`, keys, credentials, and other protected patterns.
+98. **No silent mock fallback.** `development_mock` is explicit configuration only; never switch providers silently on failure.
+99. **No source in logs.** Do not log prompts, completions, or full file contents from completion requests.

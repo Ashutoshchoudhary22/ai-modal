@@ -1,0 +1,27 @@
+{
+  "benchmark_id": "completion-mini",
+  "model_id": "development-mock-v1",
+  "model_provider": "development_mock",
+  "model_checkpoint": null,
+  "output_dir": "training/output/evaluation-completion",
+  "seed": 42,
+  "generation": {
+    "temperature": 0.0,
+    "top_p": 1.0,
+    "max_tokens": 1024,
+    "seed": 42,
+    "structured_output": false
+  },
+  "resources": {
+    "max_samples": null,
+    "max_runtime_sec": null,
+    "max_model_calls": null,
+    "max_agent_iterations": null,
+    "max_tool_calls": null,
+    "max_browser_actions": null,
+    "max_sample_retries": 0,
+    "code_timeout_sec": 5.0
+  },
+  "training_dataset_fingerprint": null,
+  "baseline_run_id": null
+}

@@ -1,0 +1,5 @@
+{"id": "comp-ts-001", "language": "typescript", "file_path": "src/user.ts", "prefix": "const user = await db.", "suffix": "", "expected_completion": "findById(id);"}
+{"id": "comp-ts-002", "language": "typescript", "file_path": "src/handler.ts", "prefix": "function ", "suffix": "", "expected_completion": "example() {\n    return null;\n}"}
+{"id": "comp-py-001", "language": "python", "file_path": "src/models.py", "prefix": "def calculate_total(items):\n    ", "suffix": "", "expected_completion": "pass"}
+{"id": "comp-js-001", "language": "javascript", "file_path": "src/app.js", "prefix": "import ", "suffix": "", "expected_completion": "{ example } from \"./example\";"}
+{"id": "comp-sql-001", "language": "sql", "file_path": "queries/users.sql", "prefix": "SELECT * FROM users WHERE ", "suffix": "", "expected_completion": "id = ?;"}

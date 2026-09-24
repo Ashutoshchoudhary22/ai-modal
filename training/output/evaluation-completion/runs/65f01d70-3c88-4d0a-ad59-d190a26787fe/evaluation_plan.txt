@@ -1,0 +1,20 @@
+Evaluation Plan
+Benchmark: completion-mini@1.0.0
+Dataset: completion-mini@1.0.0
+Samples: 5
+
+Model: development-mock-v1
+Provider: development_mock
+Checkpoint: none
+Capabilities: text, image, multimodal
+
+Generation:
+  Temperature: 0.0
+  Max tokens: 1024
+  Seed: 42
+
+Metrics: exact_match, normalized_match, prefix_preservation, suffix_preservation, syntax_validity, latency_ms
+
+Resource limits:
+  max_samples: None
+  max_runtime_sec: None

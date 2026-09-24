@@ -134,6 +134,20 @@ class Settings(BaseSettings):
     eval_max_tokens: int = 100_000
     eval_sample_retries: int = 1
 
+    completion_enabled: bool = True
+    completion_debounce_ms: int = 250
+    completion_timeout_ms: int = 5000
+    completion_max_output_tokens: int = 256
+    completion_max_output_lines: int = 20
+    completion_max_prefix_tokens: int = 3000
+    completion_max_suffix_tokens: int = 1500
+    completion_max_context_tokens: int = 6000
+    completion_max_context_lines: int = 50
+    completion_max_requests_per_minute: int = 60
+    completion_repository_context: bool = True
+    completion_model: str = ""
+    completion_provider: str = ""
+
     rate_limit_rpm: int = 60
     cors_origins: str = "http://localhost:3000,http://localhost:5173"
 

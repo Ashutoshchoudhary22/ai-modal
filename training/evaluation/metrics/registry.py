@@ -122,6 +122,33 @@ def register_defaults() -> None:
             range_min=0.0,
             range_max=1.0,
         ),
+        MetricDefinition(
+            metric_id="prefix_preservation",
+            name="Prefix Preservation",
+            version=1,
+            description="Completion does not duplicate prefix",
+            direction="higher_is_better",
+            range_min=0.0,
+            range_max=1.0,
+        ),
+        MetricDefinition(
+            metric_id="suffix_preservation",
+            name="Suffix Preservation",
+            version=1,
+            description="Completion does not duplicate suffix",
+            direction="higher_is_better",
+            range_min=0.0,
+            range_max=1.0,
+        ),
+        MetricDefinition(
+            metric_id="syntax_validity",
+            name="Syntax Validity",
+            version=1,
+            description="Lightweight syntax validity check",
+            direction="higher_is_better",
+            range_min=0.0,
+            range_max=1.0,
+        ),
     ]
     for metric in defaults:
         _register(metric)

@@ -1,0 +1,50 @@
+[
+  {
+    "metric_id": "exact_match",
+    "metric_version": 1,
+    "value": 1.0,
+    "sample_count": 5,
+    "direction": "higher_is_better",
+    "unavailable": false
+  },
+  {
+    "metric_id": "normalized_match",
+    "metric_version": 1,
+    "value": 1.0,
+    "sample_count": 5,
+    "direction": "higher_is_better",
+    "unavailable": false
+  },
+  {
+    "metric_id": "prefix_preservation",
+    "metric_version": 1,
+    "value": 1.0,
+    "sample_count": 5,
+    "direction": "higher_is_better",
+    "unavailable": false
+  },
+  {
+    "metric_id": "suffix_preservation",
+    "metric_version": 1,
+    "value": 1.0,
+    "sample_count": 5,
+    "direction": "higher_is_better",
+    "unavailable": false
+  },
+  {
+    "metric_id": "syntax_validity",
+    "metric_version": 1,
+    "value": 1.0,
+    "sample_count": 5,
+    "direction": "higher_is_better",
+    "unavailable": false
+  },
+  {
+    "metric_id": "latency_ms",
+    "metric_version": 1,
+    "value": 0.02330000097572338,
+    "sample_count": 5,
+    "direction": "lower_is_better",
+    "unavailable": false
+  }
+]

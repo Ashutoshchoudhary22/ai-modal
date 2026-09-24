@@ -211,3 +211,11 @@ class DevelopmentEvaluationAdapter(EvaluationModelAdapter):
             structured={"task_success": success, "status": result.status},
             latency_ms=latency,
         )
+
+    def complete(self, request: Any, *, config: GenerationConfig) -> GenerationResult:
+        from ai_api.completion.mock import mock_completion
+
+        started = time.perf_counter()
+        text = mock_completion(request.prefix, request.suffix, request.language)
+        latency = (time.perf_counter() - started) * 1000
+        return GenerationResult(text=text, latency_ms=latency)

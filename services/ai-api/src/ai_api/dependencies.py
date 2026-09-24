@@ -6,6 +6,7 @@ from functools import lru_cache
 
 from ai_platform_shared.config import get_settings
 
+from ai_api.completion.service import CompletionService
 from ai_api.multimodal.factory import create_multimodal_model
 from ai_api.providers.factory import create_provider
 from ai_api.services.inference import InferenceService
@@ -26,6 +27,13 @@ def get_registry_service() -> RegistryService:
 
 
 @lru_cache
+def get_completion_service() -> CompletionService:
+    settings = get_settings()
+    provider = create_provider(settings)
+    return CompletionService(provider, settings=settings)
+
+
+@lru_cache
 def get_multimodal_service() -> MultimodalService:
     settings = get_settings()
     model = create_multimodal_model(settings)
@@ -36,4 +44,5 @@ def reset_dependencies() -> None:
     get_inference_service.cache_clear()
     get_registry_service.cache_clear()
     get_multimodal_service.cache_clear()
+    get_completion_service.cache_clear()
     get_settings.cache_clear()

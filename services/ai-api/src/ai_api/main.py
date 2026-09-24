@@ -10,7 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from ai_api.exceptions import register_exception_handlers
 from ai_api.middleware.request_id import RequestIdMiddleware
-from ai_api.routes import health, inference, meta, multimodal
+from ai_api.routes import completion, health, inference, meta, multimodal
 
 
 @asynccontextmanager
@@ -46,6 +46,7 @@ def create_app() -> FastAPI:
     app.include_router(meta.router, prefix="/v1")
     app.include_router(inference.router, prefix="/v1")
     app.include_router(multimodal.router, prefix="/v1")
+    app.include_router(completion.router, prefix="/v1")
 
     return app
 

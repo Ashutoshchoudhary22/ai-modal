@@ -11,7 +11,10 @@
     "test": "npm run test --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
-    "dev:web": "npm run dev --workspace @ai-platform/web"
+    "dev:web": "npm run dev --workspace @ai-platform/web",
+    "dev:desktop": "npm run dev --workspace @ai-platform/desktop",
+    "build:desktop": "npm run build --workspace @ai-platform/desktop",
+    "package:desktop": "npm run package --workspace @ai-platform/desktop"
   },
   "devDependencies": {
     "prettier": "^3.4.2",

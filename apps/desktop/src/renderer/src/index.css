@@ -1,0 +1,136 @@
+:root {
+  --bg-primary: #1e1e1e;
+  --bg-secondary: #252526;
+  --bg-tertiary: #2d2d30;
+  --border: #3c3c3c;
+  --text-primary: #cccccc;
+  --text-secondary: #9d9d9d;
+  --accent: #007acc;
+  --accent-hover: #1a8ad4;
+  --success: #4ec9b0;
+  --warning: #dcdcaa;
+  --error: #f48771;
+  --font-mono: "Cascadia Code", "Fira Code", Consolas, monospace;
+  --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f3f3f3;
+  --bg-tertiary: #e8e8e8;
+  --border: #d4d4d4;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  padding: 4px 10px;
+  border-radius: 3px;
+}
+
+button:hover {
+  background: var(--border);
+}
+
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+button.primary:hover {
+  background: var(--accent-hover);
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  padding: 6px 8px;
+  border-radius: 3px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 1px solid var(--accent);
+}
+
+.panel {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+}
+
+.panel-header {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.connected {
+  background: var(--success);
+}
+
+.status-dot.disconnected {
+  background: var(--error);
+}
+
+.status-dot.connecting {
+  background: var(--warning);
+}
+
+.notification {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  padding: 10px 16px;
+  border-radius: 4px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  z-index: 1000;
+  max-width: 400px;
+}
+
+.notification.error {
+  border-color: var(--error);
+}
+
+.notification.success {
+  border-color: var(--success);
+}

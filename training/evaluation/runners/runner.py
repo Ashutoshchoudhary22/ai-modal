@@ -32,6 +32,7 @@ def _validate_capabilities(benchmark, adapter) -> None:
     required = set(benchmark.required_capabilities)
     available = {
         "generate": "text" in caps.modalities,
+        "complete": "text" in caps.modalities,
         "multimodal_generate": caps.supports_multimodal,
         "agent_execute": caps.supports_agent,
         "browser_execute": caps.supports_browser,
@@ -179,6 +180,14 @@ def run_evaluation(
             )
         elif evaluator == "browser":
             result = evaluate_browser_sample(
+                sample,
+                adapter=adapter,
+                generation=config.generation,
+            )
+        elif evaluator == "completion":
+            from training.evaluation.evaluators.completion import evaluate_completion_sample
+
+            result = evaluate_completion_sample(
                 sample,
                 adapter=adapter,
                 generation=config.generation,

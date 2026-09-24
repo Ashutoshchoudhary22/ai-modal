@@ -9,7 +9,8 @@
 | `packages/shared/` | **IMPLEMENTED** | Config, logging, DB layer, telemetry context |
 | `packages/ui/` | **PLANNED** | Placeholder package only |
 | `apps/web/` | **IMPLEMENTED (dev)** | Test console UI (React + Vite) |
-| `apps/desktop/`, `apps/admin/` | **PLANNED** | README + placeholder `package.json` only |
+| `apps/desktop/` | **IMPLEMENTED** | Electron + React + Monaco IDE (Phase 13–14 inline completion) |
+| `apps/admin/` | **PLANNED** | README + placeholder `package.json` only |
 | `services/code-indexer/` | **IMPLEMENTED** | Phase 4 repository intelligence (scan, index, search, context) |
 | `services/agent/` | **IMPLEMENTED** | Phase 5–9 tools, agent loop, UI generation, screenshot-to-code, browser agent |
 | `browser-agent/`, `training-api/` | **PLANNED** | README placeholders only (browser logic lives in `services/agent/browser/`) |
@@ -85,7 +86,9 @@ Electron + React + TypeScript IDE.
 | Path | Purpose |
 |------|---------|
 | `src/main/` | Electron main process |
-| `src/renderer/` | React UI (Monaco, chat, terminal) |
+| `src/renderer/` | React UI (Monaco, chat, terminal, inline completion) |
+| `src/renderer/src/features/completion/` | Inline completion controller, Monaco provider, context collector |
+| `src/renderer/src/settings/` | Inline completion settings UI |
 | `src/preload/` | Secure IPC bridge |
 
 ### `apps/web`
@@ -134,6 +137,7 @@ services/<name>/
 
 - `ModelProvider` protocol (**IMPLEMENTED**)
 - Request/response Pydantic models (**IMPLEMENTED**)
+- `completion/` types for inline code completion (**IMPLEMENTED** — Phase 14)
 - `tools/` types and protocol (**IMPLEMENTED** — Phase 5)
 - `agent/`, `indexer/` protocol stubs (**PLANNED** — Phase 6+)
 - Error codes (**IMPLEMENTED**)

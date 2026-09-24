@@ -2,8 +2,61 @@
   "name": "@ai-platform/desktop",
   "version": "0.1.0",
   "private": true,
-  "description": "Electron desktop IDE — Phase 13",
+  "description": "AI Platform Desktop IDE — Electron + React + Monaco",
+  "main": "out/main/index.js",
   "scripts": {
-    "test": "node -e \"console.log('desktop: placeholder tests pass')\""
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.node.json",
+    "package": "electron-vite build && electron-builder --dir",
+    "package:win": "electron-vite build && electron-builder --win --dir",
+    "package:linux": "electron-vite build && electron-builder --linux --dir",
+    "package:mac": "electron-vite build && electron-builder --mac --dir"
+  },
+  "dependencies": {
+    "@monaco-editor/react": "^4.7.0",
+    "dompurify": "^3.2.4",
+    "marked": "^15.0.6",
+    "monaco-editor": "^0.52.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.2.0",
+    "@types/dompurify": "^3.2.0",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^34.0.0",
+    "electron-builder": "^25.1.8",
+    "electron-vite": "^2.3.0",
+    "jsdom": "^26.0.0",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.0",
+    "vitest": "^3.0.5"
+  },
+  "build": {
+    "appId": "com.aiplatform.desktop",
+    "productName": "AI Platform IDE",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**/*"
+    ],
+    "win": {
+      "target": ["dir"]
+    },
+    "linux": {
+      "target": ["dir"]
+    },
+    "mac": {
+      "target": ["dir"]
+    }
   }
 }

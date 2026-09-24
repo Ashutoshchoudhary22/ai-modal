@@ -68,3 +68,6 @@ class EvaluationModelAdapter(ABC):
         self, sample: dict[str, Any], *, config: GenerationConfig, workspace: Path
     ) -> GenerationResult:
         raise NotImplementedError
+
+    def complete(self, request: Any, *, config: GenerationConfig) -> GenerationResult:
+        raise NotImplementedError
