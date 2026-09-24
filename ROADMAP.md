@@ -221,15 +221,24 @@ See [docs/BROWSER_AGENT.md](./docs/BROWSER_AGENT.md).
 
 ---
 
-## Phase 10 — Multimodal Model Architecture ⬜
+## Phase 10 — Multimodal Model Architecture ✅
 
-**Goal:** Decoupled text/vision/fusion interfaces.
+**Goal:** Modular text + image inference architecture with provider independence.
 
 | Deliverable | Status |
 |-------------|--------|
-| `VisionEncoder` protocol | ⬜ |
-| `MultimodalFusion` protocol | ⬜ |
-| Wiring in ModelProvider | ⬜ |
+| Multimodal protocol (`MultimodalRequest`, content types) | ✅ |
+| `ImageProcessor`, `VisionEncoder`, `MultimodalProjector`, `MultimodalFusion` | ✅ |
+| `MultimodalModel` + mock/local/proprietary providers | ✅ |
+| Context/token accounting | ✅ |
+| API (`POST /v1/multimodal/generate`, stream) | ✅ |
+| Phase 8 `MultimodalVisionProvider` adapter | ✅ |
+| Phase 9 browser observation adapter | ✅ |
+| Security + deterministic tests | ✅ |
+
+**Exit criteria:** Text + image → modular mock pipeline → structured/streaming output. ✅
+
+See [docs/MULTIMODAL.md](./docs/MULTIMODAL.md).
 
 ---
 
@@ -365,8 +374,8 @@ See [docs/BROWSER_AGENT.md](./docs/BROWSER_AGENT.md).
 ## Current Status
 
 **Active phase:** Phase 4 — Repository Intelligence ✅  
-**Next phase:** Phase 10 — Multimodal Model Architecture
+**Next phase:** Phase 11 — Training Strategy
 
 ---
 
-*Last updated: Phase 9*
+*Last updated: Phase 10*

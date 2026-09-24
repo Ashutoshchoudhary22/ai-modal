@@ -10,7 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from ai_api.exceptions import register_exception_handlers
 from ai_api.middleware.request_id import RequestIdMiddleware
-from ai_api.routes import health, inference, meta
+from ai_api.routes import health, inference, meta, multimodal
 
 
 @asynccontextmanager
@@ -27,7 +27,7 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title="AI Platform — Inference API",
         version="0.1.0",
-        description="Model inference, embeddings, and streaming generation",
+        description="Model inference, embeddings, multimodal generation, and streaming",
         lifespan=lifespan,
     )
 
@@ -45,6 +45,7 @@ def create_app() -> FastAPI:
     app.include_router(health.router)
     app.include_router(meta.router, prefix="/v1")
     app.include_router(inference.router, prefix="/v1")
+    app.include_router(multimodal.router, prefix="/v1")
 
     return app
 

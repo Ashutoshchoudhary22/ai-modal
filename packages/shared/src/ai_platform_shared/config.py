@@ -101,6 +101,18 @@ class Settings(BaseSettings):
     browser_max_elements: int = 100
     browser_max_observation_chars: int = 16000
 
+    multimodal_provider: str = "development_mock"
+    multimodal_model: str = ""
+    multimodal_max_images: int = 4
+    multimodal_max_pixels: int = 16_777_216
+    multimodal_max_batch_size: int = 8
+    multimodal_max_context_tokens: int = 8192
+    multimodal_max_output_tokens: int = 4096
+    multimodal_timeout_sec: int = 120
+    multimodal_device: str = "auto"
+    multimodal_dtype: str = "auto"
+    vision_use_multimodal: bool = False
+
     tools_enabled: bool = True
     tool_max_file_size: int = 1_048_576
     tool_max_output_chars: int = 32_000
@@ -119,7 +131,7 @@ class Settings(BaseSettings):
     rate_limit_rpm: int = 60
     cors_origins: str = "http://localhost:3000,http://localhost:5173"
 
-    @field_validator("model_provider", "vision_provider", "ui_renderer")
+    @field_validator("model_provider", "vision_provider", "ui_renderer", "multimodal_provider")
     @classmethod
     def normalize_provider(cls, value: str) -> str:
         normalized = value.strip().lower()

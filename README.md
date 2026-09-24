@@ -161,6 +161,10 @@ See [docs/SCREENSHOT_TO_CODE.md](./docs/SCREENSHOT_TO_CODE.md) for screenshot-to
 
 See [docs/BROWSER_AGENT.md](./docs/BROWSER_AGENT.md) for the bounded browser agent (`POST /v1/browser/runs`).
 
+### Multimodal model (Phase 10)
+
+See [docs/MULTIMODAL.md](./docs/MULTIMODAL.md) for text + image inference (`POST /v1/multimodal/generate`).
+
 ### 7. Start Test UI (browser console)
 
 ```bash

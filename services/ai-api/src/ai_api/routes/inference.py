@@ -16,7 +16,7 @@ from ai_platform_shared.config import get_settings
 from fastapi import APIRouter, Request
 from fastapi.responses import StreamingResponse
 
-from ai_api.dependencies import get_inference_service, get_registry_service
+from ai_api.dependencies import get_inference_service, get_multimodal_service, get_registry_service
 
 router = APIRouter(tags=["inference"])
 
@@ -30,10 +30,18 @@ async def list_models() -> dict[str, object]:
         registry_models = get_registry_service().list_models(provider=settings.model_provider)
     except Exception:
         registry_models = []
+    multimodal_service = get_multimodal_service()
+    multimodal_caps = multimodal_service.model.capabilities()
     return {
         "provider": provider_status.provider_id,
         "provider_state": provider_status.state.value,
         "models": [model.model_dump(mode="json") for model in registry_models],
+        "multimodal": {
+            "provider": multimodal_service.model.provider_id,
+            "model_id": multimodal_service.model.model_id,
+            "available": multimodal_service.model.is_available(),
+            "capabilities": multimodal_caps.model_dump(),
+        },
     }
 
 

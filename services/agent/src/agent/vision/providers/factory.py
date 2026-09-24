@@ -11,6 +11,11 @@ from ai_platform_shared.config import Settings, get_settings
 
 def create_vision_provider(settings: Settings | None = None) -> VisionProvider:
     cfg = settings or get_settings()
+    if cfg.vision_use_multimodal:
+        from agent.vision.providers.multimodal import MultimodalVisionProvider
+        from ai_api.multimodal.factory import create_multimodal_model
+
+        return MultimodalVisionProvider(create_multimodal_model(cfg))
     provider = cfg.vision_provider
     if provider == "development_mock":
         return DevelopmentMockVisionProvider()
