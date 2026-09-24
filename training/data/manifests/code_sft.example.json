@@ -1,0 +1,13 @@
+{
+  "name": "code-sft-example",
+  "version": "0.0.0-example",
+  "category": "code_completion",
+  "license": "MIT",
+  "description": "Example manifest — replace with real licensed datasets",
+  "entries": [],
+  "provenance": {
+    "source": "internal",
+    "created_at": "2026-01-01T00:00:00Z",
+    "content_hash": "placeholder"
+  }
+}

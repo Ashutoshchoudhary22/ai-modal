@@ -1,0 +1,57 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: ai-platform-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: aiplatform
+      MYSQL_USER: aiplatform
+      MYSQL_PASSWORD: aiplatform
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./infra/docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "aiplatform", "-paiplatform"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  redis:
+    image: redis:7-alpine
+    container_name: ai-platform-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  ai-api:
+    build:
+      context: .
+      dockerfile: infra/docker/ai-api.Dockerfile
+    container_name: ai-platform-ai-api
+    ports:
+      - "8000:8000"
+    environment:
+      AI_PLATFORM_ENV: development
+      AI_PLATFORM_DATABASE_URL: mysql+pymysql://aiplatform:aiplatform@mysql:3306/aiplatform
+      AI_PLATFORM_REDIS_URL: redis://redis:6379/0
+      AI_PLATFORM_MODEL_PROVIDER: development_mock
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    profiles:
+      - full
+
+volumes:
+  mysql_data:
+  redis_data:

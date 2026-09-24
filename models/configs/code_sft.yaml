@@ -1,0 +1,33 @@
+# Example SFT configuration — Phase 2
+# Usage: python training/sft/train.py --config models/configs/code_sft.yaml
+
+model:
+  base_model_id: "placeholder/code-model"
+  provider: local_hf
+
+training:
+  output_dir: "./models/finetuned/code-sft-v1"
+  num_epochs: 3
+  batch_size: 4
+  gradient_accumulation_steps: 4
+  learning_rate: 2.0e-5
+  max_seq_length: 4096
+  precision: bf16
+  checkpoint_frequency: 500
+  eval_frequency: 500
+
+lora:
+  enabled: true
+  r: 16
+  alpha: 32
+  dropout: 0.05
+
+dataset:
+  manifest: "training/data/manifests/code_sft.example.json"
+  train_split: 0.9
+  val_split: 0.05
+  test_split: 0.05
+
+hardware:
+  auto_detect_cuda: true
+  deepspeed: false

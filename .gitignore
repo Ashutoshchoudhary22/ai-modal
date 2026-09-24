@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+*.egg-info/
+.eggs/
+dist/
+build/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg
+
+# Node
+node_modules/
+npm-debug.log*
+dist/
+build/
+.electron/
+
+# Environment
+.env
+.env.local
+
+# Models & data (large files)
+models/**/*.bin
+models/**/*.safetensors
+models/**/*.pt
+models/**/*.ckpt
+training/data/raw/
+training/data/processed/
+*.parquet
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Docker
+.docker/

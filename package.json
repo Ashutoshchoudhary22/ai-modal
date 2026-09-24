@@ -1,0 +1,23 @@
+{
+  "name": "ai-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Proprietary AI development platform monorepo",
+  "workspaces": [
+    "apps/*",
+    "packages/ui"
+  ],
+  "scripts": {
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md}\"",
+    "dev:web": "npm run dev --workspace @ai-platform/web"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

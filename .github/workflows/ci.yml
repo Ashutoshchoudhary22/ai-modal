@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install -e "packages/protocol[dev]" -e "packages/shared[dev]" -e "services/ai-api[dev]"
+
+      - name: Ruff lint
+        run: ruff check packages services tests
+
+      - name: Ruff format check
+        run: ruff format --check packages services tests
+
+      - name: Pytest
+        run: pytest
+
+  node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install and test
+        run: |
+          npm install
+          npm test

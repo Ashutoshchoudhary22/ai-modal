@@ -1,0 +1,47 @@
+[project]
+name = "ai-platform"
+version = "0.1.0"
+description = "Proprietary AI development platform"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "Proprietary" }
+
+[tool.uv.workspace]
+members = [
+    "packages/protocol",
+    "packages/shared",
+    "services/ai-api",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "packages", "services"]
+pythonpath = ["packages/protocol/src", "packages/shared/src"]
+asyncio_mode = "auto"
+addopts = "-v --tb=short"
+markers = [
+    "integration: marks tests that require external services or heavy deps",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["packages", "services", "training", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["B008"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_ignores = true
+packages = ["ai_platform_protocol", "ai_platform_shared", "ai_api"]
+
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+disallow_untyped_defs = false
+
+[tool.coverage.run]
+source = ["packages", "services"]
+omit = ["*/tests/*"]
