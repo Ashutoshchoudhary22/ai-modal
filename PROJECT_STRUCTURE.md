@@ -10,7 +10,8 @@
 | `packages/ui/` | **PLANNED** | Placeholder package only |
 | `apps/web/` | **IMPLEMENTED (dev)** | Test console UI (React + Vite) |
 | `apps/desktop/`, `apps/admin/` | **PLANNED** | README + placeholder `package.json` only |
-| `services/agent/`, `code-indexer/`, `browser-agent/`, `training-api/` | **PLANNED** | README placeholders only |
+| `services/code-indexer/` | **IMPLEMENTED** | Phase 4 repository intelligence (scan, index, search, context) |
+| `services/agent/`, `browser-agent/`, `training-api/` | **PLANNED** | README placeholders only |
 | `training/`, `models/` | **IMPLEMENTED (Phase 2 SFT)** | Dataset pipeline + config-driven training; see `docs/TRAINING.md` |
 | `tests/integration/` | **IMPLEMENTED** | Phase 0 structure checks |
 

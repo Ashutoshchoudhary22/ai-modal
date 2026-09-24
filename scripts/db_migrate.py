@@ -33,7 +33,8 @@ def _load_database_url() -> str:
         url = os.environ.get("AI_PLATFORM_DATABASE_URL")
         if not url:
             raise SystemExit(
-                "Database URL not configured. Set AI_PLATFORM_DATABASE_URL or install ai-platform-shared."
+                "Database URL not configured. Set AI_PLATFORM_DATABASE_URL "
+                "or install ai-platform-shared."
             ) from None
         return url
 
@@ -143,6 +144,7 @@ def bootstrap(conn, db: dict[str, str | int]) -> None:
         "001_initial",
         "002_provider_model_registry",
         "003_dataset_system",
+        "004_repository_intelligence",
     ):
         if version not in applied:
             _record_migration(conn, version)

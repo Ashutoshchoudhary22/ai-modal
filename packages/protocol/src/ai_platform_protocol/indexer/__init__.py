@@ -1,4 +1,4 @@
-﻿"""Future repository indexer interfaces — Phase 4."""
+"""Future repository indexer interfaces — Phase 4."""
 
 from __future__ import annotations
 

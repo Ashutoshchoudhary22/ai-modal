@@ -1,4 +1,4 @@
-﻿"""Tests for future protocol interfaces (Phase 4–6)."""
+"""Tests for future protocol interfaces (Phase 4–6)."""
 
 from ai_platform_protocol.agent import AgentRunConfig, AgentStep, AgentStepType
 from ai_platform_protocol.indexer import IndexRequest, RepositoryIndexer

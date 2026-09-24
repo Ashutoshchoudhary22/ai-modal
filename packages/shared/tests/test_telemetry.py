@@ -1,4 +1,4 @@
-﻿"""Tests for telemetry context."""
+"""Tests for telemetry context."""
 
 from ai_platform_shared.telemetry import TelemetryContext, get_current_context
 

@@ -1,4 +1,4 @@
-﻿"""Lightweight observability context — extensible for OpenTelemetry later."""
+"""Lightweight observability context — extensible for OpenTelemetry later."""
 
 from __future__ import annotations
 

@@ -90,19 +90,21 @@ See [docs/DATASETS.md](./docs/DATASETS.md).
 
 ---
 
-## Phase 4 — Repository Intelligence ⬜
+## Phase 4 — Repository Intelligence ✅
 
 **Goal:** Index and retrieve relevant code context.
 
 | Deliverable | Status |
 |-------------|--------|
-| Workspace scanner | ⬜ |
-| Tree-sitter multi-language parsing | ⬜ |
-| Symbol + import graph | ⬜ |
-| Embeddings + vector index | ⬜ |
-| Semantic + lexical search API | ⬜ |
+| Workspace scanner | ✅ |
+| Tree-sitter multi-language parsing | ✅ |
+| Symbol + import graph | ✅ |
+| Embeddings + vector index abstraction | ✅ |
+| Semantic + lexical search API | ✅ |
 
-**Exit criteria:** "Fix auth bug" retrieves auth-related files in test repo.
+**Exit criteria:** "Fix auth bug" retrieves auth-related files in test repo. ✅
+
+See [docs/REPOSITORY_INTELLIGENCE.md](./docs/REPOSITORY_INTELLIGENCE.md).
 
 ---
 
@@ -314,8 +316,8 @@ See [docs/DATASETS.md](./docs/DATASETS.md).
 
 ## Current Status
 
-**Active phase:** Phase 3 — Dataset System ✅  
-**Next phase:** Phase 4 — Repository Intelligence
+**Active phase:** Phase 4 — Repository Intelligence ✅  
+**Next phase:** Phase 5 — Coding Agent Tools
 
 ---
 

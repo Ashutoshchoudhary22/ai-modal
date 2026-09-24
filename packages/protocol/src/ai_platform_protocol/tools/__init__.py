@@ -1,4 +1,4 @@
-﻿"""Future tool interfaces — Phase 5."""
+"""Future tool interfaces — Phase 5."""
 
 from __future__ import annotations
 
@@ -34,4 +34,5 @@ class ToolResult(BaseModel):
 @runtime_checkable
 class Tool(Protocol):
     definition: ToolDefinition
+
     async def execute(self, arguments: dict[str, Any]) -> ToolResult: ...

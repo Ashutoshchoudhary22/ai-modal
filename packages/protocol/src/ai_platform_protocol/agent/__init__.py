@@ -1,4 +1,4 @@
-﻿"""Future agent interfaces — Phase 5/6."""
+"""Future agent interfaces — Phase 5/6."""
 
 from __future__ import annotations
 
