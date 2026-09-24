@@ -58,6 +58,13 @@ class Settings(BaseSettings):
     agent_default_policy: str = "coding"
     agent_tool_timeout_sec: int = 120
 
+    ui_generation_enabled: bool = True
+    ui_max_context_chars: int = 24_000
+    ui_max_files: int = 40
+    ui_max_components: int = 30
+    ui_default_validation: str = "build"
+    ui_max_generation_files: int = 20
+
     tools_enabled: bool = True
     tool_max_file_size: int = 1_048_576
     tool_max_output_chars: int = 32_000

@@ -159,15 +159,23 @@ See [docs/AGENT_LOOP.md](./docs/AGENT_LOOP.md).
 
 ---
 
-## Phase 7 — UI Generation ⬜
+## Phase 7 — UI Generation ✅
 
-**Goal:** React + TS + Tailwind component generation.
+**Goal:** Repository-aware UI generation via Agent Loop.
 
 | Deliverable | Status |
 |-------------|--------|
-| UI prompt templates | ⬜ |
-| Component library conventions | ⬜ |
-| Accessibility + responsive checks | ⬜ |
+| Framework detection (Next.js, Vite React) | ✅ |
+| UISpec / PageSpec / ComponentSpec | ✅ |
+| UI planner + component reuse | ✅ |
+| UIGenerator + Agent Loop integration | ✅ |
+| Validation (diagnostics/build/test) | ✅ |
+| API (`POST /v1/ui/generate`, stream, GET run) | ✅ |
+| Security + prompt injection tests | ✅ |
+
+**Exit criteria:** NL UI request → framework-aware code in workspace with bounded validation. ✅
+
+See [docs/UI_GENERATION.md](./docs/UI_GENERATION.md).
 
 ---
 
@@ -339,8 +347,8 @@ See [docs/AGENT_LOOP.md](./docs/AGENT_LOOP.md).
 ## Current Status
 
 **Active phase:** Phase 4 — Repository Intelligence ✅  
-**Next phase:** Phase 7 — UI Generation
+**Next phase:** Phase 8 — Screenshot-to-Code
 
 ---
 
-*Last updated: Phase 6*
+*Last updated: Phase 7*

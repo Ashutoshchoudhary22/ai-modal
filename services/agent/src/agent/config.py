@@ -63,6 +63,30 @@ def load_agent_settings(settings: Settings | None = None) -> AgentSettings:
     )
 
 
+@dataclass
+class UISettings:
+    enabled: bool = True
+    max_context_chars: int = 24_000
+    max_files: int = 40
+    max_components: int = 30
+    default_validation: str = "build"
+    max_generation_files: int = 20
+    max_iterations: int = 25
+
+
+def load_ui_settings(settings: Settings | None = None) -> UISettings:
+    cfg = settings or get_settings()
+    return UISettings(
+        enabled=cfg.ui_generation_enabled,
+        max_context_chars=cfg.ui_max_context_chars,
+        max_files=cfg.ui_max_files,
+        max_components=cfg.ui_max_components,
+        default_validation=cfg.ui_default_validation,
+        max_generation_files=cfg.ui_max_generation_files,
+        max_iterations=cfg.agent_max_iterations,
+    )
+
+
 def load_tool_settings(settings: Settings | None = None) -> ToolSettings:
     cfg = settings or get_settings()
     return ToolSettings(

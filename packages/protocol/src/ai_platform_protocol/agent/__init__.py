@@ -71,6 +71,13 @@ class AgentEventType(StrEnum):
     RUN_FAILED = "run.failed"
     RUN_CANCELLED = "run.cancelled"
     RUN_LIMIT_REACHED = "run.limit_reached"
+    UI_ANALYSIS_STARTED = "ui.analysis.started"
+    UI_SPEC_CREATED = "ui.spec.created"
+    UI_PLAN_CREATED = "ui.plan.created"
+    UI_GENERATION_STARTED = "ui.generation.started"
+    UI_VALIDATION_STARTED = "ui.validation.started"
+    UI_VALIDATION_COMPLETED = "ui.validation.completed"
+    UI_COMPLETED = "ui.completed"
 
 
 class AgentEvent(BaseModel):

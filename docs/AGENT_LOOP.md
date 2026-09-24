@@ -123,4 +123,4 @@ Tests use `ScriptedModelClient` for deterministic orchestration without a live L
 
 ## Phase boundary
 
-> Phase 6 provides a bounded Agent Loop. UI generation belongs to **Phase 7**.
+> Phase 6 provides a bounded Agent Loop. UI generation is implemented in **Phase 7** — see [UI_GENERATION.md](./UI_GENERATION.md).

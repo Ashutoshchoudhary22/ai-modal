@@ -80,10 +80,28 @@ TESTING_POLICY = AgentPolicy(
     validation_mode="diagnostics",
 )
 
+UI_READ_ONLY_POLICY = AgentPolicy(
+    name="ui_read_only",
+    allow_write=False,
+    allow_execute=False,
+    allow_git_read=True,
+    allowed_tools=READ_ONLY_POLICY.allowed_tools,
+)
+
+UI_GENERATION_POLICY = AgentPolicy(
+    name="ui_generation",
+    allow_write=True,
+    allow_execute=True,
+    allow_git_read=True,
+    validation_mode="build",
+)
+
 _POLICIES: dict[str, AgentPolicy] = {
     "read_only": READ_ONLY_POLICY,
     "coding": CODING_POLICY,
     "testing": TESTING_POLICY,
+    "ui_read_only": UI_READ_ONLY_POLICY,
+    "ui_generation": UI_GENERATION_POLICY,
 }
 
 
