@@ -38,10 +38,16 @@ def is_within_workspace(workspace_root: Path, path: Path) -> bool:
 
 
 def safe_relative_path(workspace_root: Path, path: Path) -> str:
-    resolved = path.resolve()
-    if not is_within_workspace(workspace_root, resolved):
+    root = workspace_root.resolve()
+    normalized = str(path).replace("\\", "/")
+    candidate = Path(normalized)
+    if not candidate.is_absolute():
+        candidate = (root / normalized).resolve()
+    else:
+        candidate = candidate.resolve()
+    if not is_within_workspace(root, candidate):
         raise PathSecurityError(f"Path escapes workspace: {path}")
-    return resolved.relative_to(workspace_root.resolve()).as_posix()
+    return candidate.relative_to(root).as_posix()
 
 
 def validate_workspace_root(

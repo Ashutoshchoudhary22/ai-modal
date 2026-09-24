@@ -111,9 +111,7 @@ async def test_validation_build_failure(tool_context):
 @pytest.mark.asyncio
 async def test_validation_missing_build_script_warns(tool_context):
     executor = MagicMock()
-    executor.execute = AsyncMock(
-        return_value=ToolResult(success=True, output="", metadata={})
-    )
+    executor.execute = AsyncMock(return_value=ToolResult(success=True, output="", metadata={}))
     validator = UIValidator(ToolRegistry(ToolSettings()), executor=executor)
     result = await validator.validate(
         mode=UIValidationMode.BUILD, profile=_profile(), context=tool_context

@@ -20,6 +20,8 @@ htmlcov/
 
 # Node
 node_modules/
+!services/code-indexer/tests/fixtures/fixture_repo/node_modules/
+!services/code-indexer/tests/fixtures/fixture_repo/node_modules/**
 npm-debug.log*
 dist/
 build/
@@ -27,6 +29,7 @@ build/
 
 # Environment
 .env
+!services/code-indexer/tests/fixtures/fixture_repo/.env
 .env.local
 
 # Models & data (large files)

@@ -62,9 +62,15 @@ class WorkspaceService:
                 team_id=row.team_id,
             )
 
+    def _lookup_workspace(self, workspace_id: str) -> WorkspaceRecord | None:
+        try:
+            return self.get_workspace(workspace_id)
+        except Exception:
+            return None
+
     def resolve_root_path(self, workspace_id: str, fallback_root: str | None = None) -> Path:
         allowed = self.config.allowed_workspace_roots or None
-        record = self.get_workspace(workspace_id)
+        record = self._lookup_workspace(workspace_id)
         if record:
             try:
                 return validate_workspace_root(Path(record.root_path), allowed_roots=allowed)

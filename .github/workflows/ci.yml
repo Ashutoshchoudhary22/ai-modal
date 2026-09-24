@@ -9,6 +9,24 @@ on:
 jobs:
   python:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: aiplatform
+          MYSQL_USER: aiplatform
+          MYSQL_PASSWORD: aiplatform
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -u aiplatform -paiplatform"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=10
+          --health-start-period=30s
+    env:
+      AI_PLATFORM_DATABASE_URL: mysql+pymysql://aiplatform:aiplatform@127.0.0.1:3306/aiplatform
     steps:
       - uses: actions/checkout@v4
 
@@ -20,6 +38,9 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -e "packages/protocol[dev]" -e "packages/shared[dev]" -e "services/ai-api[dev]" -e "services/code-indexer[dev]" -e "services/agent[dev]" -e "training[dev]"
+
+      - name: Initialize database schema
+        run: python scripts/db_migrate.py --bootstrap
 
       - name: Ruff lint
         run: ruff check packages services tests training

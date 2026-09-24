@@ -31,24 +31,30 @@ class MySQLIndexStore:
 
     def ensure_workspace(self, root: Path, *, name: str | None = None) -> None:
         normalized = str(root.resolve()).replace("\\", "/")
-        with session_scope() as session:
-            workspace_repo = WorkspaceRepository(session)
-            existing = workspace_repo.get_by_id(self.workspace_id)
-            if existing:
-                return
-            by_path = workspace_repo.get_by_root_path(normalized)
-            if by_path:
-                return
-            workspace_repo.create_with_id(
-                workspace_id=self.workspace_id,
-                name=name or root.name,
-                root_path=normalized,
-            )
+        try:
+            with session_scope() as session:
+                workspace_repo = WorkspaceRepository(session)
+                existing = workspace_repo.get_by_id(self.workspace_id)
+                if existing:
+                    return
+                by_path = workspace_repo.get_by_root_path(normalized)
+                if by_path:
+                    return
+                workspace_repo.create_with_id(
+                    workspace_id=self.workspace_id,
+                    name=name or root.name,
+                    root_path=normalized,
+                )
+        except Exception as exc:
+            raise IndexPersistenceError(f"MySQL workspace setup failed: {exc}") from exc
 
     def load_file_hashes(self) -> dict[str, str]:
-        with session_scope() as session:
-            repo = RepositoryIndexRepository(session)
-            return repo.get_file_hashes(self.workspace_id)
+        try:
+            with session_scope() as session:
+                repo = RepositoryIndexRepository(session)
+                return repo.get_file_hashes(self.workspace_id)
+        except Exception as exc:
+            raise IndexPersistenceError(f"MySQL file hash load failed: {exc}") from exc
 
     def persist_index(
         self,
@@ -59,8 +65,11 @@ class MySQLIndexStore:
         imports: list[ImportRecord],
         deleted_paths: list[str],
         changed_paths: set[str],
+        root: Path | None = None,
     ) -> None:
         try:
+            if root is not None:
+                self.ensure_workspace(root)
             with session_scope() as session:
                 repo = RepositoryIndexRepository(session)
                 repo.persist_index(

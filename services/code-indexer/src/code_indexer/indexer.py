@@ -53,7 +53,6 @@ class RepositoryIndexer:
                     raise IndexPersistenceError("MySQL persistence required but unavailable")
             else:
                 self.mysql_store = MySQLIndexStore(self.workspace_id)
-                self.mysql_store.ensure_workspace(self.root)
 
     def index(self, *, incremental: bool = True) -> tuple[IndexRun, IndexStats]:
         started = time.perf_counter()
@@ -169,6 +168,7 @@ class RepositoryIndexer:
                     imports=all_imports,
                     deleted_paths=deleted_paths,
                     changed_paths=changed_paths,
+                    root=self.root,
                 )
                 run.status = "completed"
             except IndexPersistenceError as exc:
