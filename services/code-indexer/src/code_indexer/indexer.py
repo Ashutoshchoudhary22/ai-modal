@@ -13,6 +13,7 @@ from code_indexer.graph import RepositoryGraph
 from code_indexer.imports.resolve import resolve_imports
 from code_indexer.models import ImportRecord, IndexRun, RepositoryFile, Symbol
 from code_indexer.parsing import build_default_registry
+from code_indexer.persistence import IndexPersistenceError, MySQLIndexStore
 from code_indexer.scanner import WorkspaceScanner
 from code_indexer.security import resolve_workspace_path
 from code_indexer.store import IndexStore
@@ -45,6 +46,14 @@ class RepositoryIndexer:
         self.config = config or IndexerConfig()
         self.store = IndexStore(self.root, self.workspace_id)
         self.parsers = build_default_registry()
+        self.mysql_store: MySQLIndexStore | None = None
+        if self.config.mysql_persistence:
+            if not MySQLIndexStore.is_available():
+                if self.config.require_mysql:
+                    raise IndexPersistenceError("MySQL persistence required but unavailable")
+            else:
+                self.mysql_store = MySQLIndexStore(self.workspace_id)
+                self.mysql_store.ensure_workspace(self.root)
 
     def index(self, *, incremental: bool = True) -> tuple[IndexRun, IndexStats]:
         started = time.perf_counter()
@@ -58,7 +67,7 @@ class RepositoryIndexer:
         stats.binary = scan_stats.binary
         stats.supported = scan_stats.supported
 
-        previous_hashes = self.store.load_file_hashes() if incremental else {}
+        previous_hashes = self._load_previous_hashes()
         existing_data = self.store.load_index() if incremental else None
         existing_symbols = (
             [Symbol(**s) for s in existing_data.get("symbols", [])] if existing_data else []
@@ -67,39 +76,43 @@ class RepositoryIndexer:
             [ImportRecord(**i) for i in existing_data.get("imports", [])] if existing_data else []
         )
         current_paths = {f.relative_path for f in discovered if not f.is_binary}
-
-        for path in sorted(set(previous_hashes) - current_paths):
-            self.store.remove_file(path)
+        deleted_paths = sorted(set(previous_hashes) - current_paths)
 
         all_symbols: list[Symbol] = []
         all_imports: list[ImportRecord] = []
         indexed_files: list[RepositoryFile] = []
         graph = RepositoryGraph()
         known_paths = {f.relative_path for f in discovered}
+        changed_paths: set[str] = set()
 
-        unchanged_paths = {
-            p
-            for p in current_paths
-            if incremental
-            and previous_hashes.get(p)
-            == next((f.sha256 for f in discovered if f.relative_path == p), None)
-        }
+        unchanged_paths: set[str] = set()
+        if incremental:
+            unchanged_paths = {
+                p
+                for p in current_paths
+                if previous_hashes.get(p)
+                == next((f.sha256 for f in discovered if f.relative_path == p), None)
+            }
         if unchanged_paths:
             all_symbols.extend(s for s in existing_symbols if s.file_path in unchanged_paths)
             all_imports.extend(i for i in existing_imports if i.file_path in unchanged_paths)
 
         for repo_file in discovered:
+            repo_file.workspace_id = self.workspace_id
             if repo_file.is_binary or not repo_file.language:
                 continue
             if repo_file.relative_path in unchanged_paths:
                 stats.skipped_unchanged += 1
                 indexed_files.append(repo_file)
                 continue
+            changed_paths.add(repo_file.relative_path)
             full_path = self.root / repo_file.relative_path
             try:
                 source = full_path.read_text(encoding="utf-8", errors="replace")
             except OSError:
+                repo_file.parser_status = "error"
                 stats.failed += 1
+                indexed_files.append(repo_file)
                 continue
             result = self.parsers.parse_file(
                 language_id=repo_file.language,
@@ -108,7 +121,12 @@ class RepositoryIndexer:
                 source=source,
             )
             if result.errors and not result.symbols:
+                repo_file.parser_status = "error"
                 stats.failed += 1
+            elif result.errors:
+                repo_file.parser_status = "partial"
+            else:
+                repo_file.parser_status = "ok"
             file_imports = resolve_imports(
                 result.imports,
                 file_path=repo_file.relative_path,
@@ -140,15 +158,49 @@ class RepositoryIndexer:
         run.symbols_extracted = stats.symbols
         run.imports_extracted = stats.imports
         run.duration_ms = int((time.perf_counter() - started) * 1000)
-        run.status = "completed"
         run.completed_at = datetime.now(UTC).isoformat()
 
+        if self.mysql_store and self.config.mysql_persistence:
+            try:
+                self.mysql_store.persist_index(
+                    run=run,
+                    files=indexed_files,
+                    symbols=all_symbols,
+                    imports=all_imports,
+                    deleted_paths=deleted_paths,
+                    changed_paths=changed_paths,
+                )
+                run.status = "completed"
+            except IndexPersistenceError as exc:
+                run.status = "failed"
+                run.error_summary = str(exc)
+                raise
+        else:
+            for path in deleted_paths:
+                self.store.remove_file(path)
+            run.status = "completed"
+
         hashes = {f.relative_path: f.sha256 for f in discovered if not f.is_binary}
-        self.store.save_file_hashes(hashes)
-        self.store.save_index(
-            files=indexed_files,
-            symbols=all_symbols,
-            imports=all_imports,
-            run=run,
-        )
+        try:
+            self.store.save_file_hashes(hashes)
+            self.store.save_index(
+                files=indexed_files,
+                symbols=all_symbols,
+                imports=all_imports,
+                run=run,
+            )
+        except OSError as exc:
+            run.status = "failed"
+            run.error_summary = f"Filesystem cache write failed: {exc}"
+            raise IndexPersistenceError(run.error_summary) from exc
+
         return run, stats
+
+    def _load_previous_hashes(self) -> dict[str, str]:
+        if self.mysql_store and self.config.mysql_persistence:
+            try:
+                return self.mysql_store.load_file_hashes()
+            except IndexPersistenceError:
+                if self.config.require_mysql:
+                    raise
+        return self.store.load_file_hashes()

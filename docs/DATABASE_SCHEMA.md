@@ -362,7 +362,33 @@ Runtime registry of available model providers and model IDs. Used by the AI API 
 
 Migration: `infra/docker/mysql/migrations/002_provider_model_registry.sql`
 
-**Note:** Embeddings and model checkpoints are **not** stored in MySQL. Use object storage (future) for artifacts; vector search uses a dedicated store (future, Phase 4).
+**Note:** Embeddings and model checkpoints are **not** stored in MySQL. Vector embeddings use the pluggable `VectorStore` abstraction (in-memory/filesystem for dev).
+
+### repository_files (Phase 4)
+
+| Column | Type | Description |
+|--------|------|-------------|
+| id | CHAR(64) PK | Deterministic file id (`workspace_id:relative_path`) |
+| workspace_id | CHAR(36) FK | → `workspaces(id)` |
+| relative_path | VARCHAR(2048) | Normalized POSIX-style path |
+| language | VARCHAR(50) | Detected language |
+| size_bytes | BIGINT | File size |
+| sha256 | CHAR(64) | Content hash for incremental indexing |
+| line_count | INT | Line count |
+| is_binary | TINYINT | Binary flag |
+| is_generated | TINYINT | Generated flag |
+| is_ignored | TINYINT | Ignored flag |
+| parser_status | VARCHAR(50) | `ok`, `partial`, `error`, etc. |
+| index_version | INT | Index version |
+| parser_version | VARCHAR(50) | Parser version |
+| first_indexed_at | TIMESTAMP | First index time |
+| last_indexed_at | TIMESTAMP | Last index time |
+
+Unique: `(workspace_id, relative_path)`
+
+### repository_index_runs, repository_symbols, repository_imports
+
+See migration `004_repository_intelligence.sql` and `005_repository_files.sql`. Symbols and imports include optional `file_id` FK-style references to `repository_files.id`.
 
 ---
 
@@ -382,6 +408,8 @@ Migration: `infra/docker/mysql/migrations/002_provider_model_registry.sql`
 - Bootstrap: `infra/docker/mysql/init.sql` (schema `001_initial`)
 - Phase 1: `infra/docker/mysql/migrations/002_provider_model_registry.sql`
 - Phase 3: `infra/docker/mysql/migrations/003_dataset_system.sql`
+- Phase 4: `infra/docker/mysql/migrations/004_repository_intelligence.sql`
+- Phase 4: `infra/docker/mysql/migrations/005_repository_files.sql`
 
 Apply migrations:
 
@@ -394,4 +422,4 @@ Tracked in `schema_migrations` table. Future: Alembic (Python) or sql-migrate fo
 
 ---
 
-*Last updated: Phase 1 — Model Abstraction*
+*Last updated: Phase 4 — Repository Intelligence*

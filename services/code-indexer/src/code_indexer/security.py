@@ -42,3 +42,24 @@ def safe_relative_path(workspace_root: Path, path: Path) -> str:
     if not is_within_workspace(workspace_root, resolved):
         raise PathSecurityError(f"Path escapes workspace: {path}")
     return resolved.relative_to(workspace_root.resolve()).as_posix()
+
+
+def validate_workspace_root(
+    workspace_root: Path,
+    *,
+    allowed_roots: list[str] | None = None,
+) -> Path:
+    root = resolve_workspace_path(workspace_root)
+    if not allowed_roots:
+        return root
+    normalized_root = str(root).replace("\\", "/").lower()
+    for allowed in allowed_roots:
+        allowed_path = Path(allowed).resolve()
+        allowed_norm = str(allowed_path).replace("\\", "/").lower()
+        if normalized_root == allowed_norm or normalized_root.startswith(f"{allowed_norm}/"):
+            return root
+    raise PathSecurityError(f"Workspace root is outside allowed roots: {root}")
+
+
+def normalize_path_for_storage(path: str | Path) -> str:
+    return str(Path(path).resolve()).replace("\\", "/")

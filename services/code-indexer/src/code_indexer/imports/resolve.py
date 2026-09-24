@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import PurePosixPath
+from posixpath import normpath
 
 from code_indexer.models import ImportRecord
 
@@ -39,7 +40,7 @@ def resolve_imports(
             or "/" in module
         )
         if is_relative:
-            candidate = (base_dir / module).as_posix()
+            candidate = normpath((base_dir / module).as_posix()).lstrip("/")
             target = _resolve_local(candidate, known_paths)
             if target:
                 record.resolution_status = "resolved_local"

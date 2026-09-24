@@ -10,12 +10,12 @@ from code_indexer.models import ImportRecord, Symbol
 from code_indexer.search import lexical_search
 
 
-def test_full_index_search_context(fixture_repo: Path, tmp_path: Path):
+def test_full_index_search_context(fixture_repo: Path, tmp_path: Path, offline_indexer_config):
     import shutil
 
     workspace = tmp_path / "repo"
     shutil.copytree(fixture_repo, workspace)
-    indexer = RepositoryIndexer(workspace)
+    indexer = RepositoryIndexer(workspace, config=offline_indexer_config)
     run, stats = indexer.index(incremental=False)
     assert run.status == "completed"
     assert stats.indexed > 0
@@ -40,12 +40,12 @@ def test_full_index_search_context(fixture_repo: Path, tmp_path: Path):
     assert ctx.snippets
 
 
-def test_incremental_and_deletion(fixture_repo: Path, tmp_path: Path):
+def test_incremental_and_deletion(fixture_repo: Path, tmp_path: Path, offline_indexer_config):
     import shutil
 
     workspace = tmp_path / "repo2"
     shutil.copytree(fixture_repo, workspace)
-    indexer = RepositoryIndexer(workspace)
+    indexer = RepositoryIndexer(workspace, config=offline_indexer_config)
     indexer.index(incremental=False)
     target = workspace / "src/auth/controller.ts"
     target.unlink()

@@ -5,9 +5,21 @@ Static analysis pipeline for workspace scanning, Tree-sitter parsing, symbol ext
 ## Architecture
 
 ```text
-Workspace → Scanner → Language Detection → Tree-sitter → Symbols/Imports
-    → Graph → Index Store → Lexical/Hybrid Search → Context Builder
+Workspace → Scanner → Language Detection → Git Metadata → Tree-sitter
+    → Symbols/Imports → Graph → MySQL (authoritative) + .code_index/ (cache)
+    → Lexical/Hybrid Search → Context Builder
 ```
+
+## Persistence
+
+- **MySQL** — authoritative repository metadata (`repository_files`, `repository_symbols`, `repository_imports`, `repository_index_runs`)
+- **Filesystem** — local cache at `<workspace>/.code_index/` (hashes, index snapshot, source files remain on disk)
+
+Indexing writes to MySQL first; filesystem cache is updated only after MySQL persistence succeeds.
+
+## Git metadata
+
+Read-only Git queries (branch, commit, tracked/modified/untracked counts) via safe subprocess argument arrays. Git is optional — indexing works without it.
 
 ## CLI
 
@@ -25,10 +37,18 @@ python -m code_indexer symbols --workspace . --query "User"
 - JavaScript / JSX (`tree-sitter-javascript`)
 - TypeScript / TSX (`tree-sitter-typescript`)
 
-## Index storage
+## API
 
-- Local index: `<workspace>/.code_index/`
-- MySQL metadata: `repository_index_runs`, `repository_symbols`, `repository_imports`
+```text
+POST /v1/workspaces
+POST /v1/workspaces/{id}/index
+GET  /v1/workspaces/{id}/index/status
+GET  /v1/workspaces/{id}/files
+GET  /v1/workspaces/{id}/symbols
+GET  /v1/workspaces/{id}/graph
+POST /v1/workspaces/{id}/search
+POST /v1/workspaces/{id}/context
+```
 
 ## Security
 

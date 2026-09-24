@@ -145,6 +145,7 @@ def bootstrap(conn, db: dict[str, str | int]) -> None:
         "002_provider_model_registry",
         "003_dataset_system",
         "004_repository_intelligence",
+        "005_repository_files",
     ):
         if version not in applied:
             _record_migration(conn, version)

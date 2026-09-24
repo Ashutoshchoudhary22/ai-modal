@@ -14,22 +14,30 @@ ImportResolution = Literal["resolved_local", "unresolved_local", "external", "un
 MatchType = Literal["exact_symbol", "path", "symbol_name", "text"]
 
 
+ParserStatus = Literal["pending", "ok", "partial", "error", "skipped"]
+
+
 @dataclass
 class RepositoryFile:
     relative_path: str
-    language: str | None
     size_bytes: int
     sha256: str
     line_count: int
     is_binary: bool
+    language: str | None = None
+    workspace_id: str | None = None
     is_ignored: bool = False
+    is_generated: bool = False
+    parser_status: ParserStatus = "pending"
     mtime: float = 0.0
     indexed_at: str | None = None
     index_version: int = 1
 
     @property
     def file_id(self) -> str:
-        return hashlib.sha256(self.relative_path.encode("utf-8")).hexdigest()
+        scope = self.workspace_id or ""
+        normalized = self.relative_path.replace("\\", "/")
+        return hashlib.sha256(f"{scope}:{normalized}".encode()).hexdigest()
 
 
 @dataclass
@@ -133,3 +141,22 @@ class ContextResult:
     symbols: list[Symbol] = field(default_factory=list)
     snippets: list[SearchResult] = field(default_factory=list)
     imports: list[ImportRecord] = field(default_factory=list)
+
+
+@dataclass
+class GitMetadata:
+    is_git_repository: bool = False
+    repository_root: str | None = None
+    branch: str | None = None
+    commit: str | None = None
+    tracked_files: int = 0
+    modified_files: int = 0
+    untracked_files: int = 0
+
+
+@dataclass
+class WorkspaceRecord:
+    id: str
+    name: str
+    root_path: str
+    team_id: str

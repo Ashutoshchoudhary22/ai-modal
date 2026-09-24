@@ -36,6 +36,9 @@ SCHEMA_VERSION = "1.0"
 
 @dataclass
 class IndexerConfig:
+    mysql_persistence: bool = True
+    require_mysql: bool = False
+    allowed_workspace_roots: list[str] = field(default_factory=list)
     max_file_size: int = 1_048_576  # 1 MiB
     max_line_length: int = 10_000
     max_files_per_workspace: int = 50_000

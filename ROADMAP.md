@@ -99,6 +99,9 @@ See [docs/DATASETS.md](./docs/DATASETS.md).
 | Workspace scanner | ✅ |
 | Tree-sitter multi-language parsing | ✅ |
 | Symbol + import graph | ✅ |
+| MySQL persistence (files, symbols, imports, runs) | ✅ |
+| Workspace creation API | ✅ |
+| Git read-only metadata | ✅ |
 | Embeddings + vector index abstraction | ✅ |
 | Semantic + lexical search API | ✅ |
 

@@ -5,11 +5,16 @@ from __future__ import annotations
 import shutil
 from pathlib import Path
 
+from code_indexer.config import IndexerConfig
 from code_indexer.main import create_app
 from fastapi.testclient import TestClient
 
 
-def test_api_index_search_context(fixture_repo: Path, tmp_path: Path):
+def test_api_index_search_context(fixture_repo: Path, tmp_path: Path, monkeypatch):
+    monkeypatch.setattr(
+        "code_indexer.routes.workspaces.IndexerConfig",
+        lambda: IndexerConfig(mysql_persistence=False),
+    )
     workspace = tmp_path / "api_repo"
     shutil.copytree(fixture_repo, workspace)
     client = TestClient(create_app())
