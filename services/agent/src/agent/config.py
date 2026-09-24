@@ -102,6 +102,56 @@ class ScreenshotSettings:
     max_iterations: int = 25
 
 
+@dataclass
+class BrowserSettings:
+    enabled: bool = True
+    provider: str = "development_mock"
+    headless: bool = True
+    timeout_sec: int = 120
+    navigation_timeout_sec: int = 30
+    action_timeout_sec: int = 15
+    max_sessions: int = 10
+    max_pages: int = 3
+    max_actions: int = 50
+    max_navigations: int = 20
+    max_screenshots: int = 10
+    max_runtime_sec: int = 600
+    max_iterations: int = 25
+    screenshot_max_bytes: int = 5_242_880
+    allow_localhost: bool = True
+    max_visible_text_chars: int = 8000
+    max_elements: int = 100
+    max_observation_chars: int = 16_000
+    allowed_domains_list: list[str] = field(default_factory=list)
+    blocked_domains_list: list[str] = field(default_factory=list)
+
+
+def load_browser_settings(settings: Settings | None = None) -> BrowserSettings:
+    cfg = settings or get_settings()
+    return BrowserSettings(
+        enabled=cfg.browser_enabled,
+        provider=cfg.browser_provider,
+        headless=cfg.browser_headless,
+        timeout_sec=cfg.browser_timeout_sec,
+        navigation_timeout_sec=cfg.browser_navigation_timeout_sec,
+        action_timeout_sec=cfg.browser_action_timeout_sec,
+        max_sessions=cfg.browser_max_sessions,
+        max_pages=cfg.browser_max_pages,
+        max_actions=cfg.browser_max_actions,
+        max_navigations=cfg.browser_max_navigations,
+        max_screenshots=cfg.browser_max_screenshots,
+        max_runtime_sec=cfg.browser_max_runtime_sec,
+        max_iterations=cfg.browser_max_iterations,
+        screenshot_max_bytes=cfg.browser_screenshot_max_bytes,
+        allow_localhost=cfg.browser_allow_localhost,
+        max_visible_text_chars=cfg.browser_max_visible_text_chars,
+        max_elements=cfg.browser_max_elements,
+        max_observation_chars=cfg.browser_max_observation_chars,
+        allowed_domains_list=cfg.browser_allowed_domains_list,
+        blocked_domains_list=cfg.browser_blocked_domains_list,
+    )
+
+
 def load_screenshot_settings(settings: Settings | None = None) -> ScreenshotSettings:
     cfg = settings or get_settings()
     return ScreenshotSettings(

@@ -1,0 +1,20 @@
+{
+  "url": "https://example.com/navigation",
+  "title": "Navigation Test",
+  "visible_text": "Navigation page with links",
+  "elements": [
+    {
+      "element_id": "e1",
+      "tag": "a",
+      "role": "link",
+      "name": "Go to simple",
+      "text": "Go to simple",
+      "href": "https://example.com/simple",
+      "visible": true,
+      "enabled": true
+    }
+  ],
+  "transitions": {
+    "e1": "https://example.com/simple"
+  }
+}

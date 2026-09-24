@@ -80,6 +80,27 @@ class Settings(BaseSettings):
     visual_validation_threshold: float = 0.85
     visual_max_iterations: int = 3
 
+    browser_provider: str = "development_mock"
+    browser_headless: bool = True
+    browser_enabled: bool = True
+    browser_timeout_sec: int = 120
+    browser_navigation_timeout_sec: int = 30
+    browser_action_timeout_sec: int = 15
+    browser_max_sessions: int = 10
+    browser_max_pages: int = 3
+    browser_max_actions: int = 50
+    browser_max_navigations: int = 20
+    browser_max_screenshots: int = 10
+    browser_max_runtime_sec: int = 600
+    browser_max_iterations: int = 25
+    browser_screenshot_max_bytes: int = 5_242_880
+    browser_allowed_domains: str = ""
+    browser_blocked_domains: str = ""
+    browser_allow_localhost: bool = True
+    browser_max_visible_text_chars: int = 8000
+    browser_max_elements: int = 100
+    browser_max_observation_chars: int = 16000
+
     tools_enabled: bool = True
     tool_max_file_size: int = 1_048_576
     tool_max_output_chars: int = 32_000
@@ -121,6 +142,14 @@ class Settings(BaseSettings):
     @property
     def diagnostics_commands_list(self) -> list[str]:
         return [c.strip() for c in self.diagnostics_commands.split(",") if c.strip()]
+
+    @property
+    def browser_allowed_domains_list(self) -> list[str]:
+        return [d.strip() for d in self.browser_allowed_domains.split(",") if d.strip()]
+
+    @property
+    def browser_blocked_domains_list(self) -> list[str]:
+        return [d.strip() for d in self.browser_blocked_domains.split(",") if d.strip()]
 
     @property
     def is_production(self) -> bool:

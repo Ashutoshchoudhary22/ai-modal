@@ -9,7 +9,7 @@ from ai_platform_shared.config import get_settings
 from ai_platform_shared.logging import setup_logging
 from fastapi import FastAPI
 
-from agent.routes import agent, health, screenshot, tools, ui
+from agent.routes import agent, browser, health, screenshot, tools, ui
 
 
 @asynccontextmanager
@@ -23,7 +23,9 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title="AI Platform — Coding Agent",
         version="0.3.0",
-        description="Coding agent tools, agent loop, UI generation, and screenshot-to-code",
+        description=(
+            "Coding agent tools, agent loop, UI generation, screenshot-to-code, and browser agent"
+        ),
         lifespan=lifespan,
     )
     app.include_router(health.router)
@@ -31,6 +33,7 @@ def create_app() -> FastAPI:
     app.include_router(agent.router, prefix="/v1")
     app.include_router(ui.router, prefix="/v1")
     app.include_router(screenshot.router, prefix="/v1")
+    app.include_router(browser.router, prefix="/v1")
     return app
 
 

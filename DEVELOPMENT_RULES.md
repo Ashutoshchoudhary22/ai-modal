@@ -86,6 +86,8 @@ Mandatory engineering standards for all contributors and AI-assisted development
 38. **No pixel-perfect claims.** Visual similarity requires metric-backed evaluation.
 39. **Reuse existing UI.** Phase 7 UI generation must detect framework/styling from the repository and reuse existing components/tokens — do not introduce a second styling system or duplicate Agent Loop.
 40. **Screenshot-to-code in Phase 8 only.** Phase 7 must not accept images; Phase 8 uses VisionProvider and visual comparison without implementing Phase 9 browser agents.
+
+41. **Browser agent in Phase 9 only.** Browser automation uses `BrowserProvider` and `browser.*` tools with `browser_agent` policy. No arbitrary JavaScript, no shell/file/git access by default. Playwright is optional; tests use `development_mock`.
 41. **Vision honesty.** Mock vision providers must be labeled; never claim real visual understanding in production paths using development mocks.
 42. **Visual validation thresholds.** Visual comparison scores must come from deterministic metrics, not fabricated values.
 43. **Validation honesty.** UI validation results must reflect actual diagnostics/build/test command outcomes; never claim success without running configured checks.

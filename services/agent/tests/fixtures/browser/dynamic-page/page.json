@@ -1,0 +1,28 @@
+{
+  "url": "https://example.com/dynamic",
+  "title": "Dynamic Page",
+  "visible_text": "Dynamic content loaded",
+  "elements": [
+    {
+      "element_id": "e1",
+      "tag": "button",
+      "role": "button",
+      "name": "Load more",
+      "text": "Load more",
+      "visible": true,
+      "enabled": true
+    },
+    {
+      "element_id": "e2",
+      "tag": "button",
+      "role": "button",
+      "name": "Hidden action",
+      "text": "Hidden action",
+      "visible": false,
+      "enabled": true
+    }
+  ],
+  "transitions": {
+    "e1": "https://example.com/dashboard"
+  }
+}

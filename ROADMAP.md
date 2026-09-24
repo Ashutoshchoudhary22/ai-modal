@@ -200,15 +200,24 @@ See [docs/SCREENSHOT_TO_CODE.md](./docs/SCREENSHOT_TO_CODE.md).
 
 ---
 
-## Phase 9 — Browser Agent ⬜
+## Phase 9 — Browser Agent ✅
 
-**Goal:** Playwright integration for UI testing.
+**Goal:** Secure, bounded browser agent for controlled web application testing.
 
 | Deliverable | Status |
 |-------------|--------|
-| browser-agent service | ⬜ |
-| Console/network inspection | ⬜ |
-| Responsive screenshot tests | ⬜ |
+| BrowserProvider abstraction (mock + Playwright stub) | ✅ |
+| Browser sessions, observations, element IDs | ✅ |
+| browser.* tools in ToolRegistry | ✅ |
+| `browser_agent` policy (no shell/file/git) | ✅ |
+| URL/domain/SSRF policy | ✅ |
+| LoopAgentRunner integration | ✅ |
+| API (`POST /v1/browser/runs`, stream, cancel, GET) | ✅ |
+| Security + prompt-injection tests | ✅ |
+
+**Exit criteria:** Task → observe → action → bounded retry → result with domain/SSRF enforcement. ✅
+
+See [docs/BROWSER_AGENT.md](./docs/BROWSER_AGENT.md).
 
 ---
 
@@ -356,8 +365,8 @@ See [docs/SCREENSHOT_TO_CODE.md](./docs/SCREENSHOT_TO_CODE.md).
 ## Current Status
 
 **Active phase:** Phase 4 — Repository Intelligence ✅  
-**Next phase:** Phase 8 — Screenshot-to-Code
+**Next phase:** Phase 10 — Multimodal Model Architecture
 
 ---
 
-*Last updated: Phase 7*
+*Last updated: Phase 9*

@@ -15,6 +15,7 @@ class AgentPolicy:
     allow_write: bool = True
     allow_execute: bool = True
     allow_git_read: bool = True
+    allow_browser: bool = False
     allowed_tools: frozenset[str] | None = None
     denied_tools: frozenset[str] = field(default_factory=frozenset)
     validation_mode: str = "none"
@@ -27,6 +28,8 @@ class AgentPolicy:
             perms.add(ToolPermission.EXECUTE)
         if self.allow_git_read:
             perms.add(ToolPermission.GIT_READ)
+        if self.allow_browser:
+            perms.add(ToolPermission.BROWSER)
         return perms
 
     def is_tool_allowed(self, tool_name: str) -> bool:
@@ -96,12 +99,55 @@ UI_GENERATION_POLICY = AgentPolicy(
     validation_mode="build",
 )
 
+BROWSER_TOOL_NAMES = frozenset(
+    {
+        "browser.navigate",
+        "browser.observe",
+        "browser.click",
+        "browser.fill",
+        "browser.type",
+        "browser.select",
+        "browser.scroll",
+        "browser.press",
+        "browser.wait",
+        "browser.screenshot",
+        "browser.back",
+        "browser.forward",
+        "browser.reload",
+    }
+)
+
+BROWSER_AGENT_POLICY = AgentPolicy(
+    name="browser_agent",
+    allow_write=False,
+    allow_execute=False,
+    allow_git_read=False,
+    allow_browser=True,
+    allowed_tools=BROWSER_TOOL_NAMES,
+    denied_tools=frozenset(
+        {
+            "terminal.exec",
+            "file.write",
+            "file.edit",
+            "file.read",
+            "file.list",
+            "code.search",
+            "code.symbols",
+            "code.context",
+            "code.diagnostics",
+            "git.status",
+            "git.diff",
+        }
+    ),
+)
+
 _POLICIES: dict[str, AgentPolicy] = {
     "read_only": READ_ONLY_POLICY,
     "coding": CODING_POLICY,
     "testing": TESTING_POLICY,
     "ui_read_only": UI_READ_ONLY_POLICY,
     "ui_generation": UI_GENERATION_POLICY,
+    "browser_agent": BROWSER_AGENT_POLICY,
 }
 
 

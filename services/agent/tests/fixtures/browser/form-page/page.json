@@ -1,0 +1,55 @@
+{
+  "url": "https://example.com/login",
+  "title": "Login",
+  "visible_text": "Sign in to your account",
+  "elements": [
+    {
+      "element_id": "e1",
+      "tag": "input",
+      "role": "textbox",
+      "name": "Email",
+      "placeholder": "Email",
+      "visible": true,
+      "enabled": true
+    },
+    {
+      "element_id": "e2",
+      "tag": "input",
+      "role": "textbox",
+      "name": "Password",
+      "type": "password",
+      "sensitive": true,
+      "visible": true,
+      "enabled": true
+    },
+    {
+      "element_id": "e3",
+      "tag": "select",
+      "role": "combobox",
+      "name": "Role",
+      "visible": true,
+      "enabled": true
+    },
+    {
+      "element_id": "e4",
+      "tag": "button",
+      "role": "button",
+      "name": "Submit",
+      "text": "Submit",
+      "visible": true,
+      "enabled": true
+    },
+    {
+      "element_id": "e5",
+      "tag": "button",
+      "role": "button",
+      "name": "Disabled",
+      "text": "Disabled",
+      "visible": true,
+      "enabled": false
+    }
+  ],
+  "transitions": {
+    "e4": "https://example.com/dashboard"
+  }
+}

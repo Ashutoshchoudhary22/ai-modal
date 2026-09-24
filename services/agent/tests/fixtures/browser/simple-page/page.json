@@ -1,0 +1,27 @@
+{
+  "url": "https://example.com/simple",
+  "title": "Simple Page",
+  "visible_text": "Welcome to the simple page. Click continue to proceed.",
+  "elements": [
+    {
+      "element_id": "e1",
+      "tag": "h1",
+      "role": "heading",
+      "text": "Welcome",
+      "visible": true,
+      "enabled": true
+    },
+    {
+      "element_id": "e2",
+      "tag": "button",
+      "role": "button",
+      "name": "Continue",
+      "text": "Continue",
+      "visible": true,
+      "enabled": true
+    }
+  ],
+  "transitions": {
+    "e2": "https://example.com/dashboard"
+  }
+}

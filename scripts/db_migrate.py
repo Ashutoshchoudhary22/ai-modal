@@ -179,9 +179,7 @@ def show_status(conn) -> None:
     except Exception as exc:
         print(f"Could not read schema_migrations: {exc}")
     with conn.cursor() as cur:
-        cur.execute(
-            "SHOW TABLES LIKE 'provider_model_registry'"
-        )
+        cur.execute("SHOW TABLES LIKE 'provider_model_registry'")
         if cur.fetchone():
             cur.execute("DESCRIBE provider_model_registry")
             print("\nprovider_model_registry columns:")

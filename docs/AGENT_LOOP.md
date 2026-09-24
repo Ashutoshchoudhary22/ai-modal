@@ -121,6 +121,10 @@ Tests use `ScriptedModelClient` for deterministic orchestration without a live L
 4. No long-term cross-session agent memory
 5. No autonomous Git commits/push
 
+## Browser agent (Phase 9)
+
+The same `LoopAgentRunner` powers browser tasks via `BrowserAgentOrchestrator` and the `browser_agent` policy. Browser-specific events (`browser.session.created`, `browser.observation`, `browser.action.*`, etc.) extend `AgentEventType`. See [BROWSER_AGENT.md](./BROWSER_AGENT.md).
+
 ## Phase boundary
 
-> Phase 6 provides a bounded Agent Loop. UI generation is implemented in **Phase 7** — see [UI_GENERATION.md](./UI_GENERATION.md).
+> Phase 6 provides a bounded Agent Loop. UI generation is implemented in **Phase 7** — see [UI_GENERATION.md](./UI_GENERATION.md). Browser automation is **Phase 9** — see [BROWSER_AGENT.md](./BROWSER_AGENT.md).

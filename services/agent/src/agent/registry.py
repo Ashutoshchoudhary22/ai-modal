@@ -12,6 +12,7 @@ from agent.config import ToolSettings, load_tool_settings
 from agent.context import ToolExecutionContext
 from agent.errors import ToolErrorCode, ToolExecutionError
 from agent.tools.base import BaseTool
+from agent.tools.browser_tools import all_browser_tools
 from agent.tools.code_intel import CodeContextTool, CodeSearchTool, CodeSymbolsTool
 from agent.tools.diagnostics import CodeDiagnosticsTool
 from agent.tools.filesystem import FileEditTool, FileListTool, FileReadTool, FileWriteTool
@@ -38,6 +39,7 @@ class ToolRegistry:
             GitStatusTool(),
             GitDiffTool(self._settings),
             CodeDiagnosticsTool(self._settings),
+            *all_browser_tools(),
         ):
             self.register(tool)
 

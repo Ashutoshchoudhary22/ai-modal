@@ -1,0 +1,59 @@
+"""Browser provider protocol."""
+
+from __future__ import annotations
+
+from typing import Protocol, runtime_checkable
+
+from ai_platform_protocol.browser import BrowserObservation, BrowserSession
+
+
+@runtime_checkable
+class BrowserProviderSession(Protocol):
+    session: BrowserSession
+
+    async def navigate(self, url: str) -> BrowserObservation: ...
+
+    async def observe(self) -> BrowserObservation: ...
+
+    async def click(self, element_id: str) -> BrowserObservation: ...
+
+    async def fill(self, element_id: str, value: str) -> BrowserObservation: ...
+
+    async def type_text(self, element_id: str, value: str) -> BrowserObservation: ...
+
+    async def select(self, element_id: str, value: str) -> BrowserObservation: ...
+
+    async def press(self, key: str) -> BrowserObservation: ...
+
+    async def scroll(self, direction: str, amount: int) -> BrowserObservation: ...
+
+    async def wait(self, wait_type: str, value: str | None = None) -> BrowserObservation: ...
+
+    async def screenshot(self) -> tuple[BrowserObservation, bytes | None]: ...
+
+    async def back(self) -> BrowserObservation: ...
+
+    async def forward(self) -> BrowserObservation: ...
+
+    async def reload(self) -> BrowserObservation: ...
+
+    async def close(self) -> None: ...
+
+    def close_sync(self) -> None: ...
+
+
+@runtime_checkable
+class BrowserProvider(Protocol):
+    @property
+    def provider_id(self) -> str: ...
+
+    def is_available(self) -> bool: ...
+
+    async def create_session(
+        self,
+        *,
+        session_id: str,
+        run_id: str | None = None,
+        start_url: str | None = None,
+        allowed_domains: list[str] | None = None,
+    ) -> BrowserProviderSession: ...

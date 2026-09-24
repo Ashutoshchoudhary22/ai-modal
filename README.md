@@ -157,6 +157,10 @@ See [docs/UI_GENERATION.md](./docs/UI_GENERATION.md) for framework-aware UI gene
 
 See [docs/SCREENSHOT_TO_CODE.md](./docs/SCREENSHOT_TO_CODE.md) for screenshot-to-code (`POST /v1/ui/screenshot-to-code`).
 
+### Browser agent (Phase 9)
+
+See [docs/BROWSER_AGENT.md](./docs/BROWSER_AGENT.md) for the bounded browser agent (`POST /v1/browser/runs`).
+
 ### 7. Start Test UI (browser console)
 
 ```bash

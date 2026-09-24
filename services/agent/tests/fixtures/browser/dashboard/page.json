@@ -1,0 +1,24 @@
+{
+  "url": "https://example.com/dashboard",
+  "title": "Dashboard",
+  "visible_text": "You are on the dashboard. Task complete.",
+  "elements": [
+    {
+      "element_id": "e1",
+      "tag": "h1",
+      "role": "heading",
+      "text": "Dashboard",
+      "visible": true,
+      "enabled": true
+    },
+    {
+      "element_id": "e2",
+      "tag": "p",
+      "role": "text",
+      "text": "Task complete.",
+      "visible": true,
+      "enabled": true
+    }
+  ],
+  "transitions": {}
+}

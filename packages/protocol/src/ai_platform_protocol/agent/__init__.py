@@ -88,6 +88,17 @@ class AgentEventType(StrEnum):
     VISUAL_FIX_STARTED = "screenshot.visual.fix.started"
     SCREENSHOT_COMPLETED = "screenshot.completed"
     SCREENSHOT_FAILED = "screenshot.failed"
+    BROWSER_SESSION_CREATED = "browser.session.created"
+    BROWSER_NAVIGATION_STARTED = "browser.navigation.started"
+    BROWSER_NAVIGATION_COMPLETED = "browser.navigation.completed"
+    BROWSER_OBSERVATION = "browser.observation"
+    BROWSER_ACTION_STARTED = "browser.action.started"
+    BROWSER_ACTION_COMPLETED = "browser.action.completed"
+    BROWSER_ACTION_FAILED = "browser.action.failed"
+    BROWSER_SCREENSHOT = "browser.screenshot"
+    BROWSER_POLICY_DENIED = "browser.policy.denied"
+    BROWSER_COMPLETED = "browser.completed"
+    BROWSER_FAILED = "browser.failed"
 
 
 class AgentEvent(BaseModel):
